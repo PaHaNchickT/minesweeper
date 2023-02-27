@@ -104,5 +104,45 @@ section {
 
 .b0.opened {
   background-position-x: 202px;
-  background-position-y: 54px;
+  background-position-y: 56px;
+}
+
+.b1.opened {
+  background-position-x: 230px;
+  background-position-y: 28px;
+}
+
+.b2.opened {
+  background-position-x: 202px;
+  background-position-y: 28px;
+}
+
+.b3.opened {
+  background-position-x: 174px;
+  background-position-y: 28px;
+}
+
+.b4.opened {
+  background-position-x: 144px;
+  background-position-y: 28px;
+}
+
+.b5.opened {
+  background-position-x: 118px;
+  background-position-y: 28px;
+}
+
+.b6.opened {
+  background-position-x: 90px;
+  background-position-y: 28px;
+}
+
+.b7.opened {
+  background-position-x: 62px;
+  background-position-y: 28px;
+}
+
+.b8.opened {
+  background-position-x: 34px;
+  background-position-y: 28px;
 }/*# sourceMappingURL=style.css.map */

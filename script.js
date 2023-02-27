@@ -49,7 +49,7 @@ function bombGen(selected) {
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
 
-function bombCounter(event) {
+function radius(event) {
     let count = event.classList[1].split('-'),
         pos1 = (+count[0] - 2) * 16 + +count[1] - 2,
         pos2 = (+count[0] - 2) * 16 + +count[1] - 1,
@@ -60,8 +60,7 @@ function bombCounter(event) {
         pos7 = (+count[0]) * 16 + +count[1] - 2,
         pos8 = (+count[0]) * 16 + +count[1] - 1,
         pos9 = (+count[0]) * 16 + +count[1],
-        pos = [],
-        bombs = 0
+        pos = []
 
     if (+count[1] === 1 && +count[0] === 1) {
         pos.push(pos6, pos8, pos9)
@@ -83,7 +82,13 @@ function bombCounter(event) {
         pos.push(pos1, pos2, pos3, pos4, pos6, pos7, pos8, pos9)
     }
 
-    pos.forEach(e => {
+    return pos
+}
+
+function bombCounter(event) {
+    let bombs = 0
+
+    radius(event).forEach(e => {
         if (cells[e].classList[2] === 'bomb') {
             bombs++
         }
@@ -103,13 +108,80 @@ function bombsNumber() {
 
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
-function radar(event) {
+function nextSib(event) {
+    if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
+        event.classList.add('opened')
+        return
+    }
+
+    if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+        event.classList.add('opened')
+        return
+    }
+
+    if (event.classList[2] === 'b0') {
+        event.classList.add('opened')
+        nextSib(event.nextSibling)
+    } else {
+        return
+    }
+}
+
+function prevSib(event) {
+    if (+event.classList[1].split('-')[1] === 16) {
+        event.classList.add('opened')
+        return
+    }
+
+    if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+        event.classList.add('opened')
+        return
+    }
+
+    if (event.classList[2] !== 'b0') {
+        event.classList.add('opened')
+        prevSib(event.previousSibling)
+    } else {
+        return
+    }
+}
+
+
+function radar (event) {
+    let count = event.classList[1].split('-')
+    // console.log(count)
+    if (+count[1] > 1 && +count[1] < 16) {
+        nextSib(event)
+        prevSib(event)
+    }
+    if (+count[0] > 1 && +count[0] < 16) {
+        // for ()
+        // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
+        // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
+        nextSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
+        prevSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
+    }
+    // if ()
+    
+    // console.log(event.nextSibling)
+    // field.querySelectorAll('.opened').forEach(el => {
+    //     radius(el).forEach(e => {
+    //         if (cells[e].classList[2] !== 'bomb' && cells[e].classList[2] !== 'b0') {
+    //             cells[e].classList.add('opened')
+    //         } else if (cells[e].classList[2] !== 'bomb' && cells[e].classList[2] === 'b0') {
+    //             // radar(cells[e])
+    //         } else {
+    //             return
+    //         }
+    //     })
+    // })
+    
     // let count = event.classList[1].split('-'),
     //     pos = (+count[0] - 1) * 16 + +count[1] - 1
     // console.log(pos)
-    if (event.classList[2] === 'b0') {
+    // if (event.classList[2] === 'b0') {
         
-    }
+    // }
 }
 
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
@@ -123,7 +195,7 @@ field.addEventListener('click', function (event) {
         isStart = 1
         radar(event.target)
     } else {
-
+        radar(event.target)
     }
 })
 
