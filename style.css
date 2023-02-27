@@ -1,0 +1,47 @@
+@font-face {
+  font-family: main-font;
+  src: url("../../assets/fonts/mine-sweeper.ttf");
+}
+html {
+  scroll-behavior: smooth;
+}
+
+p, h1, html, body, ul {
+  margin: 0;
+}
+
+body {
+  font-family: "main-font", sans-serif;
+}
+
+header, footer {
+  background-color: #c0c0c0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+header {
+  justify-content: center;
+}
+
+a:link, a:active, a:visited {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+}
+
+ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  padding: 0;
+  justify-content: space-around;
+}
+
+section {
+  height: calc(100vh - 140px);
+  width: 100%;
+}/*# sourceMappingURL=style.css.map */
