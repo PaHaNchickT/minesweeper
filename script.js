@@ -38,7 +38,7 @@ body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com
 /////////////////////////////////////////////////////bomb generation/////////////////////////////////////////////////
 
 function bombGen(selected) {
-    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 40;) {
+    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 90;) {
         cells.forEach(e => {
             if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
@@ -83,25 +83,33 @@ function bombCounter(event) {
         pos.push(pos1, pos2, pos3, pos4, pos6, pos7, pos8, pos9)
     }
 
-    pos.forEach(e => {
-        if (cells[e].classList[2] === 'bomb') {
-            bombs++
-        }
-    })
+        pos.forEach(e => {
+            if (cells[e].classList[2] === 'bomb') {
+                bombs++
+            }
+        })
 
-    if (event.classList[2] !== 'bomb') {
-        event.classList.add(`b${bombs}`)
-    }
-    
+        if (event.classList[2] !== 'bomb') {
+            event.classList.add(`b${bombs}`)
+        }
+        pos.forEach(e => {
+            if (cells[e].classList[2] !== 'bomb') {
+                cells[e].classList.add('opened')
+            } else {
+                return
+            }
+        })
 }
 
 function bombsNumber() {
-    cells.forEach(el => {
-        bombCounter(el)
-    })
+    if (isStart === 0) {
+        cells.forEach(el => {
+            bombCounter(el)
+        })
+    }
 }
 
-//////////
+/////////////////////////////////////////////////////////raduis/////////////////////////////////////////////////////
 
 function radius() {
 
@@ -111,10 +119,10 @@ function radius() {
 
 field.addEventListener('click', function (event) {
     if (isStart === 0) {
-        isStart = 1
         bombGen(event.target.classList[1])
         bombCounter(event.target)
         bombsNumber()
+        isStart = 1
     } else {
         bombCounter(event.target)
     }
