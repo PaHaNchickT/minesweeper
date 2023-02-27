@@ -1,0 +1,536 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap')
+
+// @mixin flex($just: flex-start, $align: stretch)
+//     display: flex
+//     justify-content: $just
+//     align-items: $align
+
+// @mixin font($w, $s, $h, $a: left, $ls: 0)
+//     font-weight: $w
+//     font-size: $s
+//     line-height: $h
+//     text-align: $a
+//     letter-spacing: $ls
+
+// @mixin img($s, $p: 0 0)
+//     background-image: url($s)
+//     background-repeat: no-repeat
+//     background-position: $p
+
+$desktop: 1023.5px
+$tablet: 767.5px
+$mobile: 320px
+
+html
+    scroll-behavior: smooth
+    &::-webkit-scrollbar
+        background-color: black
+    &::-webkit-scrollbar-thumb
+        background-color: #f6ad34
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+    -webkit-tap-highlight-color: transparent
+
+a
+    transition: 0.3s
+
+.burger-bg
+    background-color: black
+    z-index: 0
+    width: 100vw
+    height: 100vh
+    opacity: 0
+    position: fixed
+    transition: 0.5s
+
+body
+    margin: 0
+    padding: 0
+    font-family: Comfortaa
+
+p, h1, h2, h3, ul
+    margin: 0
+
+ul
+    list-style: none
+    display: flex
+
+.menu > li, .home
+    margin: 20px
+
+header
+    background-color: black
+    color: #f6ad34
+    height: 70px
+    font-size: 20px
+    padding: 0 80px
+    display: flex
+    align-content: center
+    justify-content: space-between
+    align-items: center 
+    position: fixed
+    width: 96.08vw
+    z-index: 10
+
+.lang
+    display: flex
+
+.lang > p
+    margin: 0 5px
+
+.lang > span
+    transition: 0.3s
+    cursor: pointer
+    &:hover
+        color: white
+
+.act
+    color: white
+    cursor: auto !important
+
+.menu
+    margin-right: 120px
+    transition: 0.5s
+
+.home > a, .menu > li > a, .github > a
+    &:link, &:active, &:visited
+        color: #f6ad34
+        text-decoration: none
+    &:hover
+        color: white
+
+.burger
+    display: none
+    width: 24px
+    height: 24px
+    background-image: url('../../assets/images/burger.png')
+    background-size: 100%
+    margin-right: 20px
+    transition: 0.5s
+
+//////////////////////////////////////////intro///////////////////////////////////////////
+
+.intro
+    min-height: 800px
+    background-image: url('../../assets/images/bg.jpg')
+    background-attachment: fixed
+    display: flex
+    justify-content: center
+    flex-direction: column
+    align-items: center
+    color: white
+    position: relative
+    z-index: 5
+
+h1
+    font-size: 100px
+    font-weight: 700
+
+h3
+    font-size: 20px
+
+////////////////////////////////////////////skills////////////////////////////////////////////
+
+.skills
+    font-size: 30px
+    display: flex
+    justify-content: space-between
+    height: 100px
+    background-color: black
+    color: #f6ad34
+    position: relative
+    box-shadow: 0px 0px 20px -5px #f6ad34
+    z-index: 5
+
+.avatar
+    transition: 0.5s
+    width: 250px
+    height: 250px
+    border-radius: 50%
+    position: absolute
+    left: calc(50% - 250px/2)
+    top: calc(50px - 250px/2)
+    box-shadow: 0px 0px 20px 7px black
+    &:hover
+        width: 260px
+        height: 260px
+        left: calc(50% - 260px/2)
+        top: calc(50px - 260px/2)
+
+.skills > ul
+    padding: 0
+
+.skl-left, .skl-right
+    width: calc(50% - 250px/2)
+    flex-wrap: wrap
+    align-content: center
+    justify-content: space-around
+
+.html
+    color: #F67E34
+
+.css
+    color: #608FD0
+
+.vegas
+    color: #7EA1D0
+
+.adobe
+    color: #7667D5
+
+
+///////////////////////////////////////////////work//////////////////////////////////////////////////
+
+.work
+    background: linear-gradient(#523004, black)
+    padding: 100px 0 50px
+    box-shadow: 0px 0px 20px 20px black
+    position: relative
+    z-index: 4
+
+.proj-container
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+
+.proj-container > a > div
+    transition: 0.3s
+
+.proj-container > a 
+    &:link, &:active, &:visited
+        color: white
+        text-decoration: none
+
+.proj
+    width: 400px
+    height: 400px
+    margin: 10px
+    position: relative
+
+.channel
+    width: 85vw
+    height: 400px
+    margin: 10px
+
+.proj, .channel
+    color: white
+    font-size: 20px
+    display: flex
+    align-items: center
+    cursor: pointer
+    box-shadow: 0px 0px 30px -5px black
+    filter: grayscale(100%)
+    &:hover
+        filter: grayscale(0%)
+
+.proj > p
+    background-color: black
+    padding: 5px 10px 5px 20px
+
+.proj > p, .channel > p
+    position: relative
+    z-index: 8
+
+.channel
+    justify-content: center
+
+.channel > p
+    padding: 5px 20px
+    background-color: black
+
+.proj1
+    background-image: url('../../assets/images/proj1.jpg')
+
+.proj2
+    background-image: url('../../assets/images/proj2.jpg')
+
+.proj3
+    background-image: url('../../assets/images/proj3.jpg')
+
+.proj4
+    background-image: url('../../assets/images/proj4.jpg')
+
+.proj5
+    background-image: url('../../assets/images/proj5.jpg')
+
+.proj6
+    background-image: url('../../assets/images/proj6.jpg')
+
+.channel
+    background-image: url('../../assets/images/proj7.jpg')
+
+// .channel > p > span
+//     &:hover
+//         color: red
+
+.proj-black
+    transition: 0.3s
+    width: 100%
+    height: 100%
+    position: absolute
+    background-color: black
+    opacity: 0
+    transition: 0.5s
+
+////////////////////////////////////////////about///////////////////////////////////////////////
+
+.about
+    // height: 1000px
+    background-image: url('../../assets/images/bg.jpg')
+    background-attachment: fixed
+    position: relative
+    z-index: 1
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-top: 70px
+
+h2
+    color: white
+    font-size: 70px
+    width: 100%
+    text-align: center
+    margin-bottom: 30px
+
+.about-wrapper
+    width: 81.5%
+    background-color: black
+    margin-bottom: 70px
+    padding: 30px
+    display: flex
+    box-shadow: 0px 0px 20px -5px #f6ad34
+    // flex-wrap: wrap
+
+.about-wrapper > p
+    color: white
+    margin: auto 30px auto 0
+    font-size: 30px
+    text-align: justify
+
+.diplomas
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+.diploma-1
+    width: calc(67.75vw*0.4613)
+    height: calc((61.88vw*348px)/891px)
+
+.diploma-2
+    width: calc(61.87vw*0.5051)
+    height: calc((61.87vw*318px)/891px)
+
+.social
+    color: white
+    font-size: 40px
+    width: 85.2vw
+    display: flex
+    justify-content: space-between
+    padding: 0
+    margin-bottom: 100px
+
+.social > li
+    // background-color: black
+    cursor: pointer
+    &:first-child
+        color: #f6ad34
+        cursor: auto
+
+.social > li > a
+    &:link, &:active, &:visited
+        color: white
+        text-decoration: none
+    &:hover
+        color: #f6ad34
+
+.diplomas > a
+    &:hover
+        opacity: 0.7
+
+///////////////////////////////footer///////////////////////////////
+
+footer
+    height: 70px
+    background-color: black
+    box-shadow: 0px 0px 20px 20px black
+    position: relative
+    z-index: 6
+    color: #f6ad34
+    font-size: 20px
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 0 100px
+    
+footer > ul
+    flex-basis: 100%
+    padding: 0
+    display: flex
+    justify-content: space-between
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////TABLET////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (max-width: $desktop)
+    header
+        padding: 0
+        width: 100vw
+        
+    .intro
+        min-height: 600px
+
+    .menu
+        margin-right: 0
+        flex-direction: column
+        position: absolute
+        top: 70px
+        right: -156px
+        background-color: black
+        padding: 0
+        z-index: 11
+
+    .burger
+        display: block
+
+    .proj
+        width: 240px
+        height: 240px
+        margin: 5px
+
+    .channel
+        width: 740px
+        height: 240px
+        background-position-x: -480px
+        margin: 5px
+
+    .proj > p
+        max-width: 50%
+
+    .about-wrapper
+        flex-wrap: wrap
+        flex-direction: column
+        justify-content: space-between
+        margin-bottom: 30px
+
+    .about-wrapper > p
+        margin-bottom: 30px
+        margin-right: 0
+
+    .diplomas
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+
+    .diploma-1
+        width: calc(81.51vw*0.4613)
+        height: calc((81.51vw*318px)/891px)
+        margin-right: 30px
+
+    .diploma-2
+        width: calc(81.51vw*0.5051)
+        height: calc((81.51vw*318px)/891px)
+
+    .social
+        width: 70vw
+        flex-wrap: wrap
+        justify-content: space-around
+
+    footer
+        padding: 0 20px
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////MOBILE////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (max-width: $tablet)
+    .intro
+        min-height: 500px
+        background-image: url('../../assets/images/bg.jpg')
+        background-attachment: fixed
+        display: flex
+        justify-content: center
+        flex-direction: column
+        align-items: center
+        color: white
+
+    h1
+        font-size: 45px
+        font-weight: 700
+
+    h2
+        font-size: 50px
+
+    h3
+        font-size: 15px
+
+    .skills
+        height: 70px
+
+    .avatar
+        width: 200px
+        height: 200px
+        left: calc(50% - 200px/2)
+        top: calc(50% - 200px/2)
+
+    .skl-left, .skl-right
+        display: none
+
+    .channel
+        width: 240px
+        margin: 10px
+        justify-content: flex-start
+
+    .channel > p, .proj > p
+        background-color: black
+        padding: 5px 10px 5px 20px
+        max-width: 40%
+
+    .about
+        padding-top: 30px
+
+    .about-wrapper
+        padding: 20px
+
+    .about-wrapper > p
+        font-size: 15px
+        margin-bottom: 20px
+
+    .diplomas
+        flex-direction: column
+
+    .diploma-1
+        margin: 0
+        width: 100%
+        height: calc((100%*318px)/891px)
+
+    .diploma-2
+        width: 100%
+        height: calc((100%*318px)/891px)
+
+    .social
+        font-size: 30px
+        flex-direction: column
+        align-items: center
+        margin-bottom: 40px
+
+    .social > li
+        &:first-child
+            color: #f6ad34
+            margin-bottom: 20px
+
+    footer
+        padding: 0
+
+    footer > ul
+        flex-direction: column
+        align-items: center
+
+    .github
+        margin-bottom: 10px
+
+    .by
+        display: none
+
+    .github > a
+        &:link, &:active, &:visited
+            color: white
