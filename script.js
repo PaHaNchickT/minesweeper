@@ -48,7 +48,7 @@ function bombGen(event) {
         })
     }
     radius(event.target).forEach(el => {
-        cells[el].classList.remove('bomb')  
+        cells[el].classList.remove('bomb')
     })
 }
 
@@ -133,7 +133,7 @@ function nextSib(event) {
 }
 
 function prevSib(event) {
-    if (+event.classList[1].split('-')[1] === 16) {
+    if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
         return
     }
@@ -143,7 +143,7 @@ function prevSib(event) {
         return
     }
 
-    if (event.classList[2] !== 'b0') {
+    if (event.classList[2] === 'b0') {
         event.classList.add('opened')
         prevSib(event.previousSibling)
     } else {
@@ -152,22 +152,31 @@ function prevSib(event) {
 }
 
 
-function radar (event) {
+function radar(event) {
     let count = event.classList[1].split('-')
-    // console.log(count)
+
     if (+count[1] > 1 && +count[1] < 16) {
         nextSib(event)
         prevSib(event)
     }
-    if (+count[0] > 1 && +count[0] < 16) {
-        // for ()
-        // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-        // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-        nextSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-        prevSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-    }
-    // if ()
     
+    // if (+count[0] > 1 && +count[0] < 16) {
+    //     if (event.classList[2] !== 'b0') {
+    //         event.classList.add('opened')
+    //         return
+    //     }
+    //     radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
+    //     // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
+    //     // nextSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
+    //     // prevSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
+    // }
+
+
+
+
+
+    // if ()
+
     // console.log(event.nextSibling)
     // field.querySelectorAll('.opened').forEach(el => {
     //     radius(el).forEach(e => {
@@ -180,12 +189,12 @@ function radar (event) {
     //         }
     //     })
     // })
-    
+
     // let count = event.classList[1].split('-'),
     //     pos = (+count[0] - 1) * 16 + +count[1] - 1
     // console.log(pos)
     // if (event.classList[2] === 'b0') {
-        
+
     // }
 }
 
