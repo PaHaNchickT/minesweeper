@@ -6,10 +6,10 @@
 
 $font: 'main-font', sans-serif
 
-// @mixin flex($just: flex-start, $align: stretch)
-//     display: flex
-//     justify-content: $just
-//     align-items: $align
+@mixin flex($just: flex-start, $align: stretch)
+    display: flex
+    justify-content: $just
+    align-items: $align
 
 // @mixin font($w, $s, $h, $a: left, $ls: 0)
 //     font-weight: $w
@@ -39,8 +39,7 @@ body
 header, footer
     background-color: #c0c0c0
     height: 70px
-    display: flex
-    align-items: center
+    @include flex(flex-start, center)
 
 header
     justify-content: center
@@ -55,17 +54,45 @@ a
 ul
     width: 100%
     list-style: none
-    display: flex
     padding: 0
-    justify-content: space-around
+    @include flex(space-around)
 
 section
     height: calc(100vh - 140px)
     width: 100%
+    background-color: #f3f3f3
+    @include flex(center, center)
 
+.wrapper
+    box-sizing: border-box
+    width: 460px
+    height: 530px
+    background-color: #bdbdbd
+    border-top: 4px solid white
+    border-left: 4px solid white
+    border-right: 4px solid #7b7b7b
+    border-bottom: 4px solid #7b7b7b
+    @include flex(center, flex-end)
 
+.field
+    width: 432px
+    @include flex(flex-start, center)
+    flex-wrap: wrap
+    border-top: 4px solid #7b7b7b
+    border-left: 4px solid #7b7b7b
+    border-right: 4px solid white
+    border-bottom: 4px solid white
+    margin-bottom: calc(100% - 440px - 6px)
 
-
+.cell
+    box-sizing: border-box
+    width: 27px
+    height: 27px
+    background-image: url('../../assets/sprites/main-sprite.png')
+    background-position-x: 0px
+    background-position-y: 54px
+    background-size: calc((27 - 1)/16*141px)
+    
 
 
 
