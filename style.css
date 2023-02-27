@@ -100,4 +100,9 @@ section {
   background-color: #c0c0c0;
   box-sizing: border-box;
   margin-top: 2px;
+}
+
+.b0.opened {
+  background-position-x: 202px;
+  background-position-y: 54px;
 }/*# sourceMappingURL=style.css.map */

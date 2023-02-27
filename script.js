@@ -38,7 +38,7 @@ body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com
 /////////////////////////////////////////////////////bomb generation/////////////////////////////////////////////////
 
 function bombGen(selected) {
-    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 90;) {
+    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 40;) {
         cells.forEach(e => {
             if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
@@ -96,17 +96,20 @@ function bombCounter(event) {
 }
 
 function bombsNumber() {
-    if (isStart === 0) {
-        cells.forEach(el => {
-            bombCounter(el)
-        })
-    }
+    cells.forEach(el => {
+        bombCounter(el)
+    })
 }
 
-//////////
+////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
-function radius() {
-
+function radar(event) {
+    // let count = event.classList[1].split('-'),
+    //     pos = (+count[0] - 1) * 16 + +count[1] - 1
+    // console.log(pos)
+    if (event.classList[2] === 'b0') {
+        
+    }
 }
 
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
@@ -118,8 +121,9 @@ field.addEventListener('click', function (event) {
         bombsNumber()
         event.target.classList.add('opened')
         isStart = 1
+        radar(event.target)
     } else {
-        bombCounter(event.target)
+
     }
 })
 
