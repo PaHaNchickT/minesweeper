@@ -83,22 +83,16 @@ function bombCounter(event) {
         pos.push(pos1, pos2, pos3, pos4, pos6, pos7, pos8, pos9)
     }
 
-        pos.forEach(e => {
-            if (cells[e].classList[2] === 'bomb') {
-                bombs++
-            }
-        })
-
-        if (event.classList[2] !== 'bomb') {
-            event.classList.add(`b${bombs}`)
+    pos.forEach(e => {
+        if (cells[e].classList[2] === 'bomb') {
+            bombs++
         }
-        pos.forEach(e => {
-            if (cells[e].classList[2] !== 'bomb') {
-                cells[e].classList.add('opened')
-            } else {
-                return
-            }
-        })
+    })
+
+    if (event.classList[2] !== 'bomb') {
+        event.classList.add(`b${bombs}`)
+    }
+
 }
 
 function bombsNumber() {
@@ -109,7 +103,7 @@ function bombsNumber() {
     }
 }
 
-/////////////////////////////////////////////////////////raduis/////////////////////////////////////////////////////
+//////////
 
 function radius() {
 
@@ -122,6 +116,7 @@ field.addEventListener('click', function (event) {
         bombGen(event.target.classList[1])
         bombCounter(event.target)
         bombsNumber()
+        event.target.classList.add('opened')
         isStart = 1
     } else {
         bombCounter(event.target)
