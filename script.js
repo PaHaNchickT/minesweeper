@@ -12,6 +12,7 @@ body.insertAdjacentHTML('beforeend', `<section></section>`)
 const section = body.querySelector('section')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
+section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
 const field = section.querySelector('.field')
 

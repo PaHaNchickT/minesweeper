@@ -72,17 +72,21 @@ section
     border-left: 4px solid white
     border-right: 4px solid #7b7b7b
     border-bottom: 4px solid #7b7b7b
-    @include flex(center, flex-end)
+    @include flex(space-between, center)
+    flex-direction: column
+    padding: 5px 5px 0 5px
 
 .field
-    width: 432px
+    width: calc(100% - 10px)
     @include flex(flex-start, center)
     flex-wrap: wrap
+    margin-bottom: 5px
+
+.field, .pannel
     border-top: 4px solid #7b7b7b
     border-left: 4px solid #7b7b7b
     border-right: 4px solid white
     border-bottom: 4px solid white
-    margin-bottom: calc(100% - 440px - 6px)
 
 .cell
     box-sizing: border-box
@@ -93,8 +97,12 @@ section
     background-position-y: 54px
     background-size: calc((27 - 1)/16*141px)
     
-
-
+.pannel
+    width: 99.4%
+    height: 62px
+    background-color: #c0c0c0
+    box-sizing: border-box
+    margin-top: 2px
 
 
 
