@@ -25,7 +25,7 @@ for (let i = 1; i < 17; i++) {
         field.insertAdjacentHTML('beforeend', `<div class="cell ${i}-${j}"></div>`)
     }
 }
-const cells = field.querySelectorAll('.cell')
+const cells = field.childNodes
 
 // console.log(cells)
 
@@ -114,28 +114,28 @@ function bombsNumber() {
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
 function nextSib(event) {
-    let count = event.classList[1].split('-'),
-    ind = 1,
-    step = 1
-    
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16] !== undefined) {
-        radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-    }
+    let sibles = []
+    cells.forEach(e => {
+        if (e.classList[3] === 'opened') {
+            radius(e).forEach(el => {
+                if (cells[el].classList[2] === 'b0') {
+                    cells[el].classList.add('opened')
+                    sibles.push(cells[el])
+                }
+            })
+        }
+        
+    })
 
-    // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
+    sibles = sibles.filter(function(item, pos) {
+        return sibles.indexOf(item) == pos
+    })
 
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList[2] !== 'bomb' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList[3] !== 'opened') {
-        cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList.add('opened')
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-    }
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList[2] !== 'bomb' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList[3] !== 'opened') {
-        cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList.add('opened')
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32]) 
-    }
-    // if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 48].classList[2] === 'b0' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 48].classList[3] !== 'opened') {
-    //     cells[(+count[0] - 1) * 16 + +count[1] - 1 + 48].classList.add('opened')
-    //     console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 64]) 
-    // }
+    sibles.forEach(e => {
+        radius(e).forEach(el => {
+            cells[el].classList.add('opened')
+        })
+    })
 
     if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
@@ -149,71 +149,43 @@ function nextSib(event) {
     } else {
         return
     }
-
-    //console.log(ind)
-
-    for (step; step < 16; step++) {
-        // console.log(ind)
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind])
-        
-        if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] === 'b0') {
-            cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList.add('opened')
-        } else if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] !== 'b0' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] !== 'bomb') {
-            cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList.add('opened')
-            return
-        }
-        ind++
-    }
 }
 
 function prevSib(event) {
-    let count = event.classList[1].split('-'),
-    ind = 1,
-    step = 1
+    let sibles = []
+    cells.forEach(e => {
+        if (e.classList[3] === 'opened') {
+            radius(e).forEach(el => {
+                if (cells[el].classList[2] === 'b0') {
+                    cells[el].classList.add('opened')
+                    sibles.push(cells[el])
+                }
+            })
+        }
+        
+    })
 
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16] !== undefined) {
-        radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-    }
-    
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList[2] !== 'bomb' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList[3] !== 'opened') {
-        cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16].classList.add('opened')
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-    }
-    if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList[2] !== 'bomb' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList[3] !== 'opened') {
-        cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32].classList.add('opened')
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 32]) 
-    }
+    sibles = sibles.filter(function(item, pos) {
+        return sibles.indexOf(item) == pos
+    })
 
-    if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
+    sibles.forEach(e => {
+        radius(e).forEach(el => {
+            cells[el].classList.add('opened')
+        })
+    })
+
+    if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
         return
-    }
-
-    if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+    } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
         return
-    }
-
-    if (event.classList[2] === 'b0') {
+    } else if (event.classList[2] === 'b0') {
         event.classList.add('opened')
         prevSib(event.previousSibling)
     } else {
         return
-    }
-
-    //console.log(ind)
-
-    for (step; step < 16; step++) {
-        // console.log(ind)
-        // console.log(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind])
-        
-        if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] === 'b0') {
-            cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList.add('opened')
-        } else if (cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] !== 'b0' && cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList[2] !== 'bomb') {
-            cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16*ind].classList.add('opened')
-            return
-        }
-        ind++
     }
 }
 
@@ -227,45 +199,8 @@ function radar(event) {
     if (+count[1] > 1 && +count[1] < 16) {
         nextSib(event)
         prevSib(event)
+        
     }
-
-
-    // if (+count[0] > 1 && +count[0] < 16) {
-    //     if (event.classList[2] !== 'b0') {
-    //         event.classList.add('opened')
-    //         return
-    //     }
-    //     radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-    //     // radar(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-    //     // nextSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 - 16])
-    //     // prevSib(cells[(+count[0] - 1) * 16 + +count[1] - 1 + 16])
-    // }
-
-
-
-
-
-    // if ()
-
-    // console.log(event.nextSibling)
-    // field.querySelectorAll('.opened').forEach(el => {
-    //     radius(el).forEach(e => {
-    //         if (cells[e].classList[2] !== 'bomb' && cells[e].classList[2] !== 'b0') {
-    //             cells[e].classList.add('opened')
-    //         } else if (cells[e].classList[2] !== 'bomb' && cells[e].classList[2] === 'b0') {
-    //             // radar(cells[e])
-    //         } else {
-    //             return
-    //         }
-    //     })
-    // })
-
-    // let count = event.classList[1].split('-'),
-    //     pos = (+count[0] - 1) * 16 + +count[1] - 1
-    // console.log(pos)
-    // if (event.classList[2] === 'b0') {
-
-    // }
 }
 
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
