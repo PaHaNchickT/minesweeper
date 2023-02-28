@@ -7,7 +7,8 @@ import spBase from '../../assets/modules/sprite-base.js'
 
 let isStart = 0,
     bombsSumm,
-    isFailed = 0
+    isFailed = 0,
+    flags = 0
 
 
 const body = document.querySelector('body')
@@ -38,7 +39,7 @@ body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com
 //////////////////////////////////////////////////////////engine/////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-body.oncontextmenu = function() { //не вызывать контекстное меню
+body.oncontextmenu = function () { //не вызывать контекстное меню
     return false
 }
 
@@ -95,6 +96,13 @@ function radius(event) {
     } else {
         pos.push(pos1, pos2, pos3, pos4, pos6, pos7, pos8, pos9)
     }
+
+    flags = 0
+    pos.forEach(e => {
+        if (cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag') {
+            flags++
+        }
+    })
 
     return pos
 }
@@ -205,7 +213,7 @@ function radar(event) {
     if (event.classList[2] !== 'b0') {
         event.classList.add('opened')
         return
-    } 
+    }
     nextSib(event)
     prevSib(event)
 }
@@ -214,16 +222,46 @@ function radar(event) {
 
 function bombExp(event) {
     if (event.target.classList[3] !== 'flag') {
-        field.querySelectorAll('.bomb').forEach(e => {
-            if (e.classList[3] !== 'flag') {
-                e.classList.add('failed')
-            }
-        })
-        section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
-        isFailed = 1
+        gameOver()
     } else {
         return
     }
+}
+
+/////////////////////////////////////////////////////number sibl opening/////////////////////////////////////////////
+
+function numSib(event) {
+    let bombsAround = +event.target.classList[2][1]
+    radius(event.target).forEach(e => {
+        if (flags === bombsAround) {
+            cells[e].classList.add('opened')
+        }
+    })
+    field.querySelectorAll('.bomb').forEach(b => {
+        if (b.classList[2] === 'bomb' && b.classList[3] === 'opened') {
+            b.classList.add('failed')
+            console.log(event.target)
+            gameOver()
+        }
+    })
+    field.querySelectorAll('.flag').forEach(f => {
+        if (f.classList[3] === 'flag' && f.classList[4] === 'opened') {
+            f.classList.add('failed')
+        }
+    })  
+    console.log(flags, bombsAround)
+}
+
+//////////////////////////////////////////////////////////game over//////////////////////////////////////////////////
+
+function gameOver() {
+    field.querySelectorAll('.bomb').forEach(e => {
+        if (e.classList[3] !== 'flag') {
+            e.classList.add('failed')
+        }
+    })
+    section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
+    isFailed = 1
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -247,6 +285,10 @@ field.addEventListener('click', function (event) {
         }
         event.target.classList.add('opened')
         radar(event.target)
+    }
+
+    if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0) {
+        numSib(event)
     }
 })
 

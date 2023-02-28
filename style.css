@@ -159,6 +159,11 @@ section {
   background-position-y: 56px;
 }
 
+.flag.failed {
+  background-position-x: 33px;
+  background-position-y: 56px;
+}
+
 .bg {
   display: none;
   width: 100%;
