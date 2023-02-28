@@ -279,7 +279,7 @@ function gameOver() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
-    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field') {
+    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || event.target.classList[2] === 'b0') {
         return
     }
     if (isStart === 0) {
