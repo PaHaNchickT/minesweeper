@@ -20,6 +20,7 @@ const section = body.querySelector('section')
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
+section.querySelector('.wrapper').insertAdjacentHTML('beforeend', `<div class="bg"></div>`)
 const field = section.querySelector('.field')
 
 for (let i = 1; i < 17; i++) {
@@ -209,6 +210,7 @@ function bombExp(event) {
     field.querySelectorAll('.bomb').forEach(e => {
         e.classList.add('failed')
     })
+    section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     isFailed = 1
 }
 
