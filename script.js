@@ -175,7 +175,7 @@ function prevSib(event) {
         })
     })
 
-    if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
+    if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
         return
     } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
@@ -189,7 +189,6 @@ function prevSib(event) {
     }
 }
 
-
 function radar(event) {
     let count = event.classList[1].split('-')
     if (event.classList[2] !== 'b0') {
@@ -197,7 +196,7 @@ function radar(event) {
         return
     }
     if (+count[1] > 1 && +count[1] < 16) {
-        nextSib(event)
+        //nextSib(event)
         prevSib(event)
         
     }
