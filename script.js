@@ -289,6 +289,9 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         isStart = 1
         radar(event.target)
+    } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList[3] === 'opened') {
+        console.log(event.target)
+        numSib(event)
     } else {
         if (event.target.classList[2] === 'bomb') {
             bombExp(event)
@@ -296,10 +299,7 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         radar(event.target)
     }
-    // if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0) {
-    //     console.log(event.target)
-    //     numSib(event)
-    // }
+    
 })
 
 field.addEventListener('contextmenu', function (event) {
