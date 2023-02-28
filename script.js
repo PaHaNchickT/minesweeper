@@ -48,7 +48,7 @@ body.oncontextmenu = function () { //не вызывать контекстно�
 function bombGen(event) {
     let selected = event.target.classList[1]
 
-    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 60;) {
+    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 40;) {
         cells.forEach(e => {
             if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
@@ -59,7 +59,6 @@ function bombGen(event) {
         cells[el].classList.remove('bomb')
     })
     bombsSumm = field.querySelectorAll('.bomb').length
-    console.log(bombsSumm)
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
@@ -231,17 +230,20 @@ function bombExp(event) {
 /////////////////////////////////////////////////////number sibl opening/////////////////////////////////////////////
 
 function numSib(event) {
+    let unOpenned = []
     let bombsAround = +event.target.classList[2][1]
     radius(event.target).forEach(e => {
         if (flags === bombsAround) {
             cells[e].classList.add('opened')
+            if (cells[e].classList[2] === 'b0') {
+                unOpenned.push(cells[e])
+            }
         }
     })
     field.querySelectorAll('.bomb').forEach(b => {
         if (b.classList[2] === 'bomb' && b.classList[3] === 'opened' && b.classList[4] !== 'flag') {
             b.classList.add('failed')
-            // console.log(event.target)
-            // gameOver()
+            gameOver()
         }
     })
     field.querySelectorAll('.flag').forEach(f => {
@@ -249,7 +251,18 @@ function numSib(event) {
             f.classList.add('failed')
         }
     })  
-    console.log(flags, bombsAround)
+
+    unOpenned = unOpenned.filter(function (item, pos) {
+        return unOpenned.indexOf(item) == pos
+    })
+
+    unOpenned.forEach(e => {
+        radius(e).forEach(el => {
+            if(cells[el].classList[3] !== 'opened') {
+                radar(cells[el])
+            }
+        })
+    })
 }
 
 //////////////////////////////////////////////////////////game over//////////////////////////////////////////////////
