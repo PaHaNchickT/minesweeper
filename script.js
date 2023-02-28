@@ -5,7 +5,8 @@ import spBase from '../../assets/modules/sprite-base.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
-let isStart = 0
+let isStart = 0,
+    bombsSumm
 
 
 const body = document.querySelector('body')
@@ -50,6 +51,8 @@ function bombGen(event) {
     radius(event.target).forEach(el => {
         cells[el].classList.remove('bomb')
     })
+    bombsSumm = field.querySelectorAll('.bomb').length
+    console.log(bombsSumm)
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
@@ -124,10 +127,10 @@ function nextSib(event) {
                 }
             })
         }
-        
+
     })
 
-    sibles = sibles.filter(function(item, pos) {
+    sibles = sibles.filter(function (item, pos) {
         return sibles.indexOf(item) == pos
     })
 
@@ -162,10 +165,10 @@ function prevSib(event) {
                 }
             })
         }
-        
+
     })
 
-    sibles = sibles.filter(function(item, pos) {
+    sibles = sibles.filter(function (item, pos) {
         return sibles.indexOf(item) == pos
     })
 
@@ -195,14 +198,13 @@ function radar(event) {
         event.classList.add('opened')
         return
     }
-    if (+count[1] > 1 && +count[1] < 16) {
-        //nextSib(event)
-        prevSib(event)
-        
-    }
+    nextSib(event)
+    prevSib(event)
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
     if (isStart === 0) {
@@ -216,6 +218,7 @@ field.addEventListener('click', function (event) {
         radar(event.target)
     }
 })
+
 
 
 
