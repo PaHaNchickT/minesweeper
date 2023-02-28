@@ -6,7 +6,8 @@ import spBase from '../../assets/modules/sprite-base.js'
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
 let isStart = 0,
-    bombsSumm
+    bombsSumm,
+    isFailed = 0
 
 
 const body = document.querySelector('body')
@@ -197,9 +198,18 @@ function radar(event) {
     if (event.classList[2] !== 'b0') {
         event.classList.add('opened')
         return
-    }
+    } 
     nextSib(event)
     prevSib(event)
+}
+
+////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
+
+function bombExp(event) {
+    field.querySelectorAll('.bomb').forEach(e => {
+        e.classList.add('failed')
+    })
+    isFailed = 1
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +225,9 @@ field.addEventListener('click', function (event) {
         isStart = 1
         radar(event.target)
     } else {
+        if (event.target.classList[2] === 'bomb') {
+            bombExp(event)
+        }
         radar(event.target)
     }
 })
