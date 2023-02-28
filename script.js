@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
 let isStart = 0,
-    bombsSumm,
+    bombsSumm = 40,
     isFailed = 0,
     flags = 0,
     isTimer = 0,
@@ -59,17 +59,27 @@ body.oncontextmenu = function () { //не вызывать контекстно�
 function bombGen(event) {
     let selected = event.target.classList[1]
 
-    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 40;) {
+    radius(event.target).forEach(forb => {
+        console.log(cells[forb].classList[1])
+        cells[forb].classList.add('forbidden')
+    })
+
+    for (bombsSumm; bombsSumm > 0;) {
         cells.forEach(e => {
-            if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb') && (e.classList[1] !== selected)) {
+            if (field.querySelectorAll('.bomb').length === 40) {
+                return
+            } else if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb' && e.classList[2] !== 'forbidden') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
+                bombsSumm = bombsSumm-1
             }
         })
     }
-    radius(event.target).forEach(el => {
-        cells[el].classList.remove('bomb')
+    
+    field.querySelectorAll('.forbidden').forEach(e => {
+        e.classList.remove('forbidden')
     })
-    bombsSumm = field.querySelectorAll('.bomb').length
+
+    console.log(field.querySelectorAll('.bomb').length)
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
