@@ -1,14 +1,14 @@
 // import spTime from './assets/modules/sprite-timer.js'
 // import spEmts from './assets/modules/sprite-emotions.js'
-// import spNumb from './assets/modules/sprite-numbers.js'
-// import spBase from './assets/modules/sprite-base.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
 let isStart = 0,
     bombsSumm,
     isFailed = 0,
-    flags = 0
+    flags = 0,
+    isTimer = 0,
+    timerID
 
 const body = document.querySelector('body')
 body.insertAdjacentHTML('beforeend', '<header>')
@@ -19,6 +19,20 @@ const section = body.querySelector('section')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
+const pannel = section.querySelector('.wrapper').querySelector('.pannel')
+
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="home"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+const timeWrapper = pannel.querySelectorAll('.time-wrapper')
+
+timeWrapper.forEach((wr, ind) => {
+    for (let k = 0; k<3; k++) {
+        wr.insertAdjacentHTML('beforeend', `<div class="timer-el ${ind+1}-${k+1}"></div>`)
+    }
+})
+const timerEl = pannel.querySelectorAll('.timer-el')
+
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', `<div class="bg"></div>`)
 const field = section.querySelector('.field')
@@ -262,6 +276,23 @@ function numSib(event) {
     })
 }
 
+////////////////////////////////////////////////////////////timer////////////////////////////////////////////////////
+
+function timer(minutes, seconds) {
+    isTimer = 1
+    timerID = setInterval(() => {
+        seconds++
+        if (seconds === 60) {
+            minutes++
+            seconds = 0
+        }
+        console.log(minutes, seconds)
+        // timerText.innerHTML = `${minutes} min ${seconds} sec`
+        // localStorage.setItem('min', minutes)
+        // localStorage.setItem('sec', seconds)
+    }, 1000)
+}
+
 //////////////////////////////////////////////////////////game over//////////////////////////////////////////////////
 
 function gameOver() {
@@ -279,6 +310,7 @@ function gameOver() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
+    timer(0, 0)
     if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || (event.target.classList[2] === 'b0' && event.target.classList[3] === 'opened')) {
         return
     }
@@ -290,7 +322,6 @@ field.addEventListener('click', function (event) {
         isStart = 1
         radar(event.target)
     } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList[3] === 'opened') {
-        console.log(event.target)
         numSib(event)
     } else {
         if (event.target.classList[2] === 'bomb') {
