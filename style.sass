@@ -1,0 +1,185 @@
+// @import url('../../assets/fonts/mine-sweeper.ttf')
+
+@font-face
+    font-family: main-font
+    src: url('../../assets/fonts/mine-sweeper.ttf')
+
+$font: 'main-font', sans-serif
+
+@mixin flex($just: flex-start, $align: stretch)
+    display: flex
+    justify-content: $just
+    align-items: $align
+
+// @mixin font($w, $s, $h, $a: left, $ls: 0)
+//     font-weight: $w
+//     font-size: $s
+//     line-height: $h
+//     text-align: $a
+//     letter-spacing: $ls
+
+// @mixin img($s, $p: 0 0)
+//     background-image: url($s)
+//     background-repeat: no-repeat
+//     background-position: $p
+
+$desktop: 1023.5px
+$tablet: 767.5px
+$mobile: 320px
+
+html
+    scroll-behavior: smooth
+
+p, h1, html, body, ul
+    margin: 0
+
+body
+    font-family: $font
+
+header, footer
+    background-color: #c0c0c0
+    height: 70px
+    @include flex(flex-start, center)
+
+header
+    justify-content: center
+
+a
+    &:link, &:active, &:visited
+        color: black
+        text-decoration: none
+    &:hover
+        color: white
+
+ul
+    width: 100%
+    list-style: none
+    padding: 0
+    @include flex(space-around)
+
+section
+    height: calc(100vh - 140px)
+    width: 100%
+    background-color: #f3f3f3
+    @include flex(center, center)
+
+.wrapper
+    box-sizing: border-box
+    width: 460px
+    height: 530px
+    background-color: #bdbdbd
+    border-top: 4px solid white
+    border-left: 4px solid white
+    border-right: 4px solid #7b7b7b
+    border-bottom: 4px solid #7b7b7b
+    @include flex(space-between, center)
+    flex-direction: column
+    padding: 5px 5px 0 5px
+    position: relative
+    z-index: 5
+
+.field
+    width: calc(100% - 10px)
+    @include flex(flex-start, center)
+    flex-wrap: wrap
+    margin-bottom: 5px
+
+.field, .pannel
+    border-top: 4px solid #7b7b7b
+    border-left: 4px solid #7b7b7b
+    border-right: 4px solid white
+    border-bottom: 4px solid white
+
+.cell
+    box-sizing: border-box
+    width: 27px
+    height: 27px
+    background-image: url('../../assets/sprites/main-sprite.png')
+    background-position-x: 0px
+    background-position-y: 54px
+    background-size: calc((27 - 1)/16*141px)
+    
+.pannel
+    width: 99.4%
+    height: 62px
+    background-color: #c0c0c0
+    box-sizing: border-box
+    margin-top: 2px
+
+.b0.opened
+    background-position-x: 202px
+    background-position-y: 56px
+
+.b1.opened
+    background-position-x: 230px
+    background-position-y: 28px
+
+.b2.opened
+    background-position-x: 202px
+    background-position-y: 28px
+
+.b3.opened
+    background-position-x: 174px
+    background-position-y: 28px
+
+.b4.opened
+    background-position-x: 144px
+    background-position-y: 28px
+
+.b5.opened
+    background-position-x: 118px
+    background-position-y: 28px
+
+.b6.opened
+    background-position-x: 90px
+    background-position-y: 28px
+
+.b7.opened
+    background-position-x: 62px
+    background-position-y: 28px
+
+.b8.opened
+    background-position-x: 34px
+    background-position-y: 28px
+
+.bomb.failed.opened
+    background-position-x: 61px
+    background-position-y: 56px
+
+.bomb.failed
+    background-position-x: 89px
+    background-position-y: 56px
+
+.flag.failed
+    background-position-x: 33px
+    background-position-y: 56px
+
+.bg
+    display: none
+    width: 100%
+    height: 100%
+    position: absolute
+    z-index: 6
+
+.flag
+    background-position-x: 173px
+    background-position-y: 54px
+
+.wtf
+    background-position-x: 145px
+    background-position-y: 54px
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////MOBILE////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// @media screen and (max-width: $tablet)
+//     .intro
+//         min-height: 500px
+//         background-image: url('../../assets/images/bg.jpg')
+//         background-attachment: fixed
+//         display: flex
+//         justify-content: center
+//         flex-direction: column
+//         align-items: center
+//         color: white
