@@ -278,15 +278,11 @@ function numSib(event) {
 
 ////////////////////////////////////////////////////////////timer////////////////////////////////////////////////////
 
-function timer(minutes, seconds) {
+function timer(seconds) {
     isTimer = 1
     timerID = setInterval(() => {
         seconds++
-        if (seconds === 60) {
-            minutes++
-            seconds = 0
-        }
-        console.log(minutes, seconds)
+        console.log(seconds.toString().split(''))
         // timerText.innerHTML = `${minutes} min ${seconds} sec`
         // localStorage.setItem('min', minutes)
         // localStorage.setItem('sec', seconds)
@@ -310,11 +306,11 @@ function gameOver() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
-    timer(0, 0)
     if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || (event.target.classList[2] === 'b0' && event.target.classList[3] === 'opened')) {
         return
     }
     if (isStart === 0) {
+        timer(0)
         bombGen(event)
         bombCounter(event.target)
         bombsNumber()
