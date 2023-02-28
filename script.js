@@ -30,8 +30,6 @@ for (let i = 1; i < 17; i++) {
 }
 const cells = field.childNodes
 
-// console.log(cells)
-
 body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>')
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
