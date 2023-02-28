@@ -279,7 +279,7 @@ function gameOver() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
-    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag') {
+    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field') {
         return
     }
     if (isStart === 0) {
@@ -296,7 +296,6 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         radar(event.target)
     }
-
     if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0) {
         numSib(event)
     }
