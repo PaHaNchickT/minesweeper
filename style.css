@@ -90,7 +90,7 @@ section {
   box-sizing: border-box;
   width: 27px;
   height: 27px;
-  background-image: url("../../assets/sprites/main-sprite.png");
+  background-image: url("./assets/sprites/main-sprite.png");
   background-position-x: 0px;
   background-position-y: 54px;
   background-size: 229.125px;
