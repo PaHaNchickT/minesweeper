@@ -238,14 +238,14 @@ function numSib(event) {
         }
     })
     field.querySelectorAll('.bomb').forEach(b => {
-        if (b.classList[2] === 'bomb' && b.classList[3] === 'opened') {
+        if (b.classList[2] === 'bomb' && b.classList[3] === 'opened' && b.classList[4] !== 'flag') {
             b.classList.add('failed')
-            console.log(event.target)
-            gameOver()
+            // console.log(event.target)
+            // gameOver()
         }
     })
     field.querySelectorAll('.flag').forEach(f => {
-        if (f.classList[3] === 'flag' && f.classList[4] === 'opened') {
+        if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] !== 'bomb') {
             f.classList.add('failed')
         }
     })  
@@ -296,7 +296,7 @@ field.addEventListener('contextmenu', function (event) {
     if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
         event.target.classList.add('wtf')
         event.target.classList.remove('flag')
-    } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf') {
+    } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf' || event.target.classList[4] === 'wtf') {
         event.target.classList.remove('wtf')
     } else {
         event.target.classList.add('flag')
