@@ -205,13 +205,13 @@ section {
   background-color: red;
 }
 
-.el-1-1, .el-1-2, .el-1-3 {
+.el-1-1, .el-1-2, .el-1-3, .el-2-1, .el-2-2, .el-2-3 {
   background-image: url("./assets/sprites/main-sprite.png");
   background-size: 227.7692307692px;
   background-position-y: 0px;
 }
 
-.el-1-1 {
+.el-1-1, .el-2-1, .el-2-2, .el-2-3 {
   background-position-x: 21px;
 }
 

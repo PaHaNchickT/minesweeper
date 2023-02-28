@@ -290,18 +290,42 @@ function timer(seconds) {
     isTimer = 1
     timerID = setInterval(() => {
         seconds++
-        // console.log(seconds.toString().split(''))
-
-        // timerText.innerHTML = `${minutes} min ${seconds} sec`
-        // localStorage.setItem('min', minutes)
-        // localStorage.setItem('sec', seconds)
+        for (let keys in spTime) {
+            switch (seconds.toString().length) {
+                case 1: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+                break;
+                case 2: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[4].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[1]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+                break;
+                case 3: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[3].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[1]) {
+                        timerEl[4].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[2]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+            }
+        }
     }, 1000)
 }
 
 //////////////////////////////////////////////////////////bomb timer/////////////////////////////////////////////////
 
 function bombTimer(event) {
-    console.log(event)
     for (let keys in spTime) {
         if (event.toString().length === 1) {
             timerEl[1].style.backgroundPositionX = `21px`
@@ -329,6 +353,7 @@ function gameOver() {
     })
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     isFailed = 1
+    clearInterval(timerID)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
