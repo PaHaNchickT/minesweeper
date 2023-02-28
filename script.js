@@ -1,7 +1,7 @@
-import spTime from '../../assets/modules/sprite-timer.js'
-import spEmts from '../../assets/modules/sprite-emotions.js'
-import spNumb from '../../assets/modules/sprite-numbers.js'
-import spBase from '../../assets/modules/sprite-base.js'
+// import spTime from './assets/modules/sprite-timer.js'
+// import spEmts from './assets/modules/sprite-emotions.js'
+// import spNumb from './assets/modules/sprite-numbers.js'
+// import spBase from './assets/modules/sprite-base.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
@@ -9,7 +9,6 @@ let isStart = 0,
     bombsSumm,
     isFailed = 0,
     flags = 0
-
 
 const body = document.querySelector('body')
 body.insertAdjacentHTML('beforeend', '<header>')
