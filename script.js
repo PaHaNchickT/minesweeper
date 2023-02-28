@@ -253,8 +253,8 @@ field.addEventListener('click', function (event) {
 field.addEventListener('contextmenu', function (event) {
     if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
         event.target.classList.add('wtf')
-    } else if ((event.target.classList[3] === 'flag' && event.target.classList[4] === 'wtf') || event.target.classList[2] === 'flag' && event.target.classList[3] === 'wtf') {
         event.target.classList.remove('flag')
+    } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf') {
         event.target.classList.remove('wtf')
     } else {
         event.target.classList.add('flag')
