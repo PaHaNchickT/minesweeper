@@ -38,6 +38,10 @@ body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com
 //////////////////////////////////////////////////////////engine/////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+body.oncontextmenu = function() { //не вызывать контекстное меню
+    return false
+}
+
 /////////////////////////////////////////////////////bomb generation/////////////////////////////////////////////////
 
 function bombGen(event) {
@@ -195,7 +199,9 @@ function prevSib(event) {
 }
 
 function radar(event) {
-    let count = event.classList[1].split('-')
+    if (event.classList[3] === 'flag') {
+        return
+    }
     if (event.classList[2] !== 'b0') {
         event.classList.add('opened')
         return
@@ -207,11 +213,17 @@ function radar(event) {
 ////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
 
 function bombExp(event) {
-    field.querySelectorAll('.bomb').forEach(e => {
-        e.classList.add('failed')
-    })
-    section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
-    isFailed = 1
+    if (event.target.classList[3] !== 'flag') {
+        field.querySelectorAll('.bomb').forEach(e => {
+            if (e.classList[3] !== 'flag') {
+                e.classList.add('failed')
+            }
+        })
+        section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
+        isFailed = 1
+    } else {
+        return
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,6 +231,9 @@ function bombExp(event) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
+    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag') {
+        return
+    }
     if (isStart === 0) {
         bombGen(event)
         bombCounter(event.target)
@@ -230,7 +245,19 @@ field.addEventListener('click', function (event) {
         if (event.target.classList[2] === 'bomb') {
             bombExp(event)
         }
+        event.target.classList.add('opened')
         radar(event.target)
+    }
+})
+
+field.addEventListener('contextmenu', function (event) {
+    if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
+        event.target.classList.add('wtf')
+    } else if ((event.target.classList[3] === 'flag' && event.target.classList[4] === 'wtf') || event.target.classList[2] === 'flag' && event.target.classList[3] === 'wtf') {
+        event.target.classList.remove('flag')
+        event.target.classList.remove('wtf')
+    } else {
+        event.target.classList.add('flag')
     }
 })
 

@@ -165,4 +165,14 @@ section {
   height: 100%;
   position: absolute;
   z-index: 6;
+}
+
+.flag {
+  background-position-x: 173px;
+  background-position-y: 54px;
+}
+
+.wtf {
+  background-position-x: 145px;
+  background-position-y: 54px;
 }/*# sourceMappingURL=style.css.map */
