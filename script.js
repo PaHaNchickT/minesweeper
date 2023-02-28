@@ -1,4 +1,4 @@
-// import spTime from './assets/modules/sprite-timer.js'
+import spTime from './assets/modules/sprite-timer.js'
 // import spEmts from './assets/modules/sprite-emotions.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
@@ -8,7 +8,8 @@ let isStart = 0,
     isFailed = 0,
     flags = 0,
     isTimer = 0,
-    timerID
+    timerID,
+    currentBomb = bombsSumm
 
 const body = document.querySelector('body')
 body.insertAdjacentHTML('beforeend', '<header>')
@@ -27,8 +28,8 @@ pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
 const timeWrapper = pannel.querySelectorAll('.time-wrapper')
 
 timeWrapper.forEach((wr, ind) => {
-    for (let k = 0; k<3; k++) {
-        wr.insertAdjacentHTML('beforeend', `<div class="timer-el ${ind+1}-${k+1}"></div>`)
+    for (let k = 0; k < 3; k++) {
+        wr.insertAdjacentHTML('beforeend', `<div class="timer-el el-${ind + 1}-${k + 1}"></div>`)
     }
 })
 const timerEl = pannel.querySelectorAll('.timer-el')
@@ -60,7 +61,6 @@ function bombGen(event) {
     let selected = event.target.classList[1]
 
     radius(event.target).forEach(forb => {
-        console.log(cells[forb].classList[1])
         cells[forb].classList.add('forbidden')
     })
 
@@ -70,16 +70,14 @@ function bombGen(event) {
                 return
             } else if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb' && e.classList[2] !== 'forbidden') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
-                bombsSumm = bombsSumm-1
+                bombsSumm = bombsSumm - 1
             }
         })
     }
-    
+
     field.querySelectorAll('.forbidden').forEach(e => {
         e.classList.remove('forbidden')
     })
-
-    console.log(field.querySelectorAll('.bomb').length)
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
@@ -271,7 +269,7 @@ function numSib(event) {
         if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] !== 'bomb') {
             f.classList.add('failed')
         }
-    })  
+    })
 
     unOpenned = unOpenned.filter(function (item, pos) {
         return unOpenned.indexOf(item) == pos
@@ -279,7 +277,7 @@ function numSib(event) {
 
     unOpenned.forEach(e => {
         radius(e).forEach(el => {
-            if(cells[el].classList[3] !== 'opened') {
+            if (cells[el].classList[3] !== 'opened') {
                 radar(cells[el])
             }
         })
@@ -292,11 +290,33 @@ function timer(seconds) {
     isTimer = 1
     timerID = setInterval(() => {
         seconds++
-        console.log(seconds.toString().split(''))
+        // console.log(seconds.toString().split(''))
+
         // timerText.innerHTML = `${minutes} min ${seconds} sec`
         // localStorage.setItem('min', minutes)
         // localStorage.setItem('sec', seconds)
     }, 1000)
+}
+
+//////////////////////////////////////////////////////////bomb timer/////////////////////////////////////////////////
+
+function bombTimer(event) {
+    console.log(event)
+    for (let keys in spTime) {
+        if (event.toString().length === 1) {
+            timerEl[1].style.backgroundPositionX = `21px`
+            if (keys === event.toString().split('')[0]) {
+                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+        } else {
+            if (keys === event.toString().split('')[0]) {
+                timerEl[1].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+            if (keys === event.toString().split('')[1]) {
+                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////game over//////////////////////////////////////////////////
@@ -336,17 +356,28 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         radar(event.target)
     }
-    
+
 })
 
 field.addEventListener('contextmenu', function (event) {
+    if (currentBomb === 0) {
+        return
+    }
     if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
         event.target.classList.add('wtf')
         event.target.classList.remove('flag')
+        if (event.target.classList[3] !== 'opened') {
+            currentBomb++
+            bombTimer(currentBomb)
+        }
     } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf' || event.target.classList[4] === 'wtf') {
         event.target.classList.remove('wtf')
     } else {
         event.target.classList.add('flag')
+        if (event.target.classList[3] !== 'opened') {
+            currentBomb--
+            bombTimer(currentBomb)
+        }
     }
 })
 
