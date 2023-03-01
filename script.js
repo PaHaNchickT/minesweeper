@@ -466,7 +466,7 @@ field.addEventListener('contextmenu', function (event) {
     }
 
     if (event.target.classList.contains('failed')) {
-        event.target.classList.remove('failed')
+        event.target.classList.toggle('failed')
     }
 })
 
