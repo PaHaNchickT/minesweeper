@@ -350,6 +350,8 @@ function gameOver() {
             home.style.backgroundPositionX = `${spEmts[keys]}px`
         }
     }
+
+    sound('lose')
 }
 
 ///////////////////////////////////////////////////////////game win//////////////////////////////////////////////////
@@ -376,7 +378,7 @@ function gameWin() {
                 home.style.backgroundPositionX = `${spEmts[keys]}px`
             }
         }
-        alert('YOU WIN')
+        sound('win')
     }
 }
 
@@ -407,6 +409,15 @@ function newGame() {
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'none'
 }
 
+///////////////////////////////////////////////////////////////sound/////////////////////////////////////////////////
+
+function sound(event) {
+    let audio = new Audio()
+    audio.autoplay = true
+    audio.src = `./assets/sounds/${event}.mp3`
+    console.log('jopa')
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,6 +430,9 @@ field.addEventListener('click', function (event) {
     gameWin()
 
     if (isStart === 0) {
+        if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
+            sound('click')
+        }
         timer(0)
         bombGen(event)
         bombCounter(event.target)
@@ -427,15 +441,16 @@ field.addEventListener('click', function (event) {
         isStart = 1
         radar(event.target)
     } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList.contains('opened')) {
+        sound('sibling')
         numSib(event)
     } else {
+        sound('click')
         if (event.target.classList.contains('bomb')) {
             bombExp(event)
         }
         event.target.classList.add('opened')
         radar(event.target)
     }
-
 })
 
 ////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
@@ -445,6 +460,8 @@ field.addEventListener('contextmenu', function (event) {
         return
     } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
         return
+    } else {
+        sound('flag')
     }
 
     gameWin()
@@ -468,10 +485,6 @@ field.addEventListener('contextmenu', function (event) {
             event.target.classList.add('failed')
         }
     }
-
-    // if (event.target.classList.contains('failed')) {
-    //     event.target.classList.toggle('failed')
-    // }
 })
 
 /////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
