@@ -5,9 +5,7 @@ import spEmts from './assets/modules/sprite-emotions.js'
 
 let isStart = 0,
     bombsSumm = 40,
-    isFailed = 0,
     flags = 0,
-    isTimer = 0,
     finalCells = 0,
     finalCount = 0,
     timerID,
@@ -76,9 +74,7 @@ function bombGen(event) {
         })
     }
 
-    field.querySelectorAll('.forbidden').forEach(e => {
-        e.classList.remove('forbidden')
-    })
+    field.querySelectorAll('.forbidden').forEach(e => e.classList.remove('forbidden'))
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
@@ -119,6 +115,7 @@ function radius(event) {
     flags = 0
     pos.forEach(e => {
         if ((cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag') || cells[e].classList[3] !== 'opened' && cells[e].classList[2] === 'flag') {
+            // !cells[e].classList.contains('opened')
             flags++
         }
     })
@@ -277,7 +274,6 @@ function numSib(event) {
 ////////////////////////////////////////////////////////////timer////////////////////////////////////////////////////
 
 function timer(seconds) {
-    isTimer = 1
     timerID = setInterval(() => {
         seconds++
         for (let keys in spTime) {
@@ -342,7 +338,6 @@ function gameOver() {
         }
     })
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
-    isFailed = 1
     clearInterval(timerID)
     for (let keys in spEmts) {
         if (keys === 'failed') {
