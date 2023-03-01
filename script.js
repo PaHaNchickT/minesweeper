@@ -223,11 +223,12 @@ function bombExp(event) {
 function numSib(event) {
     let unOpenned = []
     let bombsAround = +event.target.classList[2][1]
-    
-    console.log(flags)
 
     radius(event.target).forEach(e => {
         if (flags === bombsAround) {
+            if (cells[e].classList[2] === 'flag') {
+                cells[e].classList.add('failed')
+            }
             cells[e].classList.add('opened')
             if (cells[e].classList[2] === 'b0') {
                 unOpenned.push(cells[e])
@@ -241,7 +242,8 @@ function numSib(event) {
         }
     })
     field.querySelectorAll('.flag').forEach(f => {
-        if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] !== 'bomb') {
+        f.classList.add('unopenned')
+        if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] === 'bomb') {
             f.classList.add('failed')
         }
     })
@@ -322,7 +324,7 @@ function bombTimer(event) {
 
 function gameOver() {
     field.querySelectorAll('.bomb').forEach(e => {
-        if (e.classList[3] !== 'flag') {
+        if (e.classList[3] !== 'flag' || e.classList[2] !== 'flag') {
             e.classList.add('failed')
         }
     })
