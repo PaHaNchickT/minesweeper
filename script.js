@@ -8,6 +8,8 @@ let isStart = 0,
     isFailed = 0,
     flags = 0,
     isTimer = 0,
+    finalCells = 0,
+    finalCount = 0,
     timerID,
     currentBomb = bombsSumm
 
@@ -297,7 +299,7 @@ function timer(seconds) {
                         timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
                     }
                 }
-                break;
+                    break;
                 case 2: {
                     if (keys === seconds.toString().split('')[0]) {
                         timerEl[4].style.backgroundPositionX = `${spTime[keys]}px`
@@ -306,7 +308,7 @@ function timer(seconds) {
                         timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
                     }
                 }
-                break;
+                    break;
                 case 3: {
                     if (keys === seconds.toString().split('')[0]) {
                         timerEl[3].style.backgroundPositionX = `${spTime[keys]}px`
@@ -356,6 +358,32 @@ function gameOver() {
     clearInterval(timerID)
 }
 
+///////////////////////////////////////////////////////////game win//////////////////////////////////////////////////
+
+function gameWin() {
+    finalCells = 0
+    finalCount = 0
+
+    field.querySelectorAll('.flag').forEach(f => {
+        if (f.classList[2] === 'bomb') {
+            finalCount++
+        }
+    })
+    cells.forEach(e => {
+        if (e.classList[3] === 'opened') {
+            finalCells++
+        }
+    })
+
+    console.log(finalCount, finalCells)
+
+    if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
+        clearInterval(timerID)
+        alert('YOU WIN')
+    }
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,6 +392,9 @@ field.addEventListener('click', function (event) {
     if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || (event.target.classList[2] === 'b0' && event.target.classList[3] === 'opened')) {
         return
     }
+
+    gameWin()
+
     if (isStart === 0) {
         timer(0)
         bombGen(event)
@@ -388,6 +419,9 @@ field.addEventListener('contextmenu', function (event) {
     if (currentBomb === 0) {
         return
     }
+
+    gameWin()
+
     if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
         event.target.classList.add('wtf')
         event.target.classList.remove('flag')
