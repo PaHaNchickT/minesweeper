@@ -1,5 +1,5 @@
 import spTime from './assets/modules/sprite-timer.js'
-// import spEmts from './assets/modules/sprite-emotions.js'
+import spEmts from './assets/modules/sprite-emotions.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
@@ -28,6 +28,7 @@ pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
 pannel.insertAdjacentHTML('beforeend', '<div class="home"></div>')
 pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
 const timeWrapper = pannel.querySelectorAll('.time-wrapper')
+const home = pannel.querySelector('.home')
 
 timeWrapper.forEach((wr, ind) => {
     for (let k = 0; k < 3; k++) {
@@ -61,11 +62,9 @@ body.oncontextmenu = function () { //не вызывать контекстно�
 
 function bombGen(event) {
     let selected = event.target.classList[1]
-
     radius(event.target).forEach(forb => {
         cells[forb].classList.add('forbidden')
     })
-
     for (bombsSumm; bombsSumm > 0;) {
         cells.forEach(e => {
             if (field.querySelectorAll('.bomb').length === 40) {
@@ -356,6 +355,11 @@ function gameOver() {
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     isFailed = 1
     clearInterval(timerID)
+    for (let keys in spEmts) {
+        if (keys === 'failed') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////game win//////////////////////////////////////////////////
@@ -375,14 +379,42 @@ function gameWin() {
         }
     })
 
-    console.log(finalCount, finalCells)
-
     if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
         clearInterval(timerID)
-        alert('YOU WIN')
+        for (let keys in spEmts) {
+            if (keys === 'won') {
+                home.style.backgroundPositionX = `${spEmts[keys]}px`
+            }
+        }
     }
 }
 
+/////////////////////////////////////////////////////////////new game////////////////////////////////////////////////
+
+function newGame() {
+    field.querySelectorAll('.cell').forEach(e => {
+        e.remove()
+    })
+    for (let i = 1; i < 17; i++) {
+        for (let j = 1; j < 17; j++) {
+            field.insertAdjacentHTML('beforeend', `<div class="cell ${i}-${j}"></div>`)
+        }
+    }
+    timerEl.forEach(t => {
+        if (+t.classList[1][3] === 2) {
+            t.style.backgroundPositionX = '21px'
+        }
+    })
+    clearInterval(timerID)
+    isStart = 0
+    bombsSumm = 40
+    currentBomb = 40
+    flags = 0
+    finalCells = 0
+    finalCount = 0
+    bombTimer(40)
+    section.querySelector('.wrapper').querySelector('.bg').style.display = 'none'
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////onclick func///////////////////////////////////////////////
@@ -440,6 +472,40 @@ field.addEventListener('contextmenu', function (event) {
     }
 })
 
+/////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
 
+field.addEventListener('mousedown', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'idk') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
 
+field.addEventListener('mouseup', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'default') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
 
+home.addEventListener('mousedown', function () {
+    for (let keys in spEmts) {
+        if (keys === 'pressed') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+home.addEventListener('mouseup', function () {
+    for (let keys in spEmts) {
+        if (keys === 'default') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+home.addEventListener('click', function (event) {
+    newGame()
+})

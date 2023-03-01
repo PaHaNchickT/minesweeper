@@ -94,6 +94,11 @@ section {
   background-position-x: 0px;
   background-position-y: 54px;
   background-size: 229.125px;
+  cursor: pointer;
+}
+
+.cell.opened {
+  cursor: auto;
 }
 
 .pannel {
@@ -197,6 +202,13 @@ section {
   width: 42px;
   height: 42px;
   background-color: yellow;
+  background-image: url("./assets/sprites/main-sprite.png");
+  background-size: 227.7692307692px;
+  background-position-x: 0px;
+  background-position-y: -39.5px;
+  cursor: pointer;
+  position: relative;
+  z-index: 8;
 }
 
 .time-wrapper > div {
