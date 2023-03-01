@@ -221,7 +221,7 @@ function radar(event) {
 ////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
 
 function bombExp(event) {
-    if (event.target.classList[3] !== 'flag') {
+    if (!event.target.classList.contains('flag')) {
         gameOver()
     } else {
         return
@@ -249,7 +249,7 @@ function numSib(event) {
         }
     })
     field.querySelectorAll('.bomb').forEach(b => {
-        if (b.classList[2] === 'bomb' && b.classList[3] === 'opened' && b.classList[4] !== 'flag') {
+        if (b.classList.contains('bomb') && b.classList.contains('opened') && !b.classList.contains('flag')) {
             b.classList.add('failed')
             gameOver()
         }
@@ -337,7 +337,7 @@ function bombTimer(event) {
 
 function gameOver() {
     field.querySelectorAll('.bomb').forEach(e => {
-        if (e.classList[3] !== 'flag' || e.classList[2] !== 'flag') {
+        if (!e.classList.contains('flag')) {
             e.classList.add('failed')
         }
     })
@@ -441,6 +441,7 @@ field.addEventListener('click', function (event) {
 
 field.addEventListener('contextmenu', function (event) {
     if (currentBomb === 0 && event.target.classList[2] === undefined) {
+        console.log('jopa')
         return
     } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
         return
@@ -450,6 +451,7 @@ field.addEventListener('contextmenu', function (event) {
 
     if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
+        event.target.classList.remove('failed')
         event.target.classList.remove('flag')
         if (!event.target.classList.contains('opened')) {
             currentBomb++
@@ -462,12 +464,14 @@ field.addEventListener('contextmenu', function (event) {
         if (!event.target.classList.contains('opened')) {
             currentBomb--
             bombTimer(currentBomb)
+        } else {
+            event.target.classList.add('failed')
         }
     }
 
-    if (event.target.classList.contains('failed')) {
-        event.target.classList.toggle('failed')
-    }
+    // if (event.target.classList.contains('failed')) {
+    //     event.target.classList.toggle('failed')
+    // }
 })
 
 /////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
