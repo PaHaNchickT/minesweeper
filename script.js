@@ -150,12 +150,12 @@ function bombsNumber() {
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
 function sib(event, side) {
+    let sibles = [],
+        limit
+
     if (event.classList[2] === 'flag') {
         return
     }
-
-    let sibles = [],
-        limit
 
     side === 'next' ? limit = 16 : limit = 1
 
@@ -206,6 +206,16 @@ function radar(event) {
     }
     sib(event, 'next')
     sib(event, 'prev')
+
+    field.querySelectorAll('.opened').forEach(o => {
+        if (o.classList[2] === 'b0') {
+            radius(o).forEach(el => {  
+                if (cells[el].classList[3] !== 'opened') {
+                    radar(cells[el])
+                }
+            })
+        }
+    })
 }
 
 ////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
@@ -218,7 +228,7 @@ function bombExp(event) {
     }
 }
 
-/////////////////////////////////////////////////////number sibl opening/////////////////////////////////////////////
+///////////////////////////////////////////////////cell-number sibl opening//////////////////////////////////////////
 
 function numSib(event) {
     let unOpenned = []
