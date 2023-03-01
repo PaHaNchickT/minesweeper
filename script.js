@@ -200,10 +200,10 @@ function sib(event, side) {
 }
 
 function radar(event) {
-    if (event.classList[3] === 'flag') {
+    if (event.classList.contains('flag')) {
         return
     }
-    if (event.classList[2] !== 'b0') {
+    if (!event.classList.contains('b0')) {
         event.classList.add('opened')
         return
     }
@@ -213,7 +213,7 @@ function radar(event) {
     field.querySelectorAll('.opened').forEach(o => {
         if (o.classList[2] === 'b0') {
             radius(o).forEach(el => {
-                if (cells[el].classList[3] !== 'opened' && cells[el].classList[2] !== 'flag') {
+                if (!cells[el].classList.contains('opened') && !cells[el].classList.contains('flag')) {
                     radar(cells[el])
                 }
             })
@@ -238,15 +238,15 @@ function numSib(event) {
     let bombsAround = +event.target.classList[2][1]
 
     radius(event.target).forEach(e => {
-        if (cells[e].classList[3] === 'flag' && cells[e].classList[2] !== 'bomb') {
+        if (cells[e].classList.contains('flag') && !cells[e].classList.contains('bomb')) {
             cells[e].classList.add('wrong')
         }
         if (flags === bombsAround) {
-            if (cells[e].classList[2] === 'flag') {
-                cells[e].classList.add('failed')
-            }
+            // if (cells[e].classList[2] === 'flag') { /////////////возможно не нужно и можно удалить
+            //     cells[e].classList.add('failed')
+            // }
             cells[e].classList.add('opened')
-            if (cells[e].classList[2] === 'b0') {
+            if (cells[e].classList.contains('b0')) {
                 unOpenned.push(cells[e])
             }
         }
@@ -259,7 +259,7 @@ function numSib(event) {
     })
     field.querySelectorAll('.flag').forEach(f => {
         f.classList.add('unopenned')
-        if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] === 'bomb') {
+        if (f.classList.contains('flag') && f.classList.contains('opened') && f.classList.contains('bomb')) {
             f.classList.add('failed')
         }
     })
@@ -270,7 +270,7 @@ function numSib(event) {
 
     unOpenned.forEach(e => {
         radius(e).forEach(el => {
-            if (cells[el].classList[3] !== 'opened') {
+            if (!cells[el].classList.contains('opened')) {
                 radar(cells[el])
             }
         })
