@@ -233,4 +233,8 @@ section {
 
 .el-1-3 {
   background-position-x: 21px;
+}
+
+.bomb.opened.unopenned {
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */

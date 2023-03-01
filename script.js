@@ -437,30 +437,36 @@ field.addEventListener('click', function (event) {
 
 })
 
+////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
+
 field.addEventListener('contextmenu', function (event) {
     if (currentBomb === 0 && event.target.classList[2] === undefined) {
         return
-    } else if (currentBomb === 0 && event.target.classList[3] !== ('flag')) {
+    } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
         return
     }
 
     gameWin()
 
-    if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
+    if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
         event.target.classList.remove('flag')
-        if (event.target.classList[3] !== 'opened') {
+        if (!event.target.classList.contains('opened')) {
             currentBomb++
             bombTimer(currentBomb)
         }
-    } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf' || event.target.classList[4] === 'wtf') {
+    } else if (event.target.classList.contains('wtf')) {
         event.target.classList.remove('wtf')
     } else {
         event.target.classList.add('flag')
-        if (event.target.classList[3] !== 'opened') {
+        if (!event.target.classList.contains('opened')) {
             currentBomb--
             bombTimer(currentBomb)
         }
+    }
+
+    if (event.target.classList.contains('failed')) {
+        event.target.classList.remove('failed')
     }
 })
 
