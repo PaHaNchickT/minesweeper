@@ -209,8 +209,8 @@ function radar(event) {
 
     field.querySelectorAll('.opened').forEach(o => {
         if (o.classList[2] === 'b0') {
-            radius(o).forEach(el => {  
-                if (cells[el].classList[3] !== 'opened') {
+            radius(o).forEach(el => {
+                if (cells[el].classList[3] !== 'opened' && cells[el].classList[2] !== 'flag') {
                     radar(cells[el])
                 }
             })
@@ -235,6 +235,9 @@ function numSib(event) {
     let bombsAround = +event.target.classList[2][1]
 
     radius(event.target).forEach(e => {
+        if (cells[e].classList[3] === 'flag' && cells[e].classList[2] !== 'bomb') {
+            cells[e].classList.add('wrong')
+        }
         if (flags === bombsAround) {
             if (cells[e].classList[2] === 'flag') {
                 cells[e].classList.add('failed')
