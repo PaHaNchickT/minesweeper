@@ -1,9 +1,9 @@
 const spEmts = {
-    '0':[0, 24],
-    '1':[27, 24],
-    '2':[54, 24],
-    '3':[81, 24],
-    '4':[108, 24]
+    'default':0,
+    'pressed':-44.5,
+    'idk':-88.5,
+    'won':-133,
+    'failed':-177
 }
 
 export default spEmts

@@ -1,14 +1,15 @@
-// import spTime from './assets/modules/sprite-timer.js'
-// import spEmts from './assets/modules/sprite-emotions.js'
-// import spNumb from './assets/modules/sprite-numbers.js'
-// import spBase from './assets/modules/sprite-base.js'
+import spTime from './assets/modules/sprite-timer.js'
+import spEmts from './assets/modules/sprite-emotions.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
 let isStart = 0,
-    bombsSumm,
-    isFailed = 0,
-    flags = 0
+    bombsSumm = 40,
+    flags = 0,
+    finalCells = 0,
+    finalCount = 0,
+    timerID,
+    currentBomb = bombsSumm
 
 const body = document.querySelector('body')
 body.insertAdjacentHTML('beforeend', '<header>')
@@ -19,6 +20,21 @@ const section = body.querySelector('section')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
+const pannel = section.querySelector('.wrapper').querySelector('.pannel')
+
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="home"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+const timeWrapper = pannel.querySelectorAll('.time-wrapper')
+const home = pannel.querySelector('.home')
+
+timeWrapper.forEach((wr, ind) => {
+    for (let k = 0; k < 3; k++) {
+        wr.insertAdjacentHTML('beforeend', `<div class="timer-el el-${ind + 1}-${k + 1}"></div>`)
+    }
+})
+const timerEl = pannel.querySelectorAll('.timer-el')
+
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', `<div class="bg"></div>`)
 const field = section.querySelector('.field')
@@ -44,18 +60,21 @@ body.oncontextmenu = function () { //не вызывать контекстно�
 
 function bombGen(event) {
     let selected = event.target.classList[1]
-
-    for (field.querySelectorAll('.bomb').length; field.querySelectorAll('.bomb').length < 40;) {
+    radius(event.target).forEach(forb => {
+        cells[forb].classList.add('forbidden')
+    })
+    for (bombsSumm; bombsSumm > 0;) {
         cells.forEach(e => {
-            if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb') && (e.classList[1] !== selected)) {
+            if (field.querySelectorAll('.bomb').length === 40) {
+                return
+            } else if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb' && e.classList[2] !== 'forbidden') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
+                bombsSumm = bombsSumm - 1
             }
         })
     }
-    radius(event.target).forEach(el => {
-        cells[el].classList.remove('bomb')
-    })
-    bombsSumm = field.querySelectorAll('.bomb').length
+
+    field.querySelectorAll('.forbidden').forEach(e => e.classList.remove('forbidden'))
 }
 
 /////////////////////////////////////////////////////bomb counter/////////////////////////////////////////////////////
@@ -94,11 +113,18 @@ function radius(event) {
     }
 
     flags = 0
+
     pos.forEach(e => {
-        if (cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag') {
+        if (cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag' || cells[e].classList[3] !== 'opened' && cells[e].classList[2] === 'flag') {
             flags++
         }
     })
+    // pos.forEach(e => {
+    //     if (!cells[e].classList.contains('opened') && cells[e].classList.contains('flag')) {
+    //         flags++
+    //         console.log(flags)
+    //     }
+    // })
 
     return pos
 }
@@ -107,12 +133,12 @@ function bombCounter(event) {
     let bombs = 0
 
     radius(event).forEach(e => {
-        if (cells[e].classList[2] === 'bomb') {
+        if (cells[e].classList.contains('bomb')) {
             bombs++
         }
     })
 
-    if (event.classList[2] !== 'bomb') {
+    if (!event.classList.contains('bomb')) {
         event.classList.add(`b${bombs}`)
     }
 
@@ -126,56 +152,25 @@ function bombsNumber() {
 
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
-function nextSib(event) {
-    let sibles = []
-    cells.forEach(e => {
-        if (e.classList[3] === 'opened') {
-            radius(e).forEach(el => {
-                if (cells[el].classList[2] === 'b0') {
-                    cells[el].classList.add('opened')
-                    sibles.push(cells[el])
-                }
-            })
-        }
+function sib(event, side) {
+    let sibles = [],
+        limit
 
-    })
-
-    sibles = sibles.filter(function (item, pos) {
-        return sibles.indexOf(item) == pos
-    })
-
-    sibles.forEach(e => {
-        radius(e).forEach(el => {
-            cells[el].classList.add('opened')
-        })
-    })
-
-    if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
-        event.classList.add('opened')
-        return
-    } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
-        event.classList.add('opened')
-        return
-    } else if (event.classList[2] === 'b0') {
-        event.classList.add('opened')
-        nextSib(event.nextSibling)
-    } else {
+    if (event.classList[2] === 'flag') {
         return
     }
-}
 
-function prevSib(event) {
-    let sibles = []
+    side === 'next' ? limit = 16 : limit = 1
+
     cells.forEach(e => {
-        if (e.classList[3] === 'opened') {
+        if (e.classList.contains('opened')) {
             radius(e).forEach(el => {
-                if (cells[el].classList[2] === 'b0') {
+                if (cells[el].classList.contains('b0')) {
                     cells[el].classList.add('opened')
                     sibles.push(cells[el])
                 }
             })
         }
-
     })
 
     sibles = sibles.filter(function (item, pos) {
@@ -184,70 +179,90 @@ function prevSib(event) {
 
     sibles.forEach(e => {
         radius(e).forEach(el => {
-            cells[el].classList.add('opened')
+            if (!cells[el].classList.contains('flag')) {
+                cells[el].classList.add('opened')
+            }
         })
     })
 
-    if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
+    if (+event.classList[1].split('-')[1] === limit && !event.classList.contains('bomb')) {
         event.classList.add('opened')
         return
-    } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+    } else if (!event.classList.contains('b0') && !event.classList.contains('bomb')) {
         event.classList.add('opened')
         return
-    } else if (event.classList[2] === 'b0') {
+    } else if (event.classList.contains('b0')) {
         event.classList.add('opened')
-        prevSib(event.previousSibling)
+        side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
     } else {
         return
     }
 }
 
 function radar(event) {
-    if (event.classList[3] === 'flag') {
+    if (event.classList.contains('flag')) {
         return
     }
-    if (event.classList[2] !== 'b0') {
+    if (!event.classList.contains('b0')) {
         event.classList.add('opened')
         return
     }
-    nextSib(event)
-    prevSib(event)
+    sib(event, 'next')
+    sib(event, 'prev')
+
+    field.querySelectorAll('.opened').forEach(o => {
+        if (o.classList[2] === 'b0') {
+            radius(o).forEach(el => {
+                if (!cells[el].classList.contains('opened') && !cells[el].classList.contains('flag')) {
+                    radar(cells[el])
+                }
+            })
+        }
+    })
 }
 
 ////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
 
 function bombExp(event) {
-    if (event.target.classList[3] !== 'flag') {
+    if (!event.target.classList.contains('flag')) {
         gameOver()
     } else {
         return
     }
 }
 
-/////////////////////////////////////////////////////number sibl opening/////////////////////////////////////////////
+///////////////////////////////////////////////////cell-number sibl opening//////////////////////////////////////////
 
 function numSib(event) {
     let unOpenned = []
     let bombsAround = +event.target.classList[2][1]
+
     radius(event.target).forEach(e => {
+        if (cells[e].classList.contains('flag') && !cells[e].classList.contains('bomb')) {
+            cells[e].classList.add('wrong')
+        }
         if (flags === bombsAround) {
+            // if (cells[e].classList[2] === 'flag') { /////////////возможно не нужно и можно удалить
+            //     cells[e].classList.add('failed')
+            // }
             cells[e].classList.add('opened')
-            if (cells[e].classList[2] === 'b0') {
+            if (cells[e].classList.contains('b0')) {
                 unOpenned.push(cells[e])
             }
         }
     })
     field.querySelectorAll('.bomb').forEach(b => {
-        if (b.classList[2] === 'bomb' && b.classList[3] === 'opened' && b.classList[4] !== 'flag') {
+        if (b.classList.contains('bomb') && b.classList.contains('opened') && !b.classList.contains('flag')) {
             b.classList.add('failed')
             gameOver()
         }
     })
     field.querySelectorAll('.flag').forEach(f => {
-        if (f.classList[3] === 'flag' && f.classList[4] === 'opened' && f.classList[2] !== 'bomb') {
+        f.classList.add('unopenned')
+        if (f.classList.contains('flag') && f.classList.contains('opened') && f.classList.contains('bomb')) {
             f.classList.add('failed')
         }
-    })  
+    })
 
     unOpenned = unOpenned.filter(function (item, pos) {
         return unOpenned.indexOf(item) == pos
@@ -255,23 +270,152 @@ function numSib(event) {
 
     unOpenned.forEach(e => {
         radius(e).forEach(el => {
-            if(cells[el].classList[3] !== 'opened') {
+            if (!cells[el].classList.contains('opened')) {
                 radar(cells[el])
             }
         })
     })
 }
 
+////////////////////////////////////////////////////////////timer////////////////////////////////////////////////////
+
+function timer(seconds) {
+    timerID = setInterval(() => {
+        seconds++
+        for (let keys in spTime) {
+            switch (seconds.toString().length) {
+                case 1: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+                    break;
+                case 2: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[4].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[1]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+                    break;
+                case 3: {
+                    if (keys === seconds.toString().split('')[0]) {
+                        timerEl[3].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[1]) {
+                        timerEl[4].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                    if (keys === seconds.toString().split('')[2]) {
+                        timerEl[5].style.backgroundPositionX = `${spTime[keys]}px`
+                    }
+                }
+            }
+        }
+    }, 1000)
+}
+
+//////////////////////////////////////////////////////////bomb timer/////////////////////////////////////////////////
+
+function bombTimer(event) {
+    for (let keys in spTime) {
+        if (event.toString().length === 1) {
+            timerEl[1].style.backgroundPositionX = `21px`
+            if (keys === event.toString().split('')[0]) {
+                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+        } else {
+            if (keys === event.toString().split('')[0]) {
+                timerEl[1].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+            if (keys === event.toString().split('')[1]) {
+                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
+            }
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////game over//////////////////////////////////////////////////
 
 function gameOver() {
     field.querySelectorAll('.bomb').forEach(e => {
-        if (e.classList[3] !== 'flag') {
+        if (!e.classList.contains('flag')) {
             e.classList.add('failed')
         }
     })
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
-    isFailed = 1
+    clearInterval(timerID)
+    for (let keys in spEmts) {
+        if (keys === 'failed') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+
+    sound('lose')
+}
+
+///////////////////////////////////////////////////////////game win//////////////////////////////////////////////////
+
+function gameWin() {
+    finalCells = 0
+    finalCount = 0
+
+    field.querySelectorAll('.flag').forEach(f => {
+        if (f.classList[2] === 'bomb') {
+            finalCount++
+        }
+    })
+    cells.forEach(e => {
+        if (e.classList[3] === 'opened') {
+            finalCells++
+        }
+    })
+
+    if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
+        clearInterval(timerID)
+        for (let keys in spEmts) {
+            if (keys === 'won') {
+                home.style.backgroundPositionX = `${spEmts[keys]}px`
+            }
+        }
+        sound('win')
+    }
+}
+
+/////////////////////////////////////////////////////////////new game////////////////////////////////////////////////
+
+function newGame() {
+    field.querySelectorAll('.cell').forEach(e => {
+        e.remove()
+    })
+    for (let i = 1; i < 17; i++) {
+        for (let j = 1; j < 17; j++) {
+            field.insertAdjacentHTML('beforeend', `<div class="cell ${i}-${j}"></div>`)
+        }
+    }
+    timerEl.forEach(t => {
+        if (+t.classList[1][3] === 2) {
+            t.style.backgroundPositionX = '21px'
+        }
+    })
+    clearInterval(timerID)
+    isStart = 0
+    bombsSumm = 40
+    currentBomb = 40
+    flags = 0
+    finalCells = 0
+    finalCount = 0
+    bombTimer(40)
+    section.querySelector('.wrapper').querySelector('.bg').style.display = 'none'
+}
+
+///////////////////////////////////////////////////////////////sound/////////////////////////////////////////////////
+
+function sound(event) {
+    let audio = new Audio()
+    audio.autoplay = true
+    audio.src = `./assets/sounds/${event}.mp3`
+    console.log('jopa')
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,40 +423,104 @@ function gameOver() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
-    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || (event.target.classList[2] === 'b0' && event.target.classList[3] === 'opened')) {
+    if (event.target.classList.contains('flag') || event.target.classList.contains('field') || (event.target.classList.contains('b0') && event.target.classList.contains('opened'))) {
         return
     }
+
+    gameWin()
+
     if (isStart === 0) {
+        if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
+            sound('click')
+        }
+        timer(0)
         bombGen(event)
         bombCounter(event.target)
         bombsNumber()
         event.target.classList.add('opened')
         isStart = 1
         radar(event.target)
-    } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList[3] === 'opened') {
-        console.log(event.target)
+    } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList.contains('opened')) {
+        sound('sibling')
         numSib(event)
     } else {
-        if (event.target.classList[2] === 'bomb') {
+        sound('click')
+        if (event.target.classList.contains('bomb')) {
             bombExp(event)
         }
         event.target.classList.add('opened')
         radar(event.target)
     }
-    
 })
 
+////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
+
 field.addEventListener('contextmenu', function (event) {
-    if ((event.target.classList[3] === 'flag' && event.target.classList[4] !== 'wtf') || (event.target.classList[2] === 'flag' && event.target.classList[3] !== 'wtf')) {
+    if ((currentBomb === 0 && event.target.classList[2] === undefined) || event.target.classList.contains('opened')) {
+        return
+    } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
+        return
+    } else {
+        sound('flag')
+    }
+
+    gameWin()
+
+    if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
+        event.target.classList.remove('failed')
         event.target.classList.remove('flag')
-    } else if (event.target.classList[3] === 'wtf' || event.target.classList[2] === 'wtf' || event.target.classList[4] === 'wtf') {
+        if (!event.target.classList.contains('opened')) {
+            currentBomb++
+            bombTimer(currentBomb)
+        }
+    } else if (event.target.classList.contains('wtf')) {
         event.target.classList.remove('wtf')
     } else {
         event.target.classList.add('flag')
+        if (!event.target.classList.contains('opened')) {
+            currentBomb--
+            bombTimer(currentBomb)
+        } else {
+            event.target.classList.add('failed')
+        }
     }
 })
 
+/////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
 
+field.addEventListener('mousedown', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'idk') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
 
+field.addEventListener('mouseup', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'default') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
 
+home.addEventListener('mousedown', function () {
+    for (let keys in spEmts) {
+        if (keys === 'pressed') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+home.addEventListener('mouseup', function () {
+    for (let keys in spEmts) {
+        if (keys === 'default') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+home.addEventListener('click', function (event) {
+    newGame()
+})
