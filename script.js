@@ -149,8 +149,12 @@ function bombsNumber() {
 
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
 
-function nextSib(event) {
-    let sibles = []
+function sib(event, side) {
+    let sibles = [],
+        limit
+
+    side === 'next' ? limit = 16 : limit = 1
+
     cells.forEach(e => {
         if (e.classList[3] === 'opened') {
             radius(e).forEach(el => {
@@ -173,7 +177,7 @@ function nextSib(event) {
         })
     })
 
-    if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
+    if (+event.classList[1].split('-')[1] === limit && event.classList[2] !== 'bomb') {
         event.classList.add('opened')
         return
     } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
@@ -181,49 +185,87 @@ function nextSib(event) {
         return
     } else if (event.classList[2] === 'b0') {
         event.classList.add('opened')
-        nextSib(event.nextSibling)
+        side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
     } else {
         return
     }
 }
 
-function prevSib(event) {
-    let sibles = []
-    cells.forEach(e => {
-        if (e.classList[3] === 'opened') {
-            radius(e).forEach(el => {
-                if (cells[el].classList[2] === 'b0') {
-                    cells[el].classList.add('opened')
-                    sibles.push(cells[el])
-                }
-            })
-        }
+// function nextSib(event) {
+//     let sibles = []
+//     cells.forEach(e => {
+//         if (e.classList[3] === 'opened') {
+//             radius(e).forEach(el => {
+//                 if (cells[el].classList[2] === 'b0') {
+//                     cells[el].classList.add('opened')
+//                     sibles.push(cells[el])
+//                 }
+//             })
+//         }
 
-    })
+//     })
 
-    sibles = sibles.filter(function (item, pos) {
-        return sibles.indexOf(item) == pos
-    })
+//     sibles = sibles.filter(function (item, pos) {
+//         return sibles.indexOf(item) == pos
+//     })
 
-    sibles.forEach(e => {
-        radius(e).forEach(el => {
-            cells[el].classList.add('opened')
-        })
-    })
+//     sibles.forEach(e => {
+//         radius(e).forEach(el => {
+//             cells[el].classList.add('opened')
+//         })
+//     })
 
-    if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
-        event.classList.add('opened')
-        return
-    } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
-        event.classList.add('opened')
-        return
-    } else if (event.classList[2] === 'b0') {
-        event.classList.add('opened')
-        prevSib(event.previousSibling)
-    } else {
-        return
-    }
-}
+//     if (+event.classList[1].split('-')[1] === 16 && event.classList[2] !== 'bomb') {
+//         event.classList.add('opened')
+//         return
+//     } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+//         event.classList.add('opened')
+//         return
+//     } else if (event.classList[2] === 'b0') {
+//         event.classList.add('opened')
+//         nextSib(event.nextSibling)
+//     } else {
+//         return
+//     }
+// }
+
+// function prevSib(event) {
+//     let sibles = []
+//     cells.forEach(e => {
+//         if (e.classList[3] === 'opened') {
+//             radius(e).forEach(el => {
+//                 if (cells[el].classList[2] === 'b0') {
+//                     cells[el].classList.add('opened')
+//                     sibles.push(cells[el])
+//                 }
+//             })
+//         }
+
+//     })
+
+//     sibles = sibles.filter(function (item, pos) {
+//         return sibles.indexOf(item) == pos
+//     })
+
+//     sibles.forEach(e => {
+//         radius(e).forEach(el => {
+//             cells[el].classList.add('opened')
+//         })
+//     })
+
+//     if (+event.classList[1].split('-')[1] === 1 && event.classList[2] !== 'bomb') {
+//         event.classList.add('opened')
+//         return
+//     } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+//         event.classList.add('opened')
+//         return
+//     } else if (event.classList[2] === 'b0') {
+//         event.classList.add('opened')
+//         prevSib(event.previousSibling)
+//     } else {
+//         return
+//     }
+// }
 
 function radar(event) {
     if (event.classList[3] === 'flag') {
@@ -233,8 +275,10 @@ function radar(event) {
         event.classList.add('opened')
         return
     }
-    nextSib(event)
-    prevSib(event)
+    // nextSib(event)
+    // prevSib(event)
+    sib(event, 'next')
+    sib(event, 'prev')
 }
 
 ////////////////////////////////////////////////////////bomb explosion///////////////////////////////////////////////
@@ -450,7 +494,6 @@ field.addEventListener('click', function (event) {
 
 field.addEventListener('contextmenu', function (event) {
     if (currentBomb === 0 && event.target.classList[2] === undefined) {
-        // console.log(event.target.classList[2])
         return
     } else if (currentBomb === 0 && event.target.classList[3] !== ('flag')) {
         return
