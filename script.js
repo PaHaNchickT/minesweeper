@@ -386,6 +386,7 @@ function gameWin() {
                 home.style.backgroundPositionX = `${spEmts[keys]}px`
             }
         }
+        alert('YOU WIN')
     }
 }
 
@@ -448,7 +449,10 @@ field.addEventListener('click', function (event) {
 })
 
 field.addEventListener('contextmenu', function (event) {
-    if (currentBomb === 0) {
+    if (currentBomb === 0 && event.target.classList[2] === undefined) {
+        // console.log(event.target.classList[2])
+        return
+    } else if (currentBomb === 0 && event.target.classList[3] !== ('flag')) {
         return
     }
 
