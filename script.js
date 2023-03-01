@@ -113,12 +113,18 @@ function radius(event) {
     }
 
     flags = 0
+
     pos.forEach(e => {
-        if ((cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag') || cells[e].classList[3] !== 'opened' && cells[e].classList[2] === 'flag') {
-            // !cells[e].classList.contains('opened')
+        if (cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag' || cells[e].classList[3] !== 'opened' && cells[e].classList[2] === 'flag') {
             flags++
         }
     })
+    // pos.forEach(e => {
+    //     if (!cells[e].classList.contains('opened') && cells[e].classList.contains('flag')) {
+    //         flags++
+    //         console.log(flags)
+    //     }
+    // })
 
     return pos
 }
@@ -127,12 +133,12 @@ function bombCounter(event) {
     let bombs = 0
 
     radius(event).forEach(e => {
-        if (cells[e].classList[2] === 'bomb') {
+        if (cells[e].classList.contains('bomb')) {
             bombs++
         }
     })
 
-    if (event.classList[2] !== 'bomb') {
+    if (!event.classList.contains('bomb')) {
         event.classList.add(`b${bombs}`)
     }
 
@@ -157,9 +163,9 @@ function sib(event, side) {
     side === 'next' ? limit = 16 : limit = 1
 
     cells.forEach(e => {
-        if (e.classList[3] === 'opened') {
+        if (e.classList.contains('opened')) {
             radius(e).forEach(el => {
-                if (cells[el].classList[2] === 'b0') {
+                if (cells[el].classList.contains('b0')) {
                     cells[el].classList.add('opened')
                     sibles.push(cells[el])
                 }
@@ -173,19 +179,19 @@ function sib(event, side) {
 
     sibles.forEach(e => {
         radius(e).forEach(el => {
-            if (cells[el].classList[2] !== 'flag') {
+            if (!cells[el].classList.contains('flag')) {
                 cells[el].classList.add('opened')
             }
         })
     })
 
-    if (+event.classList[1].split('-')[1] === limit && event.classList[2] !== 'bomb') {
+    if (+event.classList[1].split('-')[1] === limit && !event.classList.contains('bomb')) {
         event.classList.add('opened')
         return
-    } else if (event.classList[2] !== 'b0' && event.classList[2] !== 'bomb') {
+    } else if (!event.classList.contains('b0') && !event.classList.contains('bomb')) {
         event.classList.add('opened')
         return
-    } else if (event.classList[2] === 'b0') {
+    } else if (event.classList.contains('b0')) {
         event.classList.add('opened')
         side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
     } else {
