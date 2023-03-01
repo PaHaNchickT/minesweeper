@@ -412,7 +412,7 @@ function newGame() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 field.addEventListener('click', function (event) {
-    if (event.target.classList[2] === 'flag' || event.target.classList[3] === 'flag' || event.target.classList[0] === 'field' || (event.target.classList[2] === 'b0' && event.target.classList[3] === 'opened')) {
+    if (event.target.classList.contains('flag') || event.target.classList.contains('field') || (event.target.classList.contains('b0') && event.target.classList.contains('opened'))) {
         return
     }
 
@@ -426,10 +426,10 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         isStart = 1
         radar(event.target)
-    } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList[3] === 'opened') {
+    } else if (event.target.classList[2][0] === 'b' && +event.target.classList[2][1] !== 0 && event.target.classList.contains('opened')) {
         numSib(event)
     } else {
-        if (event.target.classList[2] === 'bomb') {
+        if (event.target.classList.contains('bomb')) {
             bombExp(event)
         }
         event.target.classList.add('opened')
@@ -441,8 +441,7 @@ field.addEventListener('click', function (event) {
 ////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
 
 field.addEventListener('contextmenu', function (event) {
-    if (currentBomb === 0 && event.target.classList[2] === undefined) {
-        console.log('jopa')
+    if ((currentBomb === 0 && event.target.classList[2] === undefined) || event.target.classList.contains('opened')) {
         return
     } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
         return
