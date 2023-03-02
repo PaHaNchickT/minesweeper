@@ -9,17 +9,9 @@ $font: 'main-font', sans-serif
     justify-content: $just
     align-items: $align
 
-// @mixin font($w, $s, $h, $a: left, $ls: 0)
-//     font-weight: $w
-//     font-size: $s
-//     line-height: $h
-//     text-align: $a
-//     letter-spacing: $ls
-
-// @mixin img($s, $p: 0 0)
-//     background-image: url($s)
-//     background-repeat: no-repeat
-//     background-position: $p
+@mixin bgPos($x, $y)
+    background-position-x: $x
+    background-position-y: $y
 
 $tablet: 580px
 
@@ -93,11 +85,10 @@ section
     width: 27px
     height: 27px
     background-image: url('./assets/sprites/main-sprite.png')
-    background-position-x: 1px
-    background-position-y: 55px
+    @include bgPos(1px, 55px)
     background-size: calc((27 - 1)/16*141px)
     cursor: pointer
-    
+
 .cell.opened
     cursor: auto
 
@@ -109,52 +100,40 @@ section
     margin-top: 2px
 
 .b0.opened
-    background-position-x: 202px
-    background-position-y: 55.5px
+    @include bgPos(202px, 55.5px)
 
 .b1.opened
-    background-position-x: 230px
-    background-position-y: 27.5px
+    @include bgPos(230px, 27.5px)
 
 .b2.opened
-    background-position-x: 202px
-    background-position-y: 27.5px
+    @include bgPos(202px, 27.5px)
 
 .b3.opened
-    background-position-x: 174px
-    background-position-y: 27.5px
+    @include bgPos(174px, 27.5px)
 
 .b4.opened
-    background-position-x: 144px
-    background-position-y: 27.5px
+    @include bgPos(144px, 27.5px)
 
 .b5.opened
-    background-position-x: 118px
-    background-position-y: 27.5px
+    @include bgPos(118px, 27.5px)
 
 .b6.opened
-    background-position-x: 90px
-    background-position-y: 27.5px
+    @include bgPos(90px, 27.5px)
 
 .b7.opened
-    background-position-x: 62px
-    background-position-y: 27.5px
+    @include bgPos(62px, 27.5px)
 
 .b8.opened
-    background-position-x: 34px
-    background-position-y: 27.5px
+    @include bgPos(34px, 27.5px)
 
 .bomb.failed.opened
-    background-position-x: 62px
-    background-position-y: 55px
+    @include bgPos(62px, 55px)
 
 .bomb.failed
-    background-position-x: 89.5px
-    background-position-y: 55px
+    @include bgPos(89.5px, 55px)
 
 .flag.failed, .flag.wrong.opened
-    background-position-x: 34px
-    background-position-y: 55px
+    @include bgPos(34px, 55px)
 
 .bg
     display: none
@@ -163,13 +142,11 @@ section
     position: absolute
     z-index: 6
 
-.flag, .flag.bomb.failed, .flag.unopenned   
-    background-position-x: 174px
-    background-position-y: 55px
+.flag, .flag.bomb.failed, .flag.unopenned
+    @include bgPos(174px, 55px)
 
 .wtf
-    background-position-x: 146px
-    background-position-y: 55px
+    @include bgPos(146px, 55px)
 
 .pannel
     @include flex(space-between, center)
@@ -184,8 +161,7 @@ section
     background-color: yellow
     background-image: url('./assets/sprites/main-sprite.png')
     background-size: calc(42/26*141px)
-    background-position-x: 0px
-    background-position-y: -39.5px
+    @include bgPos(0px, -39.5px)
     cursor: pointer
     position: relative
     z-index: 8
@@ -227,7 +203,7 @@ section
     ul
         flex-direction: column
         align-items: center
-        
+
     ul > li
         margin: 5px
         font-size: 13px
@@ -257,8 +233,7 @@ section
     .cell
         width: calc(27px / 1.5)
         height: calc(27px / 1.5)
-        background-position-x: 0px
-        background-position-y: 36px
+        @include bgPos(0px, 36px)
         background-size: calc((18 - 1)/16*141px)
 
     .pannel
@@ -267,57 +242,43 @@ section
         margin: 5px 0
 
     .b0.opened
-        background-position-x: -18px
-        background-position-y: 36.5px
+        @include bgPos(-18px, 36.5px)
 
     .b1.opened
-        background-position-x: 0px
-        background-position-y: 18px
+        @include bgPos(0px, 18px)
 
     .b2.opened
-        background-position-x: -18px
-        background-position-y: 18px
+        @include bgPos(-18px, 18px)
 
     .b3.opened
-        background-position-x: -36px
-        background-position-y: 18px
+        @include bgPos(-36px, 18px)
 
     .b4.opened
-        background-position-x: -54.5px
-        background-position-y: 18px
+        @include bgPos(-54.5px, 18px)
 
     .b5.opened
-        background-position-x: -72px
-        background-position-y: 18px
+        @include bgPos(-72px, 18px)
 
     .b6.opened
-        background-position-x: -90px
-        background-position-y: 18px
+        @include bgPos(-90px, 18px)
 
     .b7.opened
-        background-position-x: -108px
-        background-position-y: 18px
+        @include bgPos(-108px, 18px)
 
     .b8.opened
-        background-position-x: -126px
-        background-position-y: 18px
+        @include bgPos(-126px, 18px)
 
     .bomb.failed.opened
-        background-position-x: -109.5px
-        background-position-y: 36px
+        @include bgPos(-109.5px, 36px)
 
     .bomb.failed
-        background-position-x: -91.5px
-        background-position-y: 36px
+        @include bgPos(-91.5px, 36px)
 
     .flag.failed, .flag.wrong.opened
-        background-position-x: -127.5px
-        background-position-y: 36px
+        @include bgPos(-127.5px, 36px)
 
     .flag, .flag.bomb.failed, .flag.unopenned
-        background-position-x: -36px
-        background-position-y: 36px
+        @include bgPos(-36px, 36px)
 
     .wtf
-        background-position-x: -54px
-        background-position-y: 36px
+        @include bgPos(-54px, 36px)
