@@ -361,12 +361,12 @@ function gameWin() {
     finalCount = 0
 
     field.querySelectorAll('.flag').forEach(f => {
-        if (f.classList[2] === 'bomb') {
+        if (f.classList.contains('bomb')) {
             finalCount++
         }
     })
     cells.forEach(e => {
-        if (e.classList[3] === 'opened') {
+        if (e.classList.contains('opened')) {
             finalCells++
         }
     })
