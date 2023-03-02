@@ -129,31 +129,6 @@ function sib(event, side) {
 
     side === 'next' ? limit = 16 : limit = 1
 
-    cells.forEach(e => {
-        if (e.classList.contains('opened')) {
-            radius(e).forEach(el => {
-                if (cells[el].classList.contains('b0')) {
-                    cells[el].classList.add('opened')
-                    sibles.push(cells[el])
-                }
-            })
-        }
-    })
-
-    sibles = sibles.filter(function (item, pos) {
-        return sibles.indexOf(item) == pos
-    })
-
-    sibles.forEach(e => {
-        radius(e).forEach(el => {
-            if (cells[el].classList.contains('flag')) {
-                cells[el].classList.remove('opened')
-            } else {
-                cells[el].classList.add('opened')
-            }
-        })
-    })
-
     if (+event.classList[1].split('-')[1] === limit && !event.classList.contains('bomb')) {
         event.classList.add('opened')
         return
@@ -205,8 +180,7 @@ function numSib(event) {
             cells[e].classList.add('wrong')
         }
         if (flags === bombsAround) {
-            //cells[e].classList.contains('flag') ? cells[e].classList.add('failed') : console.log() //возможно это не нужно и можно удалить
-
+            // cells[e].classList.contains('flag') ? cells[e].classList.add('failed') : console.log() //возможно это не нужно и можно удалить
             cells[e].classList.add('opened')
             cells[e].classList.contains('b0') ? unOpenned.push(cells[e]) : console.log()
         }
