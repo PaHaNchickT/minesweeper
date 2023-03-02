@@ -398,9 +398,9 @@ field.addEventListener('click', function (event) {
 ////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
 
 field.addEventListener('contextmenu', function (event) {
-    if ((currentBomb === 0 && event.target.classList[2] === undefined) || event.target.classList.contains('opened')) {
+    if ((currentBomb === 0 && !event.target.classList.contains('flag') && !event.target.classList.contains('wtf'))) {
         return
-    } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
+    } else if (event.target.classList.contains('opened') && !event.target.classList.contains('unopenned') && !event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         return
     } else {
         sound('flag')
