@@ -1,0 +1,285 @@
+@font-face
+    font-family: main-font
+    src: url('./assets/fonts/mine-sweeper.ttf')
+
+$font: 'main-font', sans-serif
+
+@mixin flex($just: flex-start, $align: stretch)
+    display: flex
+    justify-content: $just
+    align-items: $align
+
+@mixin bgPos($x, $y)
+    background-position-x: $x
+    background-position-y: $y
+
+$tablet: 580px
+
+html
+    scroll-behavior: smooth
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+    -webkit-tap-highlight-color: transparent
+
+p, h1, html, body, ul
+    margin: 0
+
+body
+    font-family: $font
+
+header, footer
+    background-color: #c0c0c0
+    height: 70px
+    @include flex(flex-start, center)
+
+header
+    justify-content: center
+
+a
+    &:link, &:active, &:visited
+        color: black
+        text-decoration: none
+    &:hover
+        color: white
+
+ul
+    width: 100%
+    list-style: none
+    padding: 0
+    @include flex(space-around)
+
+section
+    height: calc(100vh - 140px)
+    width: 100%
+    background-color: #f3f3f3
+    @include flex(center, center)
+
+.wrapper
+    box-sizing: border-box
+    width: 460px
+    height: 530px
+    background-color: #bdbdbd
+    border-top: 4px solid white
+    border-left: 4px solid white
+    border-right: 4px solid #7b7b7b
+    border-bottom: 4px solid #7b7b7b
+    @include flex(space-between, center)
+    flex-direction: column
+    padding: 5px 5px 0 5px
+    position: relative
+    z-index: 5
+
+.field
+    width: calc(100% - 10px)
+    @include flex(flex-start, center)
+    flex-wrap: wrap
+    margin-bottom: 5px
+
+.field, .pannel
+    border-top: 4px solid #7b7b7b
+    border-left: 4px solid #7b7b7b
+    border-right: 4px solid white
+    border-bottom: 4px solid white
+
+.cell
+    box-sizing: border-box
+    width: 27px
+    height: 27px
+    background-image: url('./assets/sprites/main-sprite.png')
+    @include bgPos(1px, 55px)
+    background-size: calc((27 - 1)/16*141px)
+    cursor: pointer
+
+.cell.opened
+    cursor: auto
+
+.pannel
+    width: 99.4%
+    height: 62px
+    background-color: #c0c0c0
+    box-sizing: border-box
+    margin-top: 2px
+
+.b0.opened
+    @include bgPos(202px, 55.5px)
+
+.b1.opened
+    @include bgPos(230px, 27.5px)
+
+.b2.opened
+    @include bgPos(202px, 27.5px)
+
+.b3.opened
+    @include bgPos(174px, 27.5px)
+
+.b4.opened
+    @include bgPos(144px, 27.5px)
+
+.b5.opened
+    @include bgPos(118px, 27.5px)
+
+.b6.opened
+    @include bgPos(90px, 27.5px)
+
+.b7.opened
+    @include bgPos(62px, 27.5px)
+
+.b8.opened
+    @include bgPos(34px, 27.5px)
+
+.bomb.failed.opened
+    @include bgPos(62px, 55px)
+
+.bomb.failed
+    @include bgPos(89.5px, 55px)
+
+.flag.failed, .flag.wrong.opened
+    @include bgPos(34px, 55px)
+
+.bg
+    display: none
+    width: 100%
+    height: 100%
+    position: absolute
+    z-index: 6
+
+.flag, .flag.bomb.failed, .flag.unopenned
+    @include bgPos(174px, 55px)
+
+.wtf
+    @include bgPos(146px, 55px)
+
+.idk
+    @include bgPos(118px, 55.5px)
+
+.pannel
+    @include flex(space-between, center)
+
+.time-wrapper
+    display: flex
+    margin: 0 10px
+
+.home
+    width: 42px
+    height: 42px
+    background-image: url('./assets/sprites/main-sprite.png')
+    background-size: calc(42/26*141px)
+    @include bgPos(0px, -39.5px)
+    cursor: pointer
+    position: relative
+    z-index: 8
+
+.time-wrapper > div
+    width: 21px
+    height: 38px
+
+.el-1-1, .el-1-2, .el-1-3, .el-2-1, .el-2-2, .el-2-3
+    background-image: url('./assets/sprites/main-sprite.png')
+    background-size: calc(21/13*141px)
+    background-position-y: 0px
+
+.el-1-1, .el-2-1, .el-2-2, .el-2-3
+    background-position-x: 21px
+
+.el-1-2
+    background-position-x: 159px
+
+.el-1-3
+    background-position-x: 21px
+
+.bomb.opened.unopenned
+    cursor: pointer
+
+///////////////////////////////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////MOBILE////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (max-width: $tablet)
+
+    h1
+        font-size: 20px
+
+    footer
+        height: 100px
+
+    ul
+        flex-direction: column
+        align-items: center
+
+    ul > li
+        margin: 5px
+        font-size: 13px
+
+    section
+        height: calc(100vh - 170px)
+
+    .wrapper
+        width: calc(460px / 1.5)
+        height: calc(530px / 1.5 + 9px)
+        border-top: 2px solid white
+        border-left: 2px solid white
+        border-right: 2px solid #7b7b7b
+        border-bottom: 2px solid #7b7b7b
+        padding: 3px 3px 0 3px
+
+    .field
+        width: calc((100% - 10px / 1.5) - 2px)
+        margin-bottom: 5px
+
+    .field, .pannel
+        border-top: 2px solid #7b7b7b
+        border-left: 2px solid #7b7b7b
+        border-right: 2px solid white
+        border-bottom: 2px solid white
+
+    .cell
+        width: calc(27px / 1.5)
+        height: calc(27px / 1.5)
+        @include bgPos(0px, 36px)
+        background-size: calc((18 - 1)/16*141px)
+
+    .pannel
+        width: 98%
+        height: 64px
+        margin: 5px 0
+
+    .b0.opened
+        @include bgPos(-18px, 36.5px)
+
+    .b1.opened
+        @include bgPos(0px, 18px)
+
+    .b2.opened
+        @include bgPos(-18px, 18px)
+
+    .b3.opened
+        @include bgPos(-36px, 18px)
+
+    .b4.opened
+        @include bgPos(-54.5px, 18px)
+
+    .b5.opened
+        @include bgPos(-72px, 18px)
+
+    .b6.opened
+        @include bgPos(-90px, 18px)
+
+    .b7.opened
+        @include bgPos(-108px, 18px)
+
+    .b8.opened
+        @include bgPos(-126px, 18px)
+
+    .bomb.failed.opened
+        @include bgPos(-109.5px, 36px)
+
+    .bomb.failed
+        @include bgPos(-91.5px, 36px)
+
+    .flag.failed, .flag.wrong.opened
+        @include bgPos(-127.5px, 36px)
+
+    .flag, .flag.bomb.failed, .flag.unopenned
+        @include bgPos(-36px, 36px)
+
+    .wtf
+        @include bgPos(-54px, 36px)
