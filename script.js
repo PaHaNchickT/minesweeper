@@ -173,7 +173,9 @@ function sib(event, side) {
 
     sibles.forEach(e => {
         radius(e).forEach(el => {
-            if (!cells[el].classList.contains('flag')) {
+            if (cells[el].classList.contains('flag')) {
+                cells[el].classList.remove('opened')
+            } else {
                 cells[el].classList.add('opened')
             }
         })
@@ -236,7 +238,7 @@ function numSib(event) {
             cells[e].classList.add('wrong')
         }
         if (flags === bombsAround) {
-            // if (cells[e].classList[2] === 'flag') { /////////////возможно не нужно и можно удалить
+            // if (cells[e].classList.contains('flag')) { ////////////возможно это не нужно и можно удалить
             //     cells[e].classList.add('failed')
             // }
             cells[e].classList.add('opened')
