@@ -12,19 +12,16 @@ let isStart = 0,
     currentBomb = bombsSumm
 
 const body = document.querySelector('body')
-body.insertAdjacentHTML('beforeend', '<header>')
-body.querySelector('header').insertAdjacentHTML('beforeend', `<h1>Minesweeper</h1>`)
+body.insertAdjacentHTML('afterbegin', '<header><h1>Minesweeper</h1></header>')
+body.querySelector('header').insertAdjacentHTML('afterend', `<section></section> <footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>`)
 
-body.insertAdjacentHTML('beforeend', `<section></section>`)
 const section = body.querySelector('section')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
+section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div> <div class="field"></div> <div class="bg"></div>')
 const pannel = section.querySelector('.wrapper').querySelector('.pannel')
 
-pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
-pannel.insertAdjacentHTML('beforeend', '<div class="home"></div>')
-pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div> <div class="home"></div> <div class="time-wrapper"></div>')
 const timeWrapper = pannel.querySelectorAll('.time-wrapper')
 const home = pannel.querySelector('.home')
 
@@ -34,9 +31,6 @@ timeWrapper.forEach((wr, ind) => {
     }
 })
 const timerEl = pannel.querySelectorAll('.timer-el')
-
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', `<div class="bg"></div>`)
 const field = section.querySelector('.field')
 
 for (let i = 1; i < 17; i++) {
@@ -45,8 +39,6 @@ for (let i = 1; i < 17; i++) {
     }
 }
 const cells = field.childNodes
-
-body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>')
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////engine/////////////////////////////////////////////////////
@@ -545,3 +537,9 @@ home.addEventListener('touchstart', function () {
         }
     }
 })
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////MADE BY PAVEL TERNO///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
