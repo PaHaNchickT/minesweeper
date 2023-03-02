@@ -1,5 +1,6 @@
 import spTime from './assets/modules/sprite-timer.js'
 import spEmts from './assets/modules/sprite-emotions.js'
+import spNumb from './assets/modules/sprite-numbers.js'
 
 //////////////////////////////////////////////////making page////////////////////////////////////////////
 
@@ -12,10 +13,11 @@ let isStart = 0,
     currentBomb = bombsSumm
 
 const body = document.querySelector('body')
-body.insertAdjacentHTML('afterbegin', '<header><h1>Minesweeper</h1></header>')
+body.insertAdjacentHTML('afterbegin', '<header><h1>Minesweeper</h1> <div class="temp"></div> </header>')
 body.querySelector('header').insertAdjacentHTML('afterend', `<section></section> <footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>`)
 
 const section = body.querySelector('section')
+const temp = body.querySelector('header').querySelector('.temp')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
 section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div> <div class="field"></div> <div class="bg"></div>')
@@ -45,6 +47,16 @@ const cells = field.childNodes
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 body.oncontextmenu = () => false //не вызывать контекстное меню
+
+////////////////////////////////////////////////////audio preloading/////////////////////////////////////////////////
+
+for (let counter = 1; counter < 6; counter++) {
+    for (let keys in spNumb) {
+        if (counter === +keys) {
+            temp.insertAdjacentHTML('beforeend', `<audio src="./assets/sounds/${spNumb[keys]}.mp3" preload="auto"></audio>`)
+        }
+    }
+}
 
 /////////////////////////////////////////////////////bomb generation/////////////////////////////////////////////////
 
@@ -125,7 +137,7 @@ function sib(event, side) {
     let sibles = [],
         limit
 
-    if (event.classList[2] === 'flag') {return}
+    if (event.classList[2] === 'flag') { return }
 
     side === 'next' ? limit = 16 : limit = 1
 
@@ -138,11 +150,11 @@ function sib(event, side) {
     } else if (event.classList.contains('b0')) {
         event.classList.add('opened')
         side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
-    } else {return}
+    } else { return }
 }
 
 function radar(event) {
-    if (event.classList.contains('flag')) {return}
+    if (event.classList.contains('flag')) { return }
     if (!event.classList.contains('b0')) {
         event.classList.add('opened')
         return
@@ -166,7 +178,7 @@ function radar(event) {
 function bombExp(event) {
     if (!event.target.classList.contains('flag')) {
         gameOver()
-    } else {return}
+    } else { return }
 }
 
 ///////////////////////////////////////////////////cell-number sibl opening//////////////////////////////////////////
@@ -288,7 +300,7 @@ function gameWin() {
             finalCells++
         }
     })
-    
+
     if (finalCount === 40 && finalCells === 216) {
         clearInterval(timerID)
         for (let keys in spEmts) {
@@ -338,7 +350,7 @@ field.addEventListener('click', function (event) {
         return
     }
 
-    
+
 
     if (isStart === 0) {
         if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
@@ -375,7 +387,7 @@ field.addEventListener('contextmenu', function (event) {
         sound('flag')
     }
 
-    
+
 
     if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
