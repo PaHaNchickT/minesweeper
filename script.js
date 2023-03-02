@@ -115,16 +115,10 @@ function radius(event) {
     flags = 0
 
     pos.forEach(e => {
-        if (cells[e].classList[3] !== 'opened' && cells[e].classList[3] === 'flag' || cells[e].classList[3] !== 'opened' && cells[e].classList[2] === 'flag') {
+        if (cells[e].classList.contains('flag')) {
             flags++
         }
     })
-    // pos.forEach(e => {
-    //     if (!cells[e].classList.contains('opened') && cells[e].classList.contains('flag')) {
-    //         flags++
-    //         console.log(flags)
-    //     }
-    // })
 
     return pos
 }
@@ -366,11 +360,11 @@ function gameWin() {
         }
     })
     cells.forEach(e => {
-        if (e.classList.contains('opened')) {
+        if (e.classList.contains('opened') && !e.classList.contains('flag')) {
             finalCells++
         }
     })
-
+    
     if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
         clearInterval(timerID)
         for (let keys in spEmts) {
@@ -415,7 +409,6 @@ function sound(event) {
     let audio = new Audio()
     audio.autoplay = true
     audio.src = `./assets/sounds/${event}.mp3`
-    console.log('jopa')
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
