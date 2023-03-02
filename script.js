@@ -125,9 +125,7 @@ function sib(event, side) {
     let sibles = [],
         limit
 
-    if (event.classList[2] === 'flag') {
-        return
-    }
+    if (event.classList[2] === 'flag') {return}
 
     side === 'next' ? limit = 16 : limit = 1
 
@@ -165,15 +163,11 @@ function sib(event, side) {
     } else if (event.classList.contains('b0')) {
         event.classList.add('opened')
         side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
-    } else {
-        return
-    }
+    } else {return}
 }
 
 function radar(event) {
-    if (event.classList.contains('flag')) {
-        return
-    }
+    if (event.classList.contains('flag')) {return}
     if (!event.classList.contains('b0')) {
         event.classList.add('opened')
         return
@@ -197,9 +191,7 @@ function radar(event) {
 function bombExp(event) {
     if (!event.target.classList.contains('flag')) {
         gameOver()
-    } else {
-        return
-    }
+    } else {return}
 }
 
 ///////////////////////////////////////////////////cell-number sibl opening//////////////////////////////////////////
@@ -323,7 +315,7 @@ function gameWin() {
         }
     })
     
-    if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
+    if (finalCount === 40 && finalCells === 216) {
         clearInterval(timerID)
         for (let keys in spEmts) {
             keys === 'won' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
@@ -372,7 +364,7 @@ field.addEventListener('click', function (event) {
         return
     }
 
-    gameWin()
+    
 
     if (isStart === 0) {
         if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
@@ -394,6 +386,8 @@ field.addEventListener('click', function (event) {
         event.target.classList.add('opened')
         radar(event.target)
     }
+
+    gameWin()
 })
 
 ////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
@@ -407,7 +401,7 @@ field.addEventListener('contextmenu', function (event) {
         sound('flag')
     }
 
-    gameWin()
+    
 
     if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
@@ -428,6 +422,8 @@ field.addEventListener('contextmenu', function (event) {
             event.target.classList.add('failed')
         }
     }
+
+    gameWin()
 })
 
 /////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
