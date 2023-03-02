@@ -189,6 +189,11 @@ section {
   background-position-y: 55px;
 }
 
+.idk {
+  background-position-x: 118px;
+  background-position-y: 55.5px;
+}
+
 .pannel {
   display: flex;
   justify-content: space-between;
