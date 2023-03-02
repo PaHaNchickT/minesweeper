@@ -329,6 +329,7 @@ function gameWin() {
             keys === 'won' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
         }
         sound('win')
+        section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     }
 }
 
