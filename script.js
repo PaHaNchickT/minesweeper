@@ -517,3 +517,29 @@ home.addEventListener('mouseup', function () {
 home.addEventListener('click', function (event) {
     newGame()
 })
+
+///////////////////////////////////////////////////////////responsive////////////////////////////////////////////////
+
+field.addEventListener('touchstart', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'idk') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+field.addEventListener('touchend', function (event) {
+    for (let keys in spEmts) {
+        if (keys === 'default') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})
+
+home.addEventListener('touchstart', function () {
+    for (let keys in spEmts) {
+        if (keys === 'pressed') {
+            home.style.backgroundPositionX = `${spEmts[keys]}px`
+        }
+    }
+})

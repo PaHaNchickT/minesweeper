@@ -4,6 +4,8 @@
 }
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 p, h1, html, body, ul {
@@ -237,4 +239,111 @@ section {
 
 .bomb.opened.unopenned {
   cursor: pointer;
+}
+
+@media screen and (max-width: 580px) {
+  h1 {
+    font-size: 20px;
+  }
+  footer {
+    height: 100px;
+  }
+  ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  ul > li {
+    margin: 5px;
+    font-size: 13px;
+  }
+  section {
+    height: calc(100vh - 170px);
+  }
+  .wrapper {
+    width: 306.6666666667px;
+    height: 362.3333333333px;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    padding: 3px 3px 0 3px;
+  }
+  .field {
+    width: calc(100% - 6.6666666667px - 2px);
+    margin-bottom: 5px;
+  }
+  .field, .pannel {
+    border-top: 2px solid #7b7b7b;
+    border-left: 2px solid #7b7b7b;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+  }
+  .cell {
+    width: 18px;
+    height: 18px;
+    background-position-x: 0px;
+    background-position-y: 36px;
+    background-size: 149.8125px;
+  }
+  .pannel {
+    width: 98%;
+    height: 64px;
+    margin: 5px 0;
+  }
+  .b0.opened {
+    background-position-x: -18px;
+    background-position-y: 36.5px;
+  }
+  .b1.opened {
+    background-position-x: 0px;
+    background-position-y: 18px;
+  }
+  .b2.opened {
+    background-position-x: -18px;
+    background-position-y: 18px;
+  }
+  .b3.opened {
+    background-position-x: -36px;
+    background-position-y: 18px;
+  }
+  .b4.opened {
+    background-position-x: -54.5px;
+    background-position-y: 18px;
+  }
+  .b5.opened {
+    background-position-x: -72px;
+    background-position-y: 18px;
+  }
+  .b6.opened {
+    background-position-x: -90px;
+    background-position-y: 18px;
+  }
+  .b7.opened {
+    background-position-x: -108px;
+    background-position-y: 18px;
+  }
+  .b8.opened {
+    background-position-x: -126px;
+    background-position-y: 18px;
+  }
+  .bomb.failed.opened {
+    background-position-x: -109.5px;
+    background-position-y: 36px;
+  }
+  .bomb.failed {
+    background-position-x: -91.5px;
+    background-position-y: 36px;
+  }
+  .flag.failed, .flag.wrong.opened {
+    background-position-x: -127.5px;
+    background-position-y: 36px;
+  }
+  .flag, .flag.bomb.failed, .flag.unopenned {
+    background-position-x: -36px;
+    background-position-y: 36px;
+  }
+  .wtf {
+    background-position-x: -54px;
+    background-position-y: 36px;
+  }
 }/*# sourceMappingURL=style.css.map */

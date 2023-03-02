@@ -21,12 +21,12 @@ $font: 'main-font', sans-serif
 //     background-repeat: no-repeat
 //     background-position: $p
 
-$desktop: 1023.5px
-$tablet: 767.5px
-$mobile: 320px
+$tablet: 580px
 
 html
     scroll-behavior: smooth
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+    -webkit-tap-highlight-color: transparent
 
 p, h1, html, body, ul
     margin: 0
@@ -163,7 +163,7 @@ section
     position: absolute
     z-index: 6
 
-.flag, .flag.bomb.failed, .flag.unopenned
+.flag, .flag.bomb.failed, .flag.unopenned   
     background-position-x: 173px
     background-position-y: 54px
 
@@ -212,17 +212,112 @@ section
 .bomb.opened.unopenned
     cursor: pointer
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////    
-///////////////////////////////////////////////MOBILE////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////MOBILE////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// @media screen and (max-width: $tablet)
-//     .intro
-//         min-height: 500px
-//         background-image: url('./assets/images/bg.jpg')
-//         background-attachment: fixed
-//         display: flex
-//         justify-content: center
-//         flex-direction: column
-//         align-items: center
-//         color: white
+@media screen and (max-width: $tablet)
+
+    h1
+        font-size: 20px
+
+    footer
+        height: 100px
+
+    ul
+        flex-direction: column
+        align-items: center
+        
+    ul > li
+        margin: 5px
+        font-size: 13px
+
+    section
+        height: calc(100vh - 170px)
+
+    .wrapper
+        width: calc(460px / 1.5)
+        height: calc(530px / 1.5 + 9px)
+        border-top: 2px solid white
+        border-left: 2px solid white
+        border-right: 2px solid #7b7b7b
+        border-bottom: 2px solid #7b7b7b
+        padding: 3px 3px 0 3px
+
+    .field
+        width: calc((100% - 10px / 1.5) - 2px)
+        margin-bottom: 5px
+
+    .field, .pannel
+        border-top: 2px solid #7b7b7b
+        border-left: 2px solid #7b7b7b
+        border-right: 2px solid white
+        border-bottom: 2px solid white
+
+    .cell
+        width: calc(27px / 1.5)
+        height: calc(27px / 1.5)
+        background-position-x: 0px
+        background-position-y: 36px
+        background-size: calc((18 - 1)/16*141px)
+
+    .pannel
+        width: 98%
+        height: 64px
+        margin: 5px 0
+
+    .b0.opened
+        background-position-x: -18px
+        background-position-y: 36.5px
+
+    .b1.opened
+        background-position-x: 0px
+        background-position-y: 18px
+
+    .b2.opened
+        background-position-x: -18px
+        background-position-y: 18px
+
+    .b3.opened
+        background-position-x: -36px
+        background-position-y: 18px
+
+    .b4.opened
+        background-position-x: -54.5px
+        background-position-y: 18px
+
+    .b5.opened
+        background-position-x: -72px
+        background-position-y: 18px
+
+    .b6.opened
+        background-position-x: -90px
+        background-position-y: 18px
+
+    .b7.opened
+        background-position-x: -108px
+        background-position-y: 18px
+
+    .b8.opened
+        background-position-x: -126px
+        background-position-y: 18px
+
+    .bomb.failed.opened
+        background-position-x: -109.5px
+        background-position-y: 36px
+
+    .bomb.failed
+        background-position-x: -91.5px
+        background-position-y: 36px
+
+    .flag.failed, .flag.wrong.opened
+        background-position-x: -127.5px
+        background-position-y: 36px
+
+    .flag, .flag.bomb.failed, .flag.unopenned
+        background-position-x: -36px
+        background-position-y: 36px
+
+    .wtf
+        background-position-x: -54px
+        background-position-y: 36px
