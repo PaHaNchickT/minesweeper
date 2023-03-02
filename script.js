@@ -350,8 +350,6 @@ field.addEventListener('click', function (event) {
         return
     }
 
-
-
     if (isStart === 0) {
         if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
             sound('click')
@@ -387,8 +385,6 @@ field.addEventListener('contextmenu', function (event) {
         sound('flag')
     }
 
-
-
     if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
         event.target.classList.remove('failed')
@@ -418,12 +414,16 @@ field.addEventListener('mousedown', function (event) {
     for (let keys in spEmts) {
         keys === 'idk' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
+    if (!event.target.classList.contains('opened') && !event.target.classList.contains('flag')) {
+        event.target.classList.add('idk')
+    }
 })
 
 field.addEventListener('mouseup', function (event) {
     for (let keys in spEmts) {
         keys === 'default' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
+    event.target.classList.remove('idk')
 })
 
 home.addEventListener('mousedown', function () {
