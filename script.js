@@ -12,19 +12,16 @@ let isStart = 0,
     currentBomb = bombsSumm
 
 const body = document.querySelector('body')
-body.insertAdjacentHTML('beforeend', '<header>')
-body.querySelector('header').insertAdjacentHTML('beforeend', `<h1>Minesweeper</h1>`)
+body.insertAdjacentHTML('afterbegin', '<header><h1>Minesweeper</h1></header>')
+body.querySelector('header').insertAdjacentHTML('afterend', `<section></section> <footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>`)
 
-body.insertAdjacentHTML('beforeend', `<section></section>`)
 const section = body.querySelector('section')
 
 section.insertAdjacentHTML('beforeend', '<div class="wrapper"></div>')
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div>')
+section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="pannel"></div> <div class="field"></div> <div class="bg"></div>')
 const pannel = section.querySelector('.wrapper').querySelector('.pannel')
 
-pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
-pannel.insertAdjacentHTML('beforeend', '<div class="home"></div>')
-pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div>')
+pannel.insertAdjacentHTML('beforeend', '<div class="time-wrapper"></div> <div class="home"></div> <div class="time-wrapper"></div>')
 const timeWrapper = pannel.querySelectorAll('.time-wrapper')
 const home = pannel.querySelector('.home')
 
@@ -34,9 +31,6 @@ timeWrapper.forEach((wr, ind) => {
     }
 })
 const timerEl = pannel.querySelectorAll('.timer-el')
-
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', '<div class="field"></div>')
-section.querySelector('.wrapper').insertAdjacentHTML('beforeend', `<div class="bg"></div>`)
 const field = section.querySelector('.field')
 
 for (let i = 1; i < 17; i++) {
@@ -46,15 +40,11 @@ for (let i = 1; i < 17; i++) {
 }
 const cells = field.childNodes
 
-body.insertAdjacentHTML('beforeend', '<footer><ul><li><a href="http://github.com/PaHaNchickT">GitHub</a></li><li><a href="http://ternopavel.ru">Made by Pavel Terno</a></li><li>2023</li></ul></footer>')
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////engine/////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-body.oncontextmenu = function () { //не вызывать контекстное меню
-    return false
-}
+body.oncontextmenu = () => false //не вызывать контекстное меню
 
 /////////////////////////////////////////////////////bomb generation/////////////////////////////////////////////////
 
@@ -69,7 +59,7 @@ function bombGen(event) {
                 return
             } else if ((`${Math.floor(Math.random() * 16) + 1}-${Math.floor(Math.random() * 16) + 1}` === e.classList[1]) && (e.classList[2] !== 'bomb' && e.classList[2] !== 'forbidden') && (e.classList[1] !== selected)) {
                 e.classList.add('bomb')
-                bombsSumm = bombsSumm - 1
+                bombsSumm--
             }
         })
     }
@@ -114,34 +104,19 @@ function radius(event) {
 
     flags = 0
 
-    pos.forEach(e => {
-        if (cells[e].classList.contains('flag')) {
-            flags++
-        }
-    })
-
+    pos.forEach(e => cells[e].classList.contains('flag') ? flags++ : console.log())
     return pos
 }
 
 function bombCounter(event) {
     let bombs = 0
+    radius(event).forEach(e => cells[e].classList.contains('bomb') ? bombs++ : console.log())
 
-    radius(event).forEach(e => {
-        if (cells[e].classList.contains('bomb')) {
-            bombs++
-        }
-    })
-
-    if (!event.classList.contains('bomb')) {
-        event.classList.add(`b${bombs}`)
-    }
-
+    !event.classList.contains('bomb') ? event.classList.add(`b${bombs}`) : console.log()
 }
 
 function bombsNumber() {
-    cells.forEach(el => {
-        bombCounter(el)
-    })
+    cells.forEach(el => bombCounter(el))
 }
 
 ////////////////////////////////////////////////////////////radar////////////////////////////////////////////////////
@@ -150,9 +125,7 @@ function sib(event, side) {
     let sibles = [],
         limit
 
-    if (event.classList[2] === 'flag') {
-        return
-    }
+    if (event.classList[2] === 'flag') {return}
 
     side === 'next' ? limit = 16 : limit = 1
 
@@ -173,7 +146,9 @@ function sib(event, side) {
 
     sibles.forEach(e => {
         radius(e).forEach(el => {
-            if (!cells[el].classList.contains('flag')) {
+            if (cells[el].classList.contains('flag')) {
+                cells[el].classList.remove('opened')
+            } else {
                 cells[el].classList.add('opened')
             }
         })
@@ -188,15 +163,11 @@ function sib(event, side) {
     } else if (event.classList.contains('b0')) {
         event.classList.add('opened')
         side === 'next' ? sib(event.nextSibling, 'next') : sib(event.previousSibling, 'prev')
-    } else {
-        return
-    }
+    } else {return}
 }
 
 function radar(event) {
-    if (event.classList.contains('flag')) {
-        return
-    }
+    if (event.classList.contains('flag')) {return}
     if (!event.classList.contains('b0')) {
         event.classList.add('opened')
         return
@@ -220,9 +191,7 @@ function radar(event) {
 function bombExp(event) {
     if (!event.target.classList.contains('flag')) {
         gameOver()
-    } else {
-        return
-    }
+    } else {return}
 }
 
 ///////////////////////////////////////////////////cell-number sibl opening//////////////////////////////////////////
@@ -236,13 +205,10 @@ function numSib(event) {
             cells[e].classList.add('wrong')
         }
         if (flags === bombsAround) {
-            // if (cells[e].classList[2] === 'flag') { /////////////возможно не нужно и можно удалить
-            //     cells[e].classList.add('failed')
-            // }
+            //cells[e].classList.contains('flag') ? cells[e].classList.add('failed') : console.log() //возможно это не нужно и можно удалить
+
             cells[e].classList.add('opened')
-            if (cells[e].classList.contains('b0')) {
-                unOpenned.push(cells[e])
-            }
+            cells[e].classList.contains('b0') ? unOpenned.push(cells[e]) : console.log()
         }
     })
     field.querySelectorAll('.bomb').forEach(b => {
@@ -264,9 +230,7 @@ function numSib(event) {
 
     unOpenned.forEach(e => {
         radius(e).forEach(el => {
-            if (!cells[el].classList.contains('opened')) {
-                radar(cells[el])
-            }
+            !cells[el].classList.contains('opened') ? radar(cells[el]) : console.log()
         })
     })
 }
@@ -315,16 +279,10 @@ function bombTimer(event) {
     for (let keys in spTime) {
         if (event.toString().length === 1) {
             timerEl[1].style.backgroundPositionX = `21px`
-            if (keys === event.toString().split('')[0]) {
-                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
-            }
+            keys === event.toString().split('')[0] ? timerEl[2].style.backgroundPositionX = `${spTime[keys]}px` : console.log()
         } else {
-            if (keys === event.toString().split('')[0]) {
-                timerEl[1].style.backgroundPositionX = `${spTime[keys]}px`
-            }
-            if (keys === event.toString().split('')[1]) {
-                timerEl[2].style.backgroundPositionX = `${spTime[keys]}px`
-            }
+            keys === event.toString().split('')[0] ? timerEl[1].style.backgroundPositionX = `${spTime[keys]}px` : console.log()
+            keys === event.toString().split('')[1] ? timerEl[2].style.backgroundPositionX = `${spTime[keys]}px` : console.log()
         }
     }
 }
@@ -333,16 +291,12 @@ function bombTimer(event) {
 
 function gameOver() {
     field.querySelectorAll('.bomb').forEach(e => {
-        if (!e.classList.contains('flag')) {
-            e.classList.add('failed')
-        }
+        !e.classList.contains('flag') ? e.classList.add('failed') : console.log()
     })
     section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     clearInterval(timerID)
     for (let keys in spEmts) {
-        if (keys === 'failed') {
-            home.style.backgroundPositionX = `${spEmts[keys]}px`
-        }
+        keys === 'failed' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
 
     sound('lose')
@@ -354,44 +308,34 @@ function gameWin() {
     finalCells = 0
     finalCount = 0
 
-    field.querySelectorAll('.flag').forEach(f => {
-        if (f.classList.contains('bomb')) {
-            finalCount++
-        }
-    })
+    field.querySelectorAll('.flag').forEach(f => f.classList.contains('bomb') ? finalCount++ : console.log())
     cells.forEach(e => {
         if (e.classList.contains('opened') && !e.classList.contains('flag')) {
             finalCells++
         }
     })
     
-    if ((finalCount === 40 && finalCells === 215) || finalCount === 39 && finalCells === 216) {
+    if (finalCount === 40 && finalCells === 216) {
         clearInterval(timerID)
         for (let keys in spEmts) {
-            if (keys === 'won') {
-                home.style.backgroundPositionX = `${spEmts[keys]}px`
-            }
+            keys === 'won' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
         }
         sound('win')
+        section.querySelector('.wrapper').querySelector('.bg').style.display = 'block'
     }
 }
 
 /////////////////////////////////////////////////////////////new game////////////////////////////////////////////////
 
 function newGame() {
-    field.querySelectorAll('.cell').forEach(e => {
-        e.remove()
-    })
+    field.querySelectorAll('.cell').forEach(e => e.remove())
+
     for (let i = 1; i < 17; i++) {
         for (let j = 1; j < 17; j++) {
             field.insertAdjacentHTML('beforeend', `<div class="cell ${i}-${j}"></div>`)
         }
     }
-    timerEl.forEach(t => {
-        if (+t.classList[1][3] === 2) {
-            t.style.backgroundPositionX = '21px'
-        }
-    })
+    timerEl.forEach(t => +t.classList[1][3] === 2 ? t.style.backgroundPositionX = '21px' : console.log())
     clearInterval(timerID)
     isStart = 0
     bombsSumm = 40
@@ -420,12 +364,13 @@ field.addEventListener('click', function (event) {
         return
     }
 
-    gameWin()
+    
 
     if (isStart === 0) {
         if (event.target.classList.contains('cell') && !event.target.classList.contains('flag')) {
             sound('click')
         }
+
         timer(0)
         bombGen(event)
         bombCounter(event.target)
@@ -437,27 +382,26 @@ field.addEventListener('click', function (event) {
         sound('sibling')
         numSib(event)
     } else {
-        sound('click')
-        if (event.target.classList.contains('bomb')) {
-            bombExp(event)
-        }
+        event.target.classList.contains('bomb') ? bombExp(event) : sound('click')
         event.target.classList.add('opened')
         radar(event.target)
     }
+
+    gameWin()
 })
 
 ////////////////////////////////////////////////////////context menu//////////////////////////////////////////////////
 
 field.addEventListener('contextmenu', function (event) {
-    if ((currentBomb === 0 && event.target.classList[2] === undefined) || event.target.classList.contains('opened')) {
+    if ((currentBomb === 0 && !event.target.classList.contains('flag') && !event.target.classList.contains('wtf'))) {
         return
-    } else if (currentBomb === 0 && !event.target.classList.contains('flag')) {
+    } else if (event.target.classList.contains('opened') && !event.target.classList.contains('unopenned') && !event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         return
     } else {
         sound('flag')
     }
 
-    gameWin()
+    
 
     if (event.target.classList.contains('flag') && !event.target.classList.contains('wtf')) {
         event.target.classList.add('wtf')
@@ -478,42 +422,62 @@ field.addEventListener('contextmenu', function (event) {
             event.target.classList.add('failed')
         }
     }
+
+    gameWin()
 })
 
 /////////////////////////////////////////////////////////smile emotions///////////////////////////////////////////////
 
 field.addEventListener('mousedown', function (event) {
     for (let keys in spEmts) {
-        if (keys === 'idk') {
-            home.style.backgroundPositionX = `${spEmts[keys]}px`
-        }
+        keys === 'idk' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
 })
 
 field.addEventListener('mouseup', function (event) {
     for (let keys in spEmts) {
-        if (keys === 'default') {
-            home.style.backgroundPositionX = `${spEmts[keys]}px`
-        }
+        keys === 'default' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
 })
 
 home.addEventListener('mousedown', function () {
     for (let keys in spEmts) {
-        if (keys === 'pressed') {
-            home.style.backgroundPositionX = `${spEmts[keys]}px`
-        }
+        keys === 'pressed' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
 })
 
 home.addEventListener('mouseup', function () {
     for (let keys in spEmts) {
-        if (keys === 'default') {
-            home.style.backgroundPositionX = `${spEmts[keys]}px`
-        }
+        keys === 'default' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
     }
 })
 
 home.addEventListener('click', function (event) {
     newGame()
 })
+
+///////////////////////////////////////////////////////////responsive////////////////////////////////////////////////
+
+field.addEventListener('touchstart', function (event) {
+    for (let keys in spEmts) {
+        keys === 'idk' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
+    }
+})
+
+field.addEventListener('touchend', function (event) {
+    for (let keys in spEmts) {
+        keys === 'default' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
+    }
+})
+
+home.addEventListener('touchstart', function () {
+    for (let keys in spEmts) {
+        keys === 'pressed' ? home.style.backgroundPositionX = `${spEmts[keys]}px` : console.log()
+    }
+})
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////MADE BY PAVEL TERNO///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
