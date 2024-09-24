@@ -205,16 +205,49 @@ section {
   margin: 0 10px;
 }
 
-.home {
+.buttons-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.home, .sound {
   width: 42px;
   height: 42px;
-  background-image: url("./assets/sprites/main-sprite.png");
   background-size: 227.7692307692px;
   background-position-x: 0px;
   background-position-y: -39.5px;
+  background-image: url("./assets/sprites/main-sprite.png");
   cursor: pointer;
   position: relative;
   z-index: 8;
+}
+
+.sound {
+  position: relative;
+}
+
+.sound > div {
+  width: 75%;
+  height: 75%;
+  background-color: #c0c0c0;
+  background-image: url("./assets/images/sound-on.png");
+  background-size: cover;
+  position: absolute;
+  left: 6px;
+  top: 6px;
+}
+
+.sound.muted > div {
+  background-image: url("./assets/images/sound-off.png");
+}
+
+.sound.pressed {
+  background-position-x: -45px;
+}
+
+.sound.pressed > div {
+  left: 7px;
+  top: 8px;
 }
 
 .time-wrapper > div {
