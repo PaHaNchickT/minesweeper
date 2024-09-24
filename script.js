@@ -38,10 +38,13 @@ const pannel = section.querySelector(".wrapper").querySelector(".pannel");
 
 pannel.insertAdjacentHTML(
   "beforeend",
-  '<div class="time-wrapper"></div> <div class="home"></div> <div class="time-wrapper"></div>'
+  '<div class="time-wrapper"></div> <div class="buttons-wrapper"><div class="home"></div><div class="sound"><div></div></div></div> <div class="time-wrapper"></div>'
 );
 const timeWrapper = pannel.querySelectorAll(".time-wrapper");
 const home = pannel.querySelector(".home");
+const soundBtn = pannel.querySelector(".sound");
+
+let isSound = true;
 
 timeWrapper.forEach((wr, ind) => {
   for (let k = 0; k < 3; k++) {
@@ -433,10 +436,29 @@ function newGame() {
 
 ///////////////////////////////////////////////////////////////sound/////////////////////////////////////////////////
 
+soundBtn.addEventListener("click", () => {
+  if (isSound) {
+    isSound = false;
+    soundBtn.classList.add("muted");
+  } else {
+    isSound = true;
+    soundBtn.classList.remove("muted");
+  }
+});
+
+soundBtn.addEventListener("mousedown", () => {
+  soundBtn.classList.add("pressed");
+});
+
+soundBtn.addEventListener("mouseup", () => {
+  soundBtn.classList.remove("pressed");
+});
+
 function sound(event) {
   let audio = new Audio();
   audio.autoplay = true;
   audio.src = `./assets/sounds/${event}.mp3`;
+  if (!isSound) audio.volume = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
