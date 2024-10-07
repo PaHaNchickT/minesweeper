@@ -9,7 +9,7 @@ import { store } from '../redux/store';
 
 const App = (): ReactElement => {
   return (
-    <div className="flex flex-col justify-center w-full relative">
+    <div className="w-screen h-screen flex justify-center items-center">
       <Provider store={store}>
         <Field />
       </Provider>

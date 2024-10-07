@@ -5,11 +5,18 @@ import { useSelector } from 'react-redux';
 
 import type { RootState } from '@/redux/store';
 
-const Field = (): ReactElement => {
-  const test = useSelector((state: RootState) => state.fieldItems);
-  console.log(test);
+import Cell from '../Cell/Cell';
 
-  return <p>Test</p>;
+const Field = (): ReactElement => {
+  const fieldItems = useSelector((state: RootState) => state.fieldItems);
+
+  return (
+    <div className="w-[81px] h-[81px] flex flex-wrap">
+      {fieldItems.map((item, index) => (
+        <Cell key={index} item={item} />
+      ))}
+    </div>
+  );
 };
 
 export default Field;
