@@ -9,31 +9,32 @@ import { updateField, updateItem } from '@/redux/fieldItemsSlice';
 import { generationOn } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
+import { closeCellsRadius } from '@/utils/closeCellsRadius';
 import { fieldGen } from '@/utils/fieldGen';
 
-const Cell = (props: {
-  item: TCell;
-  indexX: number;
-  indexY: number;
-  zeroCellsOpening: (x: number, y: number) => void;
-}): ReactElement => {
+const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElement => {
   const dispatch = useDispatch();
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
+  const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
 
   const firstClick = (): void => {
     dispatch(updateField(fieldGen({ x: props.indexX, y: props.indexY })));
     dispatch(generationOn());
   };
 
-  const closedCellRadius = (): void => {
-    props.zeroCellsOpening(props.indexX, props.indexY);
-  };
-
   const clickHandler = (): void => {
     if (!isGenerated) {
       firstClick();
     } else if (!props.item.isClicked) {
-      closedCellRadius();
+      closeCellsRadius(props.indexX, props.indexY, fieldItems).forEach((cell) => {
+        dispatch(
+          updateItem({
+            item: { isClicked: true },
+            indexX: cell.x,
+            indexY: cell.y,
+          }),
+        );
+      });
     }
 
     dispatch(
