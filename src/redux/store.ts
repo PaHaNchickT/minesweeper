@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import fieldItemsReducer from './fieldItemsSlice';
+import isGeneratedReducer from './isGeneratedSlice';
 
 export const store = configureStore({
   reducer: {
     fieldItems: fieldItemsReducer,
+    isGenerated: isGeneratedReducer,
   },
 });
 

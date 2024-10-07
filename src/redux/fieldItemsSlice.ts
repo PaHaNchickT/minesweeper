@@ -20,7 +20,6 @@ export const fieldItemsSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateItem: (state, action: PayloadAction<{ item: TCell; index: number }>) => {
-      // state.value += action.payload;
       state[action.payload.index] = action.payload.item;
     },
   },
