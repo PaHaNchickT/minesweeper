@@ -2,6 +2,7 @@ import { FIELD_CONFIG } from '@/constants/constants';
 import type { TCell } from '@/types/types';
 
 import { cellsGen } from './cellsGen';
+import { closeCellsRadius } from './closeCellsRadius';
 
 export const fieldGen = (initialCell: { x: number; y: number }): TCell[][] => {
   const rawCells = cellsGen(initialCell);
@@ -30,6 +31,10 @@ export const fieldGen = (initialCell: { x: number; y: number }): TCell[][] => {
         );
       }
     });
+  });
+
+  closeCellsRadius(initialCell.x, initialCell.y, rawCells).forEach((cell) => {
+    rawCells[cell.y][cell.x].isClicked = true;
   });
 
   return rawCells;
