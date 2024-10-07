@@ -9,10 +9,13 @@ export const isGeneratedSlice = createSlice({
     generateOn: (state) => {
       state.value = true;
     },
+    generateOff: (state) => {
+      state.value = false;
+    },
   },
 });
 
-export const { generateOn } = isGeneratedSlice.actions;
+export const { generateOn, generateOff } = isGeneratedSlice.actions;
 
 export default isGeneratedSlice.reducer;
 

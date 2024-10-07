@@ -14,10 +14,12 @@ export const fieldItemsSlice = createSlice({
     updateField: (state, action) => {
       state.value = action.payload;
     },
+    clearField: (state) => {
+      state.value = initFieldGen();
+    },
   },
 });
 
-export const { updateItem, updateField } = fieldItemsSlice.actions;
+export const { updateItem, updateField, clearField } = fieldItemsSlice.actions;
 
 export default fieldItemsSlice.reducer;
-
