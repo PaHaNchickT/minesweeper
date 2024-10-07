@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { TEXT_CONTENT } from '@/constants/constants';
 import { clearField } from '@/redux/fieldItemsSlice';
-import { generateOff } from '@/redux/isGeneratedSlice';
+import { generationOff } from '@/redux/isGeneratedSlice';
 
 const ControlPanel = (): ReactElement => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const ControlPanel = (): ReactElement => {
       <Button
         onPress={() => {
           dispatch(clearField());
-          dispatch(generateOff());
+          dispatch(generationOff());
         }}
       >
         {TEXT_CONTENT.NGBtn}
