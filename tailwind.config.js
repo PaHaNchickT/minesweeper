@@ -22,7 +22,7 @@ module.exports = {
         light: {
           layout: {},
           colors: {
-            background: 'white',
+            background: '#f3f3f3',
             primary: {
               DEFAULT: '#f6ad34',
             },
@@ -31,7 +31,7 @@ module.exports = {
         dark: {
           layout: {},
           colors: {
-            background: 'white',
+            background: '#f3f3f3',
             primary: {
               DEFAULT: '#f6ad34',
             },
