@@ -5,7 +5,7 @@ import type { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { updateField } from '@/redux/fieldItemsSlice';
+import { updateField, updateItem } from '@/redux/fieldItemsSlice';
 import { generateOn } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
@@ -22,13 +22,18 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
       dispatch(generateOn());
     }
 
-    // dispatch(
-    //   updateItem({
-    //     item: Object.assign(itemCopy, { isClicked: true }),
-    //     indexX: props.indexX,
-    //     indexY: props.indexY,
-    //   }),
-    // );
+    //opening closed cell
+    // if (!props.item.isClicked) {
+
+    // }
+
+    dispatch(
+      updateItem({
+        item: { isClicked: true },
+        indexX: props.indexX,
+        indexY: props.indexY,
+      }),
+    );
   };
 
   return (
