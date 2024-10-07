@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 import type { TCell } from '@/types/types';
-// import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: TCell[] = [
   { isBomb: true, isClicked: false, isFlag: false, innerText: '💣' },
@@ -19,9 +19,9 @@ export const fieldItemsSlice = createSlice({
   name: 'fieldItems',
   initialState: initialState,
   reducers: {
-    updateItem: (state, action) => {
+    updateItem: (state, action: PayloadAction<{ item: TCell; index: number }>) => {
       // state.value += action.payload;
-      console.log(state, action);
+      state[action.payload.index] = action.payload.item;
     },
   },
 });
