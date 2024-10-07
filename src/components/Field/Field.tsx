@@ -8,10 +8,10 @@ import type { RootState } from '@/redux/store';
 import Cell from '../Cell/Cell';
 
 const Field = (): ReactElement => {
-  const fieldItems = useSelector((state: RootState) => state.fieldItems);
+  const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
 
   return (
-    <div className="w-[81px] h-[81px] flex flex-wrap">
+    <div className={`w-[432px] h-[432px] flex flex-wrap`}>
       {fieldItems.map((item, indexY) =>
         item.map((subItem, indexX) => <Cell key={indexX + indexY} item={subItem} indexX={indexX} indexY={indexY} />),
       )}

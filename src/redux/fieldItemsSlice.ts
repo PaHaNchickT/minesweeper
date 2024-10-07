@@ -2,36 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import type { TCell } from '@/types/types';
-
-const initialState: TCell[][] = [
-  [
-    { isBomb: true, isClicked: false, isFlag: false, innerText: '💣' },
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 1 },
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 0 },
-  ],
-  [
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 2 },
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 2 },
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 1 },
-  ],
-  [
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 1 },
-    { isBomb: true, isClicked: false, isFlag: false, innerText: '💣' },
-    { isBomb: false, isClicked: false, isFlag: false, innerText: 1 },
-  ],
-];
+import { initFieldGen } from '@/utils/initFieldGen';
 
 export const fieldItemsSlice = createSlice({
   name: 'fieldItems',
-  initialState: initialState,
+  initialState: { value: initFieldGen() },
   reducers: {
     updateItem: (state, action: PayloadAction<{ item: TCell; indexX: number; indexY: number }>) => {
-      state[action.payload.indexY][action.payload.indexX] = action.payload.item;
+      state.value[action.payload.indexY][action.payload.indexX] = action.payload.item;
+    },
+    updateField: (state, action) => {
+      state.value = action.payload;
     },
   },
 });
 
-export const { updateItem } = fieldItemsSlice.actions;
+export const { updateItem, updateField } = fieldItemsSlice.actions;
 
 export default fieldItemsSlice.reducer;
 

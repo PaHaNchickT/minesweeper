@@ -3,6 +3,6 @@ export const TEXT_CONTENT = {
 };
 
 export const FIELD_CONFIG = {
-  fieldSize: 3,
-  bombsCount: 2,
+  fieldSize: 16,
+  bombsCount: 40,
 };
