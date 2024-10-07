@@ -6,8 +6,8 @@ import { type ReactElement } from 'react';
 // import Header from '@/components/Header/Header';
 
 export const metadata: Metadata = {
-  title: "Pavel's Terno Portfolio",
-  description: 'Portfolio of Junior Frontend Developer Pavel Terno made using TypeScript, React and Next.js',
+  title: 'Minesweeper',
+  description: 'template description',
 };
 
 const RootLayout = async ({
