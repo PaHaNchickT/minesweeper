@@ -12,9 +12,9 @@ const Field = (): ReactElement => {
 
   return (
     <div className="w-[81px] h-[81px] flex flex-wrap">
-      {fieldItems.map((item, index) => (
-        <Cell key={index} item={item} index={index} />
-      ))}
+      {fieldItems.map((item, indexY) =>
+        item.map((subItem, indexX) => <Cell key={indexX + indexY} item={subItem} indexX={indexX} indexY={indexY} />),
+      )}
     </div>
   );
 };

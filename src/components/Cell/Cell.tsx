@@ -9,20 +9,28 @@ import { updateItem } from '@/redux/fieldItemsSlice';
 import { generateOn } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
+import { fieldGen } from '@/utils/fieldGen';
 
-const Cell = (props: { item: TCell; index: number }): ReactElement => {
+const fieldSize = 3;
+
+const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElement => {
+  const itemCopy = JSON.parse(JSON.stringify(props.item));
+
   const dispatch = useDispatch();
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
 
   const clickHandler = (): void => {
+    // first click
     if (!isGenerated) {
+      fieldGen(props.indexX, fieldSize);
       dispatch(generateOn());
     }
 
     dispatch(
       updateItem({
-        item: Object.assign(JSON.parse(JSON.stringify(props.item)), { isClicked: true }),
-        index: props.index,
+        item: Object.assign(itemCopy, { isClicked: true }),
+        indexX: props.indexX,
+        indexY: props.indexY,
       }),
     );
   };
