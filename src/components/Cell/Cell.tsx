@@ -11,10 +11,14 @@ import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
 import { fieldGen } from '@/utils/fieldGen';
 
-const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElement => {
+const Cell = (props: {
+  item: TCell;
+  indexX: number;
+  indexY: number;
+  zeroCellsOpening: (x: number, y: number) => void;
+}): ReactElement => {
   const dispatch = useDispatch();
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
-  const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
 
   const firstClick = (): void => {
     dispatch(updateField(fieldGen({ x: props.indexX, y: props.indexY })));
@@ -22,7 +26,7 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
   };
 
   const closedCellRadius = (): void => {
-    console.log(fieldItems, { x: props.indexX, y: props.indexY });
+    props.zeroCellsOpening(props.indexX, props.indexY);
   };
 
   const clickHandler = (): void => {
