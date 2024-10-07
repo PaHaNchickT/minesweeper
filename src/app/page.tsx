@@ -1,13 +1,20 @@
 'use client';
 
 import { type ReactElement } from 'react';
+import { Provider } from 'react-redux';
 
-const Home = (): ReactElement => {
+import Field from '@/components/Field/Field';
+
+import { store } from '../redux/store';
+
+const App = (): ReactElement => {
   return (
     <div className="flex flex-col justify-center w-full relative">
-      <p>Test</p>
+      <Provider store={store}>
+        <Field />
+      </Provider>
     </div>
   );
 };
 
-export default Home;
+export default App;
