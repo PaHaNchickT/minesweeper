@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { TEXT_CONTENT } from '@/constants/constants';
 import { clearField } from '@/redux/fieldItemsSlice';
+import { startGame } from '@/redux/gameStateSlice';
 import { generationOff } from '@/redux/isGeneratedSlice';
 
 const ControlPanel = (): ReactElement => {
@@ -17,6 +18,7 @@ const ControlPanel = (): ReactElement => {
         onPress={() => {
           dispatch(clearField());
           dispatch(generationOff());
+          dispatch(startGame())
         }}
       >
         {TEXT_CONTENT.NGBtn}

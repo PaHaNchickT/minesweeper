@@ -11,7 +11,7 @@ import ModalWindow from '@/components/ModalWindow/ModalWindow';
 import { store } from '../redux/store';
 
 const App = (): ReactElement => {
-  const { isOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     document.addEventListener('contextmenu', (event) => event.preventDefault());
@@ -22,7 +22,7 @@ const App = (): ReactElement => {
     <div className="w-screen h-screen flex flex-col gap-5 justify-center items-center">
       <Provider store={store}>
         <ControlPanel />
-        <Field />
+        <Field onOpen={onOpen}/>
         <ModalWindow isOpen={isOpen} onClose={onClose} />
       </Provider>
     </div>
