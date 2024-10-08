@@ -10,7 +10,6 @@ import { clearField } from '@/redux/fieldItemsSlice';
 import { clearFlags, clearGame } from '@/redux/gameStateSlice';
 import { generationOff } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
-import { timerFormatter } from '@/utils/timerFormatter';
 
 const ControlPanel = (): ReactElement => {
   const dispatch = useDispatch();
@@ -20,18 +19,19 @@ const ControlPanel = (): ReactElement => {
   const isGameEnded = useSelector((state: RootState) => state.gameState.isGameEnded);
   const isGameStarted = useSelector((state: RootState) => state.gameState.isGameStarted);
 
+  //timer
   useEffect(() => {
     if (!isGameStarted) return;
 
     const interval = setInterval(() => setSeconds((sec) => sec + 1), 1000);
 
-    if (isGameEnded) clearInterval(interval);
+    if (isGameEnded || seconds === 999) clearInterval(interval);
     return (): void => clearInterval(interval);
-  }, [isGameStarted, isGameEnded]);
+  }, [isGameStarted, isGameEnded, seconds]);
 
   return (
     <div className="w-[432px] flex justify-between items-center">
-      <p>{FIELD_CONFIG.bombsCount - flagsCount}</p>
+      <p>{(FIELD_CONFIG.bombsCount - flagsCount).toString().padStart(3, '0')}</p>
       <Button
         onPress={() => {
           setSeconds(0);
@@ -43,7 +43,7 @@ const ControlPanel = (): ReactElement => {
       >
         {TEXT_CONTENT.NGBtn}
       </Button>
-      <p>{timerFormatter(seconds)}</p>
+      <p>{seconds.toString().padStart(3, '0')}</p>
     </div>
   );
 };
