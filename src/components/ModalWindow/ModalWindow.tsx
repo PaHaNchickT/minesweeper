@@ -15,7 +15,7 @@ const ModalWindow = (props: { isOpen: boolean; onClose: () => void }): ReactElem
             </ModalBody>
             <ModalFooter className="flex justify-center">
               <Button color="default" onPress={onClose}>
-                New Game
+                Close
               </Button>
             </ModalFooter>
           </>
