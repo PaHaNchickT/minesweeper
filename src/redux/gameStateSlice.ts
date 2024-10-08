@@ -2,13 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const gameStateSlice = createSlice({
   name: 'gameState',
-  initialState: { isGameOn: false },
+  initialState: { isGameStarted: false, isGameEnded: false },
   reducers: {
     startGame: (state) => {
-      state.isGameOn = true;
+      state.isGameStarted = true;
+      state.isGameEnded = false;
     },
     endGame: (state) => {
-      state.isGameOn = false;
+      state.isGameStarted = false;
+      state.isGameEnded = true;
     },
   },
 });
