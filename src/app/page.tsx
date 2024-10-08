@@ -15,7 +15,6 @@ const App = (): ReactElement => {
 
   useEffect(() => {
     document.addEventListener('contextmenu', (event) => event.preventDefault());
-    // onOpen();
   }, []);
 
   return (

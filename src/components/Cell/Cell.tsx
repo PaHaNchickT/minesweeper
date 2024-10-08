@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { updateField, updateItem } from '@/redux/fieldItemsSlice';
-import { endGame, toggleFlag } from '@/redux/gameStateSlice';
+import { endGame, startGame, toggleFlag } from '@/redux/gameStateSlice';
 import { generationOn } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
@@ -36,6 +36,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   const firstClick = (): void => {
     dispatch(updateField(fieldGen({ x: props.currentPos.x, y: props.currentPos.y })));
     dispatch(generationOn());
+    dispatch(startGame());
   };
 
   const gameOver = (): void => {

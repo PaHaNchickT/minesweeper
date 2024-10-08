@@ -4,6 +4,10 @@ export const gameStateSlice = createSlice({
   name: 'gameState',
   initialState: { isGameStarted: false, isGameEnded: false, flagsCount: 0, isWin: false },
   reducers: {
+    clearGame: (state) => {
+      state.isGameStarted = false;
+      state.isGameEnded = false;
+    },
     startGame: (state) => {
       state.isGameStarted = true;
       state.isGameEnded = false;
@@ -23,6 +27,6 @@ export const gameStateSlice = createSlice({
   },
 });
 
-export const { startGame, endGame, toggleFlag, clearFlags } = gameStateSlice.actions;
+export const { clearGame, startGame, endGame, toggleFlag, clearFlags } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;
