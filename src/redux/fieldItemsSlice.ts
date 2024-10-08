@@ -8,7 +8,7 @@ export const fieldItemsSlice = createSlice({
   reducers: {
     updateItem: (state, action) => {
       const tempItem = JSON.parse(JSON.stringify(state.value[action.payload.indexY][action.payload.indexX]));
-      state.value[action.payload.indexY][action.payload.indexX] = Object.assign(tempItem, { isClicked: true });
+      state.value[action.payload.indexY][action.payload.indexX] = Object.assign(tempItem, action.payload.item);
     },
     updateField: (state, action) => {
       state.value = action.payload;

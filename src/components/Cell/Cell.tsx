@@ -23,6 +23,8 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
   };
 
   const clickHandler = (): void => {
+    if (props.item.isFlag) return;
+
     if (!isGenerated) {
       firstClick();
     } else if (!props.item.isClicked) {
@@ -46,13 +48,25 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
     );
   };
 
+  const contextHandler = (): void => {
+    dispatch(
+      updateItem({
+        item: props.item.isFlag ? { isFlag: false } : { isFlag: true },
+        indexX: props.indexX,
+        indexY: props.indexY,
+      }),
+    );
+  };
+
   return (
     <Button
       className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${props.item.isClicked ? 'bg-warning' : 'bg-[#699]'}`}
       onPress={clickHandler}
+      onContextMenu={contextHandler}
     >
-      {/* {props.item.isClicked ? props.item.innerText.toString() : 'x'} */}
-      {props.item.innerText.toString()}
+      {props.item.isClicked ? props.item.innerText.toString() : 'x'}
+      {props.item.isFlag ? '🚩' : 'x'}
+      {/* {props.item.innerText.toString()} */}
     </Button>
   );
 };
