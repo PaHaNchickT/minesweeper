@@ -1,16 +1,21 @@
 'use client';
 
+import { useDisclosure } from '@nextui-org/react';
 import { useEffect, type ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
 import ControlPanel from '@/components/ControlPanel/ControlPanel';
 import Field from '@/components/Field/Field';
+import ModalWindow from '@/components/ModalWindow/ModalWindow';
 
 import { store } from '../redux/store';
 
 const App = (): ReactElement => {
+  const { isOpen, onClose } = useDisclosure();
+
   useEffect(() => {
     document.addEventListener('contextmenu', (event) => event.preventDefault());
+    // onOpen();
   }, []);
 
   return (
@@ -18,6 +23,7 @@ const App = (): ReactElement => {
       <Provider store={store}>
         <ControlPanel />
         <Field />
+        <ModalWindow isOpen={isOpen} onClose={onClose} />
       </Provider>
     </div>
   );

@@ -76,6 +76,8 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
   if (props.item.isClicked) cellText = props.item.innerText.toString();
   if (props.item.isFlag) cellText = '🚩';
 
+  if (props.item.isClicked && props.item.isBomb) console.log('НУ ТЫ И ЛОШШААААРА КОНКРЕТНАЯ');
+
   return (
     <Button
       className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${props.item.isClicked ? 'bg-warning' : 'bg-[#699]'}`}
