@@ -23,6 +23,16 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   let cellText = '';
 
+  const cellUpdating = (item: { [key: string]: boolean }, indexX: number, indexY: number): void => {
+    dispatch(
+      updateItem({
+        item,
+        indexX,
+        indexY,
+      }),
+    );
+  };
+
   const firstClick = (): void => {
     dispatch(updateField(fieldGen({ x: props.currentPos.x, y: props.currentPos.y })));
     dispatch(generationOn());
@@ -32,13 +42,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
     props.onOpen();
     dispatch(endGame());
     bombsShowing(fieldItems).forEach((cell) => {
-      dispatch(
-        updateItem({
-          item: { isClicked: true },
-          indexX: cell.x,
-          indexY: cell.y,
-        }),
-      );
+      cellUpdating({ isClicked: true }, cell.x, cell.y);
     });
   };
 
@@ -50,35 +54,17 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
       firstClick();
     } else if (!props.item.isClicked) {
       closeCellsRadius(props.currentPos.x, props.currentPos.y, fieldItems).forEach((cell) => {
-        dispatch(
-          updateItem({
-            item: { isClicked: true },
-            indexX: cell.x,
-            indexY: cell.y,
-          }),
-        );
+        cellUpdating({ isClicked: true }, cell.x, cell.y);
       });
     } else if (props.item.isClicked && props.item.innerText && typeof props.item.innerText === 'number') {
       openCellsRadius(props.currentPos.x, props.currentPos.y, fieldItems).forEach((cell) => {
         if (fieldItems[cell.y][cell.x].isBomb) endGameFunc();
 
-        dispatch(
-          updateItem({
-            item: { isClicked: true },
-            indexX: cell.x,
-            indexY: cell.y,
-          }),
-        );
+        cellUpdating({ isClicked: true }, cell.x, cell.y);
       });
     }
 
-    dispatch(
-      updateItem({
-        item: { isClicked: true },
-        indexX: props.currentPos.x,
-        indexY: props.currentPos.y,
-      }),
-    );
+    cellUpdating({ isClicked: true }, props.currentPos.x, props.currentPos.y);
   };
 
   const contextHandler = (): void => {
