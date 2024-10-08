@@ -5,5 +5,5 @@ export const TEXT_CONTENT = {
 
 export const FIELD_CONFIG = {
   fieldSize: 16,
-  bombsCount: 40,
+  bombsCount: 60,
 };
