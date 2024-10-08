@@ -11,6 +11,7 @@ import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
 import { closeCellsRadius } from '@/utils/closeCellsRadius';
 import { fieldGen } from '@/utils/fieldGen';
+import { openCellsRadius } from '@/utils/openCellsRadius';
 
 const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElement => {
   const dispatch = useDispatch();
@@ -31,6 +32,16 @@ const Cell = (props: { item: TCell; indexX: number; indexY: number }): ReactElem
       firstClick();
     } else if (!props.item.isClicked) {
       closeCellsRadius(props.indexX, props.indexY, fieldItems).forEach((cell) => {
+        dispatch(
+          updateItem({
+            item: { isClicked: true },
+            indexX: cell.x,
+            indexY: cell.y,
+          }),
+        );
+      });
+    } else if (props.item.isClicked && props.item.innerText && typeof props.item.innerText === 'number') {
+      openCellsRadius(props.indexX, props.indexY, fieldItems).forEach((cell) => {
         dispatch(
           updateItem({
             item: { isClicked: true },
