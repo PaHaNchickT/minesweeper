@@ -91,7 +91,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   if (props.item.isClicked) cellText = props.item.innerText.toString();
   if (props.item.isFlag) cellText = '🚩';
-  if (!props.item.innerText) cellText = '';
+  if (!props.item.innerText && props.item.isClicked) cellText = '';
 
   return (
     <Button
