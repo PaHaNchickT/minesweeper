@@ -7,8 +7,9 @@ export const openCellsRadius = (
   currentX: number,
   currentY: number,
   fieldItems: TCell[][],
-): { x: number; y: number }[] => {
-  const output: { x: number; y: number }[] = [];
+): { cellsToOpen: { x: number; y: number }[]; wrongFlags: { x: number; y: number }[] } => {
+  const cellsToOpen: { x: number; y: number }[] = [];
+  const wrongFlags: { x: number; y: number }[] = [];
 
   let flagsCount = 0;
   for (
@@ -23,12 +24,20 @@ export const openCellsRadius = (
     ) {
       if (fieldItems[countY][countX].isFlag) flagsCount++;
       if (!fieldItems[countY][countX].isFlag && !fieldItems[countY][countX].isClicked) {
-        output.push({ x: countX, y: countY });
-        if (fieldItems[countY][countX].innerText === 0) output.push(...closeCellsRadius(countX, countY, fieldItems));
+        cellsToOpen.push({ x: countX, y: countY });
+        if (fieldItems[countY][countX].innerText === 0)
+          cellsToOpen.push(...closeCellsRadius(countX, countY, fieldItems));
       }
+
+      if (fieldItems[countY][countX].isFlag && !fieldItems[countY][countX].isBomb)
+        wrongFlags.push({ x: countX, y: countY });
     }
   }
 
-  return flagsCount === fieldItems[currentY][currentX].innerText ? output : [];
+  return {
+    cellsToOpen: flagsCount === fieldItems[currentY][currentX].innerText ? cellsToOpen : [],
+    wrongFlags: flagsCount === fieldItems[currentY][currentX].innerText ? wrongFlags : [],
+  };
+  // return flagsCount === fieldItems[currentY][currentX].innerText ? cellsToOpen : [];
 };
 

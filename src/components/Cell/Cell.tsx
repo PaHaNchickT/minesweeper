@@ -71,10 +71,14 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
         cellUpdating({ isClicked: true }, cell.x, cell.y);
       });
     } else if (props.item.isClicked && props.item.innerText && typeof props.item.innerText === 'number') {
-      openCellsRadius(props.currentPos.x, props.currentPos.y, fieldItems).forEach((cell) => {
+      const cellsToOpen = openCellsRadius(props.currentPos.x, props.currentPos.y, fieldItems);
+      cellsToOpen.cellsToOpen.forEach((cell) => {
         if (fieldItems[cell.y][cell.x].isBomb) gameOver({ x: cell.x, y: cell.y });
 
         cellUpdating({ isClicked: true }, cell.x, cell.y);
+      });
+      cellsToOpen.wrongFlags.forEach((cell) => {
+        cellUpdating({ isFlagWrong: true }, cell.x, cell.y);
       });
     }
 
@@ -104,7 +108,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   return (
     <Button
-      className={`opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${cellBg} ${props.item.isFlag ? 'flex flex-col justify-start' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
+      className={`relative opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${cellBg} ${props.item.isFlag ? 'flex flex-col justify-start leading-tight' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={gameState.isGameEnded}
@@ -114,6 +118,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
       onPressEnd={clickEndHandler}
     >
       {cellText}
+      {props.item.isFlagWrong && <p className="absolute w-full h-full">❌</p>}
     </Button>
   );
 };
