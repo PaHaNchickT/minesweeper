@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { type ReactElement } from 'react';
 
 // import Footer from '@/components/Footer/Footer';
-// import Header from '@/components/Header/Header';
+import Header from '@/components/Header/Header';
 
 export const metadata: Metadata = {
   title: 'Minesweeper',
@@ -19,8 +19,7 @@ const RootLayout = async ({
     <html lang="en" suppressHydrationWarning={true}>
       <body>
         <div className="w-screen h-screen flex flex-col justify-between">
-          {/* <Header /> */}
-          <p>Minesweeper</p>
+          <Header />
           {children}
           {/* <Footer /> */}
           <p>Footer</p>

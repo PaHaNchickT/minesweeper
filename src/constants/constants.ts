@@ -8,6 +8,7 @@ export const TEXT_CONTENT = {
   modalCloseBtn: 'Close',
   reloadBtn: 'Reload App',
   homeBtn: 'Home',
+  headerTitle: 'Minesweeper',
 };
 
 export const FIELD_CONFIG = {
