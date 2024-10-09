@@ -19,7 +19,7 @@ const ModalWindow = (props: { isOpen: boolean; onClose: () => void }): ReactElem
               {isWin ? TEXT_CONTENT.modalTitleWin : TEXT_CONTENT.modalTitleLoose}
             </ModalHeader>
             <ModalBody className="flex flex-row justify-center">
-              <p>{isWin ? TEXT_CONTENT.modalBodyWin : TEXT_CONTENT.modalBodyLoose}</p>
+              <p className='text-xs text-center'>{isWin ? TEXT_CONTENT.modalBodyWin : TEXT_CONTENT.modalBodyLoose}</p>
             </ModalBody>
             <ModalFooter className="flex justify-center">
               <Button color="default" onPress={onClose}>
