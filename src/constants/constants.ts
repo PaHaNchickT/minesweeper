@@ -5,6 +5,7 @@ export const TEXT_CONTENT = {
   modalBodyWin: 'Бля чел хорош гг',
   modalBodyLoose: 'НУ ТЫ И ЛОШШААААРА КОНКРЕТНАЯ',
   modalCloseBtn: 'Close',
+  reloadBtn: 'Reload App',
 };
 
 export const FIELD_CONFIG = {
