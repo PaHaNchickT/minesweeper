@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { type ReactElement } from 'react';
 
-// import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 
 export const metadata: Metadata = {
@@ -21,8 +21,7 @@ const RootLayout = async ({
         <div className="w-screen h-screen flex flex-col justify-between">
           <Header />
           {children}
-          {/* <Footer /> */}
-          <p>Footer</p>
+          <Footer />
         </div>
       </body>
     </html>
