@@ -1,11 +1,13 @@
 export const TEXT_CONTENT = {
   errorMsg: 'Something went wrong!',
+  notFoundMsg: 'Not Found!',
   modalTitleWin: 'You Win!',
   modalTitleLoose: 'Game Over!',
   modalBodyWin: 'Бля чел хорош гг',
   modalBodyLoose: 'НУ ТЫ И ЛОШШААААРА КОНКРЕТНАЯ',
   modalCloseBtn: 'Close',
   reloadBtn: 'Reload App',
+  homeBtn: 'Home',
 };
 
 export const FIELD_CONFIG = {
