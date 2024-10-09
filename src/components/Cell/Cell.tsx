@@ -5,6 +5,7 @@ import type { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import { FIELD_CONFIG } from '@/constants/constants';
 import { updateField, updateItem } from '@/redux/fieldItemsSlice';
 import { endGame, startGame, toggleFlag, updateClickStatus } from '@/redux/gameStateSlice';
 import { generationOn } from '@/redux/isGeneratedSlice';
@@ -19,7 +20,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   const dispatch = useDispatch();
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
   const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
-  const isGameEnded = useSelector((state: RootState) => state.gameState.isGameEnded);
+  const gameState = useSelector((state: RootState) => state.gameState);
 
   const closedCellStyles = 'border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080]';
   const openedCellStyles = 'border-2 border-l-[#808080] border-t-[#808080]';
@@ -75,7 +76,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   };
 
   const contextHandler = (): void => {
-    if (props.item.isClicked) return;
+    if (props.item.isClicked || (!props.item.isFlag && gameState.flagsCount >= FIELD_CONFIG.bombsCount)) return;
 
     cellUpdating(props.item.isFlag ? { isFlag: false } : { isFlag: true }, props.currentPos.x, props.currentPos.y);
     dispatch(toggleFlag(props.item.isFlag ? false : true));
@@ -98,7 +99,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
       className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isClicked ? openedCellStyles : closedCellStyles}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
-      isDisabled={isGameEnded}
+      isDisabled={gameState.isGameEnded}
       onMouseDown={clickStartHandler}
       onMouseUp={clickEndHandler}
       onPressStart={clickStartHandler}
