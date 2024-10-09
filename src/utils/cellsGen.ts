@@ -20,7 +20,14 @@ export const cellsGen = (initField: TCell[][], initialCell: { x: number; y: numb
       }
       if (initField[counterX][counterY].isFlag) isFlag = true;
 
-      subArray.push({ isBomb: isBomb, isClicked: false, isFlag: isFlag, innerText: innerText });
+      subArray.push({
+        isBomb: isBomb,
+        isClicked: false,
+        isFlag: isFlag,
+        innerText: innerText,
+        isBombWrong: false,
+        isFlagWrong: false,
+      });
     }
     fieldArray.push(subArray);
   }

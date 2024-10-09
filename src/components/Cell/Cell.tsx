@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@nextui-org/react';
-import { useEffect, useState, type ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -18,7 +18,6 @@ import { openCellsRadius } from '@/utils/openCellsRadius';
 
 const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen: () => void }): ReactElement => {
   const dispatch = useDispatch();
-  const [cellBg, setCellBg] = useState('bg-[#c0c0c0]');
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
   const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
   const gameState = useSelector((state: RootState) => state.gameState);
@@ -28,6 +27,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   let cellText = '';
   let cellColor = 'text-black';
+  let cellBg = 'bg-[#c0c0c0]';
 
   const cellUpdating = (item: { [key: string]: boolean }, indexX: number, indexY: number): void => {
     dispatch(
@@ -45,21 +45,23 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
     dispatch(startGame());
   };
 
-  const gameOver = (): void => {
+  const gameOver = (bombPos: { x: number; y: number }): void => {
     props.onOpen();
 
     dispatch(endGame(false));
     dispatch(updateClickStatus('😵'));
 
+    cellUpdating({ isBombWrong: true }, bombPos.x, bombPos.y);
+
     bombsShowing(fieldItems).forEach((cell) => {
       cellUpdating({ isClicked: true }, cell.x, cell.y);
     });
 
-    setCellBg('bg-[#ff0000]');
+    // if (props.item.isFlag && !props.item.isBomb) console.log(props.currentPos);
   };
 
   const clickHandler = (): void => {
-    if (props.item.isBomb && !props.item.isFlag) gameOver();
+    if (props.item.isBomb && !props.item.isFlag) gameOver(props.currentPos);
     if (props.item.isFlag) return;
 
     if (!isGenerated) {
@@ -70,7 +72,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
       });
     } else if (props.item.isClicked && props.item.innerText && typeof props.item.innerText === 'number') {
       openCellsRadius(props.currentPos.x, props.currentPos.y, fieldItems).forEach((cell) => {
-        if (fieldItems[cell.y][cell.x].isBomb) gameOver();
+        if (fieldItems[cell.y][cell.x].isBomb) gameOver({ x: cell.x, y: cell.y });
 
         cellUpdating({ isClicked: true }, cell.x, cell.y);
       });
@@ -98,10 +100,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   if (props.item.isFlag) cellText = '🚩';
   if (!props.item.innerText && props.item.isClicked) cellText = '';
   if (typeof props.item.innerText === 'number' && props.item.innerText) cellColor = CELLS_COLOR[props.item.innerText];
-
-  useEffect(() => {
-    if (cellBg !== 'bg-[#c0c0c0]' && !gameState.isGameStarted && !gameState.isGameEnded) setCellBg('bg-[#c0c0c0]');
-  }, [cellBg, gameState]);
+  if (props.item.isBombWrong) cellBg = 'bg-[#ff0000]';
 
   return (
     <Button
