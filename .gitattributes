@@ -12,7 +12,5 @@
 *.ico binary
 *.tiff binary
 
-# Videos
-*.mp4 binary
-*.avi binary
-*.webm binary
+# Fonts
+*.ttf binary

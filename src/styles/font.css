@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Minesweeper';
+  src: url('../../public/fonts/mine-sweeper.ttf');
+}
+
 body {
-  font-family: 'Comfortaa', sans-serif;
+  font-family: 'Minesweeper', sans-serif;
 }

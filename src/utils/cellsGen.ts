@@ -16,7 +16,7 @@ export const cellsGen = (initField: TCell[][], initialCell: { x: number; y: numb
 
       if (bombsPos.map((pos) => JSON.stringify(pos)).includes(JSON.stringify({ x: counterY, y: counterX }))) {
         isBomb = true;
-        innerText = '💣';
+        innerText = '*';
       }
       if (initField[counterX][counterY].isFlag) isFlag = true;
 
