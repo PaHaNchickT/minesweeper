@@ -1,6 +1,6 @@
 'use client';
 
-import { useDisclosure } from '@nextui-org/react';
+import { Spinner, useDisclosure } from '@nextui-org/react';
 import { useEffect, useState, type ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
@@ -8,7 +8,6 @@ import ControlPanel from '@/components/ControlPanel/ControlPanel';
 import Field from '@/components/Field/Field';
 import ModalWindow from '@/components/ModalWindow/ModalWindow';
 
-import Loader from './loading';
 import { store } from '../redux/store';
 
 const App = (): ReactElement => {
@@ -33,7 +32,7 @@ const App = (): ReactElement => {
           </Provider>
         </main>
       ) : (
-        <Loader />
+        <Spinner color="danger" size="lg" />
       )}
     </>
   );
