@@ -19,7 +19,7 @@ export const closeCellsRadius = (
         for (let countX = x - 1 < 0 ? 0 : x - 1; countX <= (x + 1 === FIELD_CONFIG.fieldSize ? x : x + 1); countX++) {
           if (Array.from(viewedCells).includes(JSON.stringify({ x: countX, y: countY }))) continue;
 
-          output.push({ x: countX, y: countY });
+          if (!fieldItems[countY][countX].isFlag) output.push({ x: countX, y: countY });
           viewedCells.add(JSON.stringify({ x: countX, y: countY }));
 
           if (

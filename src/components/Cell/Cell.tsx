@@ -34,7 +34,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   };
 
   const firstClick = (): void => {
-    dispatch(updateField(fieldGen({ x: props.currentPos.x, y: props.currentPos.y })));
+    dispatch(updateField(fieldGen(fieldItems, { x: props.currentPos.x, y: props.currentPos.y })));
     dispatch(generationOn());
     dispatch(startGame());
   };

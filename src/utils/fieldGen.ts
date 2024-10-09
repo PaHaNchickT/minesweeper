@@ -4,8 +4,8 @@ import type { TCell } from '@/types/types';
 import { cellsGen } from './cellsGen';
 import { closeCellsRadius } from './closeCellsRadius';
 
-export const fieldGen = (initialCell: { x: number; y: number }): TCell[][] => {
-  const rawCells = cellsGen(initialCell);
+export const fieldGen = (initField: TCell[][], initialCell: { x: number; y: number }): TCell[][] => {
+  const rawCells = cellsGen(initField, initialCell);
 
   const bombsCounter = (startPos: { x: number; y: number }, endPos: { x: number; y: number }): number => {
     let summBombs = 0;
