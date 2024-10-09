@@ -5,7 +5,7 @@ import type { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { FIELD_CONFIG } from '@/constants/constants';
+import { CELLS_COLOR, FIELD_CONFIG } from '@/constants/constants';
 import { updateField, updateItem } from '@/redux/fieldItemsSlice';
 import { endGame, startGame, toggleFlag, updateClickStatus } from '@/redux/gameStateSlice';
 import { generationOn } from '@/redux/isGeneratedSlice';
@@ -26,6 +26,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   const openedCellStyles = 'border-2 border-l-[#808080] border-t-[#808080]';
 
   let cellText = '';
+  let cellColor = 'text-black';
 
   const cellUpdating = (item: { [key: string]: boolean }, indexX: number, indexY: number): void => {
     dispatch(
@@ -93,10 +94,11 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   if (props.item.isClicked) cellText = props.item.innerText.toString();
   if (props.item.isFlag) cellText = '🚩';
   if (!props.item.innerText && props.item.isClicked) cellText = '';
+  if (typeof props.item.innerText === 'number' && props.item.innerText) cellColor = CELLS_COLOR[props.item.innerText];
 
   return (
     <Button
-      className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isClicked ? openedCellStyles : closedCellStyles}`}
+      className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={gameState.isGameEnded}
