@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { updateField, updateItem } from '@/redux/fieldItemsSlice';
-import { endGame, startGame, toggleFlag } from '@/redux/gameStateSlice';
+import { endGame, startGame, toggleFlag, updateClickStatus } from '@/redux/gameStateSlice';
 import { generationOn } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 import type { TCell } from '@/types/types';
@@ -41,7 +41,10 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   const gameOver = (): void => {
     props.onOpen();
+
     dispatch(endGame(false));
+    dispatch(updateClickStatus('😵'));
+
     bombsShowing(fieldItems).forEach((cell) => {
       cellUpdating({ isClicked: true }, cell.x, cell.y);
     });
@@ -75,15 +78,27 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
     dispatch(toggleFlag(props.item.isFlag ? false : true));
   };
 
+  const clickStartHandler = (): void => {
+    dispatch(updateClickStatus('😮'));
+  };
+
+  const clickEndHandler = (): void => {
+    dispatch(updateClickStatus('🙂'));
+  };
+
   if (props.item.isClicked) cellText = props.item.innerText.toString();
   if (props.item.isFlag) cellText = '🚩';
 
   return (
     <Button
       className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${props.item.isClicked ? 'bg-warning' : 'bg-[#699]'}`}
-      onPress={clickHandler}
+      onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={isGameEnded}
+      onMouseDown={clickStartHandler}
+      onMouseUp={clickEndHandler}
+      onPressStart={clickStartHandler}
+      onPressEnd={clickEndHandler}
     >
       {cellText}
     </Button>

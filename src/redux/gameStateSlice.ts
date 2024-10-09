@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const gameStateSlice = createSlice({
   name: 'gameState',
-  initialState: { isGameStarted: false, isGameEnded: false, flagsCount: 0, isWin: false },
+  initialState: { isGameStarted: false, isGameEnded: false, flagsCount: 0, isWin: false, clickStatus: '🙂' },
   reducers: {
     clearGame: (state) => {
       state.isGameStarted = false;
@@ -24,9 +24,12 @@ export const gameStateSlice = createSlice({
     clearFlags: (state) => {
       state.flagsCount = 0;
     },
+    updateClickStatus: (state, action) => {
+      state.clickStatus = action.payload;
+    },
   },
 });
 
-export const { clearGame, startGame, endGame, toggleFlag, clearFlags } = gameStateSlice.actions;
+export const { clearGame, startGame, endGame, toggleFlag, clearFlags, updateClickStatus } = gameStateSlice.actions;
 
 export default gameStateSlice.reducer;

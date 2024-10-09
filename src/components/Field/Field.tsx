@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { FIELD_CONFIG } from '@/constants/constants';
-import { endGame } from '@/redux/gameStateSlice';
+import { endGame, updateClickStatus } from '@/redux/gameStateSlice';
 import type { RootState } from '@/redux/store';
 import { openCellsCounter } from '@/utils/openCellsCounter';
 
@@ -26,6 +26,7 @@ const Field = (props: { onOpen: () => void }): ReactElement => {
     ) {
       props.onOpen();
       dispatch(endGame(true));
+      dispatch(updateClickStatus('😎'));
     }
   }, [fieldItems, flagsCount]);
 
