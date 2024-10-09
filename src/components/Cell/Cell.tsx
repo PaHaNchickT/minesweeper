@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@nextui-org/react';
-import type { ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -18,6 +18,7 @@ import { openCellsRadius } from '@/utils/openCellsRadius';
 
 const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen: () => void }): ReactElement => {
   const dispatch = useDispatch();
+  const [cellBg, setCellBg] = useState('bg-[#c0c0c0]');
   const isGenerated = useSelector((state: RootState) => state.isGenerated.value);
   const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
   const gameState = useSelector((state: RootState) => state.gameState);
@@ -53,6 +54,8 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
     bombsShowing(fieldItems).forEach((cell) => {
       cellUpdating({ isClicked: true }, cell.x, cell.y);
     });
+
+    setCellBg('bg-[#ff0000]');
   };
 
   const clickHandler = (): void => {
@@ -96,9 +99,13 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   if (!props.item.innerText && props.item.isClicked) cellText = '';
   if (typeof props.item.innerText === 'number' && props.item.innerText) cellColor = CELLS_COLOR[props.item.innerText];
 
+  useEffect(() => {
+    if (cellBg !== 'bg-[#c0c0c0]' && !gameState.isGameStarted && !gameState.isGameEnded) setCellBg('bg-[#c0c0c0]');
+  }, [cellBg, gameState]);
+
   return (
     <Button
-      className={`opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isFlag ? 'flex flex-col justify-start' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
+      className={`opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${cellBg} ${props.item.isFlag ? 'flex flex-col justify-start' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={gameState.isGameEnded}
