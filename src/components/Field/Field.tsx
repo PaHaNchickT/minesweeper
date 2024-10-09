@@ -31,7 +31,9 @@ const Field = (props: { onOpen: () => void }): ReactElement => {
   }, [fieldItems, flagsCount]);
 
   return (
-    <div className={`w-[432px] h-[432px] flex flex-wrap`}>
+    <div
+      className={`w-[440px] h-[440px] box-border flex flex-wrap border-4 border-l-[#7b7b7b] border-t-[#7b7b7b] border-r-white border-b-white`}
+    >
       {fieldItems.map((item, indexY) =>
         item.map((subItem, indexX) => (
           <Cell key={indexX + indexY} item={subItem} currentPos={{ x: indexX, y: indexY }} onOpen={props.onOpen} />

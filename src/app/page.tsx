@@ -18,13 +18,15 @@ const App = (): ReactElement => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col gap-5 justify-center items-center">
+    <main className="flex justify-center">
       <Provider store={store}>
-        <ControlPanel />
-        <Field onOpen={onOpen}/>
+        <div className="flex flex-col gap-2 justify-center items-center bg-[#bdbdbd] p-2 box-border border-4 border-l-white border-t-white border-r-[#7b7b7b] border-b-[#7b7b7b]">
+          <ControlPanel />
+          <Field onOpen={onOpen} />
+        </div>
         <ModalWindow isOpen={isOpen} onClose={onClose} />
       </Provider>
-    </div>
+    </main>
   );
 };
 

@@ -21,6 +21,9 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
   const isGameEnded = useSelector((state: RootState) => state.gameState.isGameEnded);
 
+  const closedCellStyles = 'border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080]';
+  const openedCellStyles = 'border-2 border-l-[#808080] border-t-[#808080]';
+
   let cellText = '';
 
   const cellUpdating = (item: { [key: string]: boolean }, indexX: number, indexY: number): void => {
@@ -88,10 +91,11 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   if (props.item.isClicked) cellText = props.item.innerText.toString();
   if (props.item.isFlag) cellText = '🚩';
+  if (!props.item.innerText) cellText = '';
 
   return (
     <Button
-      className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${props.item.isClicked ? 'bg-warning' : 'bg-[#699]'}`}
+      className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isClicked ? openedCellStyles : closedCellStyles}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={isGameEnded}

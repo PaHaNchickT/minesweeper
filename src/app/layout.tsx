@@ -18,10 +18,12 @@ const RootLayout = async ({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body>
-        <div className="min-h-screen flex flex-col">
+        <div className="w-screen h-screen flex flex-col justify-between">
           {/* <Header /> */}
-          <main className="w-full flex-1">{children}</main>
+          <p>Minesweeper</p>
+          {children}
           {/* <Footer /> */}
+          <p>Footer</p>
         </div>
       </body>
     </html>
