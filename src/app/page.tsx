@@ -20,7 +20,7 @@ const App = (): ReactElement => {
   return (
     <main className="flex justify-center">
       <Provider store={store}>
-        <div className="flex flex-col gap-2 justify-center items-center bg-[#bdbdbd] p-2 box-border border-4 border-l-white border-t-white border-r-[#7b7b7b] border-b-[#7b7b7b]">
+        <div className="flex flex-col gap-2 justify-center items-center bg-[#bdbdbd] p-2 box-border border-4 border-l-white border-t-white border-r-[#808080] border-b-[#808080]">
           <ControlPanel />
           <Field onOpen={onOpen} />
         </div>

@@ -27,7 +27,7 @@ const ControlPanel = (): ReactElement => {
   }, [gameState.isGameStarted, gameState.isGameEnded, seconds]);
 
   return (
-    <div className="w-full p-2 flex justify-between items-center box-border border-4 border-l-[#7b7b7b] border-t-[#7b7b7b] border-r-white border-b-white">
+    <div className="w-full p-2 flex justify-between items-center box-border border-4 border-l-[#808080] border-t-[#808080] border-r-white border-b-white">
       <p>{(FIELD_CONFIG.bombsCount - gameState.flagsCount).toString().padStart(3, '0')}</p>
       <Button
         onPress={() => {
