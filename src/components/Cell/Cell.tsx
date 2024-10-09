@@ -98,7 +98,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   return (
     <Button
-      className={`w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isFlag ? 'flex flex-col justify-start' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
+      className={`opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border bg-[#c0c0c0] ${props.item.isFlag ? 'flex flex-col justify-start' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={gameState.isGameEnded}
