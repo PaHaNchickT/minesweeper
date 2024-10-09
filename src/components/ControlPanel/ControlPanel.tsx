@@ -11,12 +11,14 @@ import { clearFlags, clearGame, updateClickStatus } from '@/redux/gameStateSlice
 import { generationOff } from '@/redux/isGeneratedSlice';
 import type { RootState } from '@/redux/store';
 
+import ControlPanelItems from '../ControlPanelItems/ControlPanelItems';
+
 const ControlPanel = (): ReactElement => {
   const dispatch = useDispatch();
   const [seconds, setSeconds] = useState(0);
   const gameState = useSelector((state: RootState) => state.gameState);
 
-  //timer
+  // Timer
   useEffect(() => {
     if (!gameState.isGameStarted) return;
 
@@ -28,7 +30,7 @@ const ControlPanel = (): ReactElement => {
 
   return (
     <div className="w-full p-2 flex justify-between items-center box-border border-4 border-l-[#808080] border-t-[#808080] border-r-white border-b-white">
-      <p>{(FIELD_CONFIG.bombsCount - gameState.flagsCount).toString().padStart(3, '0')}</p>
+      <ControlPanelItems innerText={(FIELD_CONFIG.bombsCount - gameState.flagsCount).toString().padStart(3, '0')} />
       <Button
         onPress={() => {
           setSeconds(0);
@@ -41,7 +43,7 @@ const ControlPanel = (): ReactElement => {
       >
         {gameState.clickStatus}
       </Button>
-      <p>{seconds.toString().padStart(3, '0')}</p>
+      <ControlPanelItems innerText={seconds.toString().padStart(3, '0')} />
     </div>
   );
 };

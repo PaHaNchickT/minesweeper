@@ -3,6 +3,11 @@
   src: url('../../public/fonts/mine-sweeper.ttf');
 }
 
+@font-face {
+  font-family: 'Bittypix';
+  src: url('../../public/fonts/bittypix-countdown.ttf');
+}
+
 body {
   font-family: 'Minesweeper', sans-serif;
 }
