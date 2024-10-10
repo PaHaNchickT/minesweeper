@@ -36,7 +36,7 @@ const ControlPanel = (): ReactElement => {
       <ControlPanelItems innerText={(FIELD_CONFIG.bombsCount - gameState.flagsCount).toString().padStart(3, '0')} />
       <div className="relative">
         <Button
-          className={`bg-[#c0c0c0] relative z-[1] text-2xl p-0 flex leading-[1.2] flex-col justify-start min-w-0 w-[43px] h-[43px] rounded-none ${smileStyles}`}
+          className={`bg-[#c0c0c0] relative z-[1] text-2xl p-0 flex leading-[1.4] flex-col justify-start min-w-0 w-[43px] h-[43px] rounded-none ${smileStyles} sm:leading-[1.2]`}
           onPress={() => {
             setSeconds(0);
             dispatch(clearField());
@@ -46,10 +46,10 @@ const ControlPanel = (): ReactElement => {
             dispatch(updateClickStatus('🙂'));
           }}
           onPressStart={() =>
-            setSmileStyles('border-4 border-l-[#808080] border-t-[#808080] border-r-[#c0c0c0] border-b-[#c0c0c0]')
+            setSmileStyles('border-3 border-l-[#808080] border-t-[#808080] border-r-[#c0c0c0] border-b-[#c0c0c0] sm:border-4')
           }
           onPressEnd={() =>
-            setSmileStyles('border-4 border-l-white border-t-white border-r-[#808080] border-b-[#808080]')
+            setSmileStyles('border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080] sm:border-4')
           }
         >
           {gameState.clickStatus}
