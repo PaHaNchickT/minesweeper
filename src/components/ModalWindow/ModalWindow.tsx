@@ -11,7 +11,7 @@ const ModalWindow = (props: { isOpen: boolean; onClose: () => void }): ReactElem
   const isWin = useSelector((state: RootState) => state.gameState.isWin);
 
   return (
-    <Modal size="md" isOpen={props.isOpen} onClose={props.onClose} backdrop="blur">
+    <Modal size="md" isOpen={props.isOpen} onClose={props.onClose} backdrop="blur" placement="center">
       <ModalContent>
         {(onClose) => (
           <>
@@ -19,7 +19,7 @@ const ModalWindow = (props: { isOpen: boolean; onClose: () => void }): ReactElem
               {isWin ? TEXT_CONTENT.modalTitleWin : TEXT_CONTENT.modalTitleLoose}
             </ModalHeader>
             <ModalBody className="flex flex-row justify-center">
-              <p className='text-xs text-center'>{isWin ? TEXT_CONTENT.modalBodyWin : TEXT_CONTENT.modalBodyLoose}</p>
+              <p className="text-xs text-center">{isWin ? TEXT_CONTENT.modalBodyWin : TEXT_CONTENT.modalBodyLoose}</p>
             </ModalBody>
             <ModalFooter className="flex justify-center">
               <Button color="default" onPress={onClose}>

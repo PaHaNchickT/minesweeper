@@ -22,8 +22,8 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
   const fieldItems = useSelector((state: RootState) => state.fieldItems.value);
   const gameState = useSelector((state: RootState) => state.gameState);
 
-  const closedCellStyles = 'border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080]';
-  const openedCellStyles = 'border-2 border-l-[#808080] border-t-[#808080]';
+  const closedCellStyles = 'border-2 border-l-white border-t-white border-r-[#808080] border-b-[#808080] sm:border-3';
+  const openedCellStyles = 'border-1 border-l-[#808080] border-t-[#808080] sm:border-2';
 
   let cellText = '';
   let cellColor = 'text-black';
@@ -56,8 +56,6 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
     bombsShowing(fieldItems).forEach((cell) => {
       cellUpdating({ isClicked: true }, cell.x, cell.y);
     });
-
-    // if (props.item.isFlag && !props.item.isBomb) console.log(props.currentPos);
   };
 
   const clickHandler = (): void => {
@@ -108,7 +106,7 @@ const Cell = (props: { item: TCell; currentPos: { x: number; y: number }; onOpen
 
   return (
     <Button
-      className={`relative opacity-1 w-[27px] h-[27px] p-0 min-w-0 rounded-none box-border ${cellBg} ${props.item.isFlag ? 'flex flex-col justify-start leading-tight' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor}`}
+      className={`relative opacity-1 w-[18px] h-[18px] text-[10px] p-0 min-w-0 rounded-none box-border ${cellBg} ${props.item.isFlag ? 'flex flex-col justify-start leading-tight' : ''} ${props.item.isClicked ? openedCellStyles : closedCellStyles} ${cellColor} sm:w-[27px] sm:h-[27px] sm:text-sm`}
       onClick={clickHandler}
       onContextMenu={contextHandler}
       isDisabled={gameState.isGameEnded}

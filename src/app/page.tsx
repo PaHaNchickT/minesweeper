@@ -24,7 +24,7 @@ const App = (): ReactElement => {
       {mounted ? (
         <main className="flex justify-center">
           <Provider store={store}>
-            <div className="flex flex-col gap-2 justify-center items-center bg-[#bdbdbd] p-2 box-border border-4 border-l-white border-t-white border-r-[#808080] border-b-[#808080]">
+            <div className="flex flex-col gap-2 justify-center items-center bg-[#bdbdbd] p-2 box-border border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080] sm:border-4">
               <ControlPanel />
               <Field onOpen={onOpen} />
             </div>

@@ -17,7 +17,7 @@ const ControlPanel = (): ReactElement => {
   const dispatch = useDispatch();
   const [seconds, setSeconds] = useState(0);
   const [smileStyles, setSmileStyles] = useState(
-    'border-4 border-l-white border-t-white border-r-[#808080] border-b-[#808080]',
+    'border-3 border-l-white border-t-white border-r-[#808080] border-b-[#808080] sm:border-4',
   );
   const gameState = useSelector((state: RootState) => state.gameState);
 
@@ -32,7 +32,7 @@ const ControlPanel = (): ReactElement => {
   }, [gameState.isGameStarted, gameState.isGameEnded, seconds]);
 
   return (
-    <div className="w-full p-2 flex justify-between items-center box-border border-4 border-l-[#808080] border-t-[#808080] border-r-white border-b-white">
+    <div className="w-full p-2 flex justify-between items-center box-border border-3 border-l-[#808080] border-t-[#808080] border-r-white border-b-white sm:border-4">
       <ControlPanelItems innerText={(FIELD_CONFIG.bombsCount - gameState.flagsCount).toString().padStart(3, '0')} />
       <div className="relative">
         <Button
