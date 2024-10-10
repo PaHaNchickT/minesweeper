@@ -32,7 +32,7 @@ const Field = (props: { onOpen: () => void }): ReactElement => {
 
   return (
     <div
-      className={`w-[293px] h-[293px] box-border flex flex-wrap border-3 border-l-[#808080] border-t-[#808080] border-r-white border-b-white sm:w-[440px] sm:h-[440px] sm:border-4`}
+      className={`w-[294px] h-[294px] box-border flex flex-wrap border-3 border-l-[#808080] border-t-[#808080] border-r-white border-b-white sm:w-[440px] sm:h-[440px] sm:border-4`}
     >
       {fieldItems.map((item, indexY) =>
         item.map((subItem, indexX) => (
