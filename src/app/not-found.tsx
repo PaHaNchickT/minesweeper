@@ -13,8 +13,8 @@ export default function NotFound(): ReactElement {
     <div className="flex justify-center items-center h-screen text-center">
       <div className="flex flex-col z-[2] gap-5 items-center">
         <div>
-          <p className="text-4xl text-center">404</p>
-          <p className="text-xl">{TEXT_CONTENT.notFoundMsg}</p>
+          <p className="text-3xl text-center sm:text-4xl">404</p>
+          <p className="text-sm sm:text-xl">{TEXT_CONTENT.notFoundMsg}</p>
         </div>
         <Button onClick={() => router.push('/')}>{TEXT_CONTENT.homeBtn}</Button>
       </div>
