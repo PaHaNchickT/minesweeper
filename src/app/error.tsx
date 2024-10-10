@@ -9,7 +9,7 @@ const Error = (): ReactElement => {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col items-center gap-4 mt-4">
-        <p className="text-xl">{TEXT_CONTENT.errorMsg}</p>
+        <p className="text-center text-xl">{TEXT_CONTENT.errorMsg}</p>
         <Button onClick={() => location.reload()}>{TEXT_CONTENT.reloadBtn}</Button>
       </div>
     </div>
