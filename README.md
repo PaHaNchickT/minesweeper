@@ -1,5 +1,7 @@
 # Minesweeper
 
+![promo-image](https://github.com/user-attachments/assets/8491acfd-be25-4c6f-9e09-0c079fe6e651)
+
 ## Играть:
 
 https://minesweeper-eight-green.vercel.app/
